@@ -5,3 +5,4 @@ Progetto  I3AA-1819
 
 - scenarios  
 Analysis of the scenarios in the scribble game
+    - [joinRoom](scenarios/joinRoom.puml)
