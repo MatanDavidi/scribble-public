@@ -1,0 +1,27 @@
+/'
+ ' Scribble, Ready to play scribble sequence diagram.
+ '
+ ' @author giuliobosco
+ ' @author jarinaeser
+ ' @version 1.0 (2019-03-18 - 2019-03-18)
+ '/
+
+@startuml
+actor user
+
+user->client:readyToPlayButtonClicked()
+activate client
+
+client->server:readyToPlay()
+activate server
+
+opt joined
+    server->server:updateList(nickname, ready)
+    server->client:ack
+    server->server:updateChat(READY, nickname)
+    client->user:msg
+else
+    server->client:error(message)
+    client->user:error(message)
+end
+@enduml
