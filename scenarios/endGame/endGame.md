@@ -2,7 +2,7 @@
 Matteo Forni & Bryan Beffa
 
 - Swim Lane
-![swim lane](scenarioFinale.png)
+![swim lane](endGame.png)
 
 - Tabella del protocollo
 
