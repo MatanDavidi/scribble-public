@@ -5,7 +5,10 @@ Progetto  I3AA-1819
 
 - scenarios  
 Analysis of the scenarios in the scribble game
-    - [joinRoom](scenarios/joinRoom/joinRoom.md)
-    - [readyToPlay](scenarios/readyToPlay/readyToPlay.md)
-    - [playerReady](scenarios/playerReady/playerReady.md)
-    - [playerDisconnected](scenarios/playerDisconnected/playerDisconnectedDoc.md)
+    - [endGame](analysis/scenarios/endGame/endGameDoc.md)
+    - [game](analysis/scenarios/game/gameDoc.md)
+    - [joinRoom](analysis/scenarios/joinRoom/joinRoomDoc.md)
+    - [playerDisconnected](analysis/scenarios/playerDisconnected/playerDisconnectedDoc.md)
+    - [playerReady](analysis/scenarios/playerReady/playerReadyDoc.md)
+    - [readyToPlay](analysis/scenarios/readyToPlay/readyToPlayDoc.md)
+    - [start](analysis/scenarios/start/start.jpeg)
