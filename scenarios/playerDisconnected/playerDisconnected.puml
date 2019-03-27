@@ -1,10 +1,10 @@
 ﻿/'
- ' Scribble, the player disconnects from a game in progress.
- '
- ' @author Mattia Ruberto
- ' @author Gabriele Alessi
- ' @version 19.03.2019
- '/
+' Scribble: the player disconnects from a game in progress.
+'
+' @author Mattia Ruberto
+' @author Gabriele Alessi
+' @version 1.2 (27.03.2019)
+'/
 
 @startuml playerDisconnected
 
@@ -16,10 +16,9 @@ activate client
 client->server:leave(nickname, ip, port)
 activate server
 
-opt successful disconnection
-    server->server:removePlayer(nickname, ip)
-    server->client:removed()
-    server->server:updateChat(LEAVED, nickname)
-end
+server->server:removePlayer(nickname, ip)
+server->client:removed()
+server->server:updateChat(LEAVED, nickname)
+client->user:OK
 
 @enduml
