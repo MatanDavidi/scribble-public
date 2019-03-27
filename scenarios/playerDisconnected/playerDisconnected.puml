@@ -20,10 +20,6 @@ opt successful disconnection
     server->server:removePlayer(nickname, ip)
     server->client:removed()
     server->server:updateChat(LEAVED, nickname)
-    client->user:OK
-else
-    server->client:error(msg)
-    client->user:error(msg)
 end
 
 @enduml

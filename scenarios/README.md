@@ -1,11 +1,11 @@
 # scribble/scenarios
 
-Documentation of scribble's scenarios
+## Documentation of scribble's scenarios
 
-## joinRoom
+joinRoom
 
-## playerReady
+playerReady
 
-## readyToPlay
+readyToPlay
 
-## playerDisconnected
+playerDisconnected

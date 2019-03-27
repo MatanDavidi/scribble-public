@@ -8,4 +8,4 @@ Analysis of the scenarios in the scribble game
     - [joinRoom](scenarios/joinRoom.puml)
     - [readyToPlay](scenarios/readyToPlay.puml)
     - [playerReady](scenarios/playerReady/playerReady.md)
-    - [playerDisconnected](scenarios/playerDisconnected/playerDisconnected.puml)
+    - [playerDisconnected](scenarios/playerDisconnected/playerDisconnectedDoc.md)
