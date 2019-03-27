@@ -7,5 +7,5 @@ Progetto  I3AA-1819
 Analysis of the scenarios in the scribble game
     - [joinRoom](scenarios/joinRoom.puml)
     - [readyToPlay](scenarios/readyToPlay.puml)
-    - [playerReady](scenarios/playerReady.puml)
+    - [playerReady](scenarios/playerReady/playerReady.md)
     - [playerDisconnected](scenarios/playerDisconnected/playerDisconnected.puml)
