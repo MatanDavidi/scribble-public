@@ -13,7 +13,7 @@ In questa prima parte del progetto l’utente avvia l’applicazione client imme
 ## tabella dei protocolli di comunicazione
 
 |Command|Direction|Description|Possible Response|
-|-|-|-|
+|-|-|-|-|
 |Join(Nickname)|c&rarr;s|Client makes a request to join the server with the nickname given as a parameter|Joined() error(message)|
 |Joined()|c&rarr;s|Confirms that the client joined the server.|-|
 |Error(message)|c&rarr;s|Returns an error with it’s relative message.|-|
