@@ -1,4 +1,4 @@
-## Scenario 2 - Analysis
+## Scenario 2: giocatore è pronto - Analysis
 This scenario starts when a player has already registered to a server and has pressed to button to signal to the server and to other players that they're ready to start the game.
 
 ![PlayerReady swim lane diagram](playerReady.png)
