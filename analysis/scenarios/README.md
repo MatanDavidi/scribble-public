@@ -1,16 +1,16 @@
 # scribble/scenarios
 
 ## Documentation of scribble's scenarios
-[endGame](endGame/endGame.md)
+[endGame](endGame/endGameDoc.md)
 
-[game](game/game.md)
+[game](game/gameDoc.md)
 
 [joinRoom](joinRoom/joinRoomDoc.md)
 
 [playerDisconnected](playerDisconnected/playerDisconnectedDoc.md)
 
-[playerReady](playerReady/playerReady.md)
+[playerReady](playerReady/playerReadyDoc.md)
 
 [readyToPlay](readyToPlay/readyToPlayDoc.md)
 
-[Start](Start/Start.jpeg)
+[start](start/start.jpeg)
