@@ -2,7 +2,9 @@
 Matteo Forni & Bryan Beffa
 
 - Swim Lane
-![swim lane](endGame.png)
+![swim lane](endGame.jpg)
+
+Se l'utente vorrà giocare un'altra partita dovrà attendere per l'inizio di essa, altrimenti lascierà il gioco e questo verrà riportato nella chat.
 
 - Tabella del protocollo
 

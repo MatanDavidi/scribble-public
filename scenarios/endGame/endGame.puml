@@ -1,0 +1,21 @@
+@startuml fine
+    actor Player as p
+    participant Client as c
+    participant Server as s
+
+    activate s
+    s -> c : endGame()
+    activate c
+    c -> p : showPoints()
+
+    opt playAgain
+    p -> c : play again
+    c -> s : playAgain()
+    s -> c : waitNewGame()
+    else
+    p -> c : quit
+    c -> s : quit()
+    s -> s : updateChat(LEAVED, nickname)
+    end
+    s -> s : startGame()
+@enduml
