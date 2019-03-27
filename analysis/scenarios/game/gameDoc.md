@@ -1,5 +1,5 @@
 ## Scenario 2: partita - Analisi
-Questo scenario inizia dopo la fine dello scenario [Start](../Start/Start.jpeg), ovvero dopo l'inizio della partita.
+Questo scenario inizia dopo la fine dello scenario [start](../start/start.jpeg), ovvero dopo l'inizio della partita.
 
 ![Game swim lane diagram](game.png)
 
