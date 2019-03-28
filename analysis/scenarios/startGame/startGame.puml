@@ -1,0 +1,25 @@
+@startuml
+
+actor player
+
+activate player
+player->client:readyToPlay()
+activate client
+
+client->server:readyToPlay()
+
+opt is player signed up
+  activate server
+  server->server:updateList()
+  server->client:start()
+  client-->player:OK
+  server->server:updateChat()
+else
+  server-->client:Error(msg)
+  client-->player:Error(msg)
+  deactivate server
+  deactivate client
+  deactivate player
+end
+
+@enduml

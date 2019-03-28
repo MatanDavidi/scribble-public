@@ -13,4 +13,4 @@
 
 [readyToPlay](readyToPlay/readyToPlayDoc.md)
 
-[start](start/start.jpeg)
+[start](startGame/startGameDoc.md)
