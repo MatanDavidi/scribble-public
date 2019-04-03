@@ -1,4 +1,4 @@
-Lo scenario inizia con la parola che viene indovinata da un giocatore oppure se il tempo a disposizione è scaduto. Lo scenario precedente è [game](game/gameDoc.md).
+Lo scenario inizia con la parola che viene indovinata da un giocatore oppure se il tempo a disposizione è scaduto. Lo scenario precedente è [game](../game/gameDoc.md).
 
 
 # Scenario: endGame
