@@ -1,4 +1,5 @@
-Scenario precedente: Game
+Scenario precedente: [game](game/gameDoc.md)
+
 # Scenario: endGame
 
 Autori: Matteo Forni, Bryan Beffa
