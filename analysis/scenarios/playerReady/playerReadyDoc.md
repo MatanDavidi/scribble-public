@@ -24,6 +24,7 @@ Tuttavia, se il giocatore non è registrato, invia semplicemente un messaggio di
 
 ### Protocollo di comunicazione
 
-| Messaggio | Direzione | Descrizione | Risposta
-| :------------- | :------------- | :------------- | :------------- |
-| readyToPlay() | C --> S | sent by the client to indicate that they are ready to play | 1 = OK; 2 = Error: player not registered (msg) |
+| Messaggio              | Direzione         | Descrizione                                                                        | Risposta                                           |
+| :-------------         | :---------------- | :--------------------------------------------------------------------------------- | :---------------------------------------------- |
+| readyToPlay()          | Client --> Server | Inviato dal client per notificare al server che è pronto per cominciare la partita | 1 = OK; 2 = Error: player not registered (msg) |
+| updateChat(newMessage) | Server --> Broadcast | Invia a tutti i client il messaggio che dice che il giocatore è pronto per avviare la partita |
