@@ -3,22 +3,20 @@
 '
 ' @author Mattia Ruberto
 ' @author Gabriele Alessi
-' @version 1.2 (27.03.2019)
+' @version 1.3 (03.04.2019)
 '/
 
 @startuml playerDisconnected
 
-actor user
-
-user->client:disconnection request
-activate client
-
-client->server:leave(nickname, ip, port)
-activate server
-
-server->server:removePlayer(nickname, ip)
-server->client:removed()
-server->server:updateChat(LEAVED, nickname)
-client->user:OK
+actor Player
+Player->Client:disconnection request
+activate Client
+Client->Server:leave(nickname, ip, port)
+activate Server
+Server->Server:removePlayer(nickname, ip)
+Server->Client:ack
+activate Broadcast
+Server->Broadcast:updateChat(LEAVED, nickname)
+Client->Player:OK
 
 @enduml
