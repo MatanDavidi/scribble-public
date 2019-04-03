@@ -3,7 +3,7 @@ Lo scenario precedente è [game](../game/gameDoc.md).
 
 # Scenario: playerDisconnected
 
-Autori: Gabriele Alessi, Mattia Ruberto
+Autori: Mattia Ruberto, Gabriele Alessi
 
 ## Swim Lane
 
@@ -24,6 +24,6 @@ Se l'utente si è disconnesso correttamente gli viene inviato un acknowledgement
 ## Tabella del protocollo
 
 | Message | Direction | Description | Reply |
-| - | - | - | - |
+|:--------|:----------|:------------|:------|
 | leave(nickname, ip, port) | c &rarr; s | Client fa una richiesta di disconessione al server. | - |        
 | removed() | s &rarr; c | Il server ritorna al client la conferma che è stato rimosso. | - |
