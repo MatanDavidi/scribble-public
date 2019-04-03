@@ -1,4 +1,5 @@
-Scenario precedente: [game](game/gameDoc.md)
+Lo scenario inizia con la parola che viene indovinata da un giocatore oppure se il tempo a disposizione è scaduto. Lo scenario precedente è [game](game/gameDoc.md).
+
 
 # Scenario: endGame
 
@@ -9,8 +10,6 @@ Autori: Matteo Forni, Bryan Beffa
 ![swim lane](endGame.jpg)
 
 ## Descrizione
-
-La partita termina se la parola viene indovinata da un giocatore oppure se il tempo a disposizione è scaduto.
 
 ### Se la parola viene indovinata:
 Se la parola è stata indovinata da un utente, il server comunica a tutti i client che la partita è finita.
