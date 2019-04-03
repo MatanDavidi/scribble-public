@@ -15,15 +15,17 @@ Autori: Mattia Ruberto, Gabriele Alessi
 
 Il client viene disconnesso quando l'utente preme l'apposito pulsante o ci sono problemi di connessione o l'arresto della macchina. Quindi il server rimuove il giocatore dalla sessione tramite nickname e indirizzo IP.
 
-L'utente preme il pulsante (player disconnected) e il client chiede al server di lasciare la partita (leave()). Quindi se va tutto bene il server rimuove il player (removePlayer()) dal sistema e invia un check al client (removed()). Infine il server aggiorna la chat mostrando che il player ha appunto lasciato la partita (updateChat()) e manda l'OK all'utente.
-
 ### Rimozione
 
 Se l'utente si è disconnesso correttamente gli viene inviato un acknowledgement dal server che nel frattempo aggiorna la chat per comunicare la disconnessione appena avvenuta agli altri utenti in sessione.
 
+### Nuova partita
+
+L'utente riceve l'OK definitivo e torna nel menu in cui può dichararsi pronto per un'altra partita ([playerReady](../playerReady/playerReadyDoc.md)). Altrimenti se il sistema è stato spento, l'utente dovrà ricominciare da capo avviando l'applicazione ([joinRoom](../joinRoom/joinRoomDoc.md)).
+
 ## Tabella del protocollo
 
-| Message | Direction | Description | Reply |
+| Messaggio | Direzione | Descrizione | Risposta |
 |:--------|:----------|:------------|:------|
-| leave(nickname, ip, port) | c &rarr; s | Client fa una richiesta di disconessione al server. | - |        
-| removed() | s &rarr; c | Il server ritorna al client la conferma che è stato rimosso. | - |
+| leave(nickname, ip, port) | C &rarr; S | Il client fa una richiesta di disconessione al server. | - |        
+| updateChat(LEAVED, nickname) | S &rarr; B | Il server comunica nella chat (agli altri client) che l'utente ha lasciato la partita. | - |
