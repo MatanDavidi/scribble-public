@@ -18,7 +18,7 @@ Una volta che la parola è stata indovinata e comunicata, il server invia a tutt
 ### Se il tempo a disposizione scade:
 Se il tempo scade e la parola non è stata indovinata da nessun il server comunica che la partita è finita, che nessuno ha indovinato la parola e la parola che era da indovinare.
 
-Infine l'utente, se vorrà giocare un'altra partita, dovrà attendere per l'inizio di essa e ritornerà quindi allo scenario [readyToPlay](../readyToPlay/readyToPlayDoc.md), altrimenti lascierà il gioco e questo verrà riportato nella chat.
+Infine l'utente, se vorrà giocare un'altra partita, dovrà attendere per l'inizio di essa e ritornerà quindi allo scenario [playerReady](../playerReady/playerReadyDoc.md), altrimenti lascierà il gioco e questo verrà riportato nella chat.
 
 ## Tabella del protocollo
 
