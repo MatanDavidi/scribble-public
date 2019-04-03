@@ -9,14 +9,14 @@
 @startuml playerDisconnected
 
 actor Player
-Player->Client:disconnection request
+Player->Client:player disconnected
 activate Client
 Client->Server:leave(nickname, ip, port)
 activate Server
 Server->Server:removePlayer(nickname, ip)
-Server->Client:ack
 activate Broadcast
 Server->Broadcast:updateChat(LEAVED, nickname)
-Client->Player:OK
+Server->Client:serverAck
+Client->Player:ack
 
 @enduml
