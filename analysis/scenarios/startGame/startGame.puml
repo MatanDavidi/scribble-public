@@ -3,23 +3,17 @@
 actor player
 
 activate player
-player->client:readyToPlay()
 activate client
+activate server
 
-client->server:readyToPlay()
-
-opt is player signed up
-  activate server
-  server->server:updateList()
-  server->client:start()
-  client-->player:OK
-  server->server:updateChat()
+opt all player are ready
+  server-->client:startGame()
+  client-->player:startGame()
 else
-  server-->client:Error(msg)
-  client-->player:Error(msg)
-  deactivate server
-  deactivate client
-  deactivate player
 end
+
+deactivate server
+deactivate client
+deactivate player
 
 @enduml
