@@ -3,37 +3,43 @@
 actor Player as p
 participant Client as c
 participant Server as s
+participant Broadcast as b
 
 activate s
-s --> s: pickWord
-s --> s: pickSketcher
+s -> s: pickWord()
+s -> s: pickSketcher()
 
 activate c
-s --> c: sketcher(player, word)
+activate b
+s -> b: sketcher(player)
 
 activate p
 opt is player guesser
   loop while word not guessed
-    p --> c: guess(word)
-    c --> s: guess(word)
+    p -> c: guess(word)
+    c -> s: guess(word)
     opt is word right
-      s --> s: updatePlayerScore(player, time)
-      s --> c: wordGuessed(player, word, score)
-      c --> c: disableChat
-      c --> p: wordGuessed(word, score)
+      s -> s: updatePlayerScore(player, time)
+      s -> b: wordGuessed(player)
+      s -> c: wordGuessed(word, newScore)
+      c -> c: disableChat()
+      c -> p: wordGuessed(word, newScore)
     else
-      s --> c: wrongWord(word)
+      s -> c: wrongWord()
     end
   end
 else
+  s -> c: wordToDraw(word)
+  c -> p: wordToDraw(word)
   loop while word not guessed
-    p --> c: draw
-    c --> s: sendDrawing(drawing)
-    s --> c: sendDrawing(drawing)
-    c --> p: drawDrawing(drawing)
+    p -> c: draw
+    c -> s: sendDrawing(drawing)
+    s -> b: sendDrawing(drawing)
+    b -> p: drawDrawing(drawing)
   end
 end
 
+deactivate b
 deactivate c
 deactivate s
 deactivate p
