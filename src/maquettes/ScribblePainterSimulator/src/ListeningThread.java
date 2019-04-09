@@ -79,8 +79,8 @@ public class ListeningThread extends Thread {
 
         DatagramPacket recievedPacket = new DatagramPacket(buffer, buffer.length);
         System.out.println("Started listener on " + socket.getLocalSocketAddress());
-        
-        while (isInterrupted()) {
+
+        while (!isInterrupted()) {
             try {
                 byte[] onlyPixels = new byte[0];
                 recievedPacket.setData(new byte[buffer.length]);
@@ -100,5 +100,5 @@ public class ListeningThread extends Thread {
             }
         }
     }
-    
+
 }
