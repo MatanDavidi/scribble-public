@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.util.Arrays;
 
 /**
  * Listening thread of client drawer simulator, for scribble.
@@ -75,27 +76,20 @@ public class ListeningThread extends Thread {
      */
     @Override
     public void run() {
-        byte[] buffer = new byte[4096];
+        byte[] buffer = new byte[2];
 
         DatagramPacket recievedPacket = new DatagramPacket(buffer, buffer.length);
         System.out.println("Started listener on " + socket.getLocalSocketAddress());
 
         while (!isInterrupted()) {
-            try {
-                byte[] onlyPixels = new byte[0];
+            try{
                 recievedPacket.setData(new byte[buffer.length]);
                 socket.receive(recievedPacket);
-                for(int i = 0; i < recievedPacket.getData().length; i++){
-                    if(recievedPacket.getData()[i] == '\0'){
-                        onlyPixels = new byte[i];
-                        i = recievedPacket.getData().length;
-                    }
+                System.out.println("Listening Thread: Recieved packet containing: " + Arrays.toString(recievedPacket.getData()));
+                if(recievedPacket.getData().length == 2){
+                    this.pointLister.pointReceived(recievedPacket.getData());
                 }
-                for(int i = 0; i < onlyPixels.length; i++){
-                    onlyPixels[i] = recievedPacket.getData()[i];
-                }
-                this.pointLister.pointReceived(onlyPixels);
-            } catch (IOException ioe) {
+            }catch(IOException ioe){
                 System.out.println("IOException: " + ioe.getMessage());
             }
         }

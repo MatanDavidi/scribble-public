@@ -26,7 +26,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
 import javax.swing.JFrame;
 
 /**
@@ -39,25 +38,14 @@ import javax.swing.JFrame;
 public class DrawerSimulator extends JFrame implements MouseListener, MouseMotionListener {
 
     /**
-     * Send all pixels mode.
-     */
-    public static final char SEND_ALL_PIXEL_MODE = 'a';
-
-    /**
-     * Send single pixel mode
-     */
-    public static final char SEND_SINGLE_PIXEL_MODE = 'p';
-
-    /**
-     * Send pixels mode.
-     * Can be 'a' for send all pixels, or 'p' for send single pixel.
-     */
-    private char mode = 'p';
-
-    /**
      * Port to use for send pixels.
      */
     private final int PORT = 9876;
+    
+    /**
+     * Size in pixels of the window x and y axis.
+     */
+    private final int SIZE = 256;
 
     /**
      * Multicast socket to send pixels.
@@ -72,13 +60,14 @@ public class DrawerSimulator extends JFrame implements MouseListener, MouseMotio
     /**
      * Pixel to send.
      */
-    private Point position;
-
-
+    private Point pixelToSend;
+    
     /**
-     * List of the pixels to send when using send all pixels mode.
+     * Boolean matrix that represents the status of each pixel.
+     * true = On
+     * false = Off
      */
-    private ArrayList<Point> pixelsToDraw;
+    private boolean[][] pixelsStatus;
 
     /**
      * Create the drawer simulator with the window title.
@@ -88,16 +77,23 @@ public class DrawerSimulator extends JFrame implements MouseListener, MouseMotio
      */
     public DrawerSimulator(String title) throws IOException {
         super(title);
-        this.setSize(200, 200);
-        this.setPreferredSize(new Dimension(200, 200));
+        this.setSize(this.SIZE, this.SIZE);
+        this.setPreferredSize(new Dimension(this.SIZE, this.SIZE));
         this.setBackground(Color.white);
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
+        this.pixelsStatus = new boolean[256][256];
         this.group = InetAddress.getByName("224.0.0.1");
         this.socket = new MulticastSocket(PORT);
         socket.joinGroup(group);
-        this.position = new Point(10, 10);
-        pixelsToDraw = new ArrayList<Point>();
+    }
+    
+    /**
+     * Getter method for the pixelStatus array.
+     * @return pixelStatus array containing the state of all pixels.
+     */
+    public boolean[][] getPixelStatus(){
+        return this.pixelsStatus;
     }
 
     /**
@@ -106,10 +102,16 @@ public class DrawerSimulator extends JFrame implements MouseListener, MouseMotio
      * @param g Graphics of the window.
      */
     @Override
-    public void paint(Graphics g) {
-        g.setColor(Color.black);
-        g.fillRect(position.x, position.y, 1, 1);
-        sendPacket(position);
+    public void paint(Graphics g){
+        if(pixelToSend != null){
+            if(pixelToSend.x > -1 && pixelToSend.x < 256 && pixelToSend.y > -1 && pixelToSend.y < 256){
+                g.fillRect(pixelToSend.x, pixelToSend.y, 1, 1);
+                if(!pixelsStatus[pixelToSend.x][pixelToSend.y]){
+                    pixelsStatus[pixelToSend.x][pixelToSend.y] = true;
+                    sendPacket(pixelToSend);
+                }
+            }
+        }
     }
 
     /**
@@ -120,34 +122,12 @@ public class DrawerSimulator extends JFrame implements MouseListener, MouseMotio
      */
     private void sendPacket(Point pixel) {
 
-        byte[] message;
-
-        if (this.mode == SEND_ALL_PIXEL_MODE) {
-            if (!pixelsToDraw.contains(pixel)) {
-                pixelsToDraw.add(pixel);
-            }
-
-            message = new byte[pixelsToDraw.size() * 2 + 1];
-
-            for (int i = 0; i < message.length; i++) {
-                if (i % 2 == 0) {
-                    message[i] = (byte) pixelsToDraw.get((int) (i - 1) / 2).x;
-                } else {
-                    message[i] = (byte) pixelsToDraw.get((int) (i - 1) / 2).y;
-                }
-            }
-            message[message.length - 1] = (byte) 'a';
-        } else if (this.mode == SEND_SINGLE_PIXEL_MODE) {
-            message = new byte[]{
-                    (byte) position.x,
-                    (byte) position.y,
-                    (byte) 'p'
-            };
-        } else {
-            return;
-        }
-
         try {
+            byte[] message = new byte[]{
+                (byte)pixel.x,
+                (byte)pixel.y
+            };
+       
             DatagramPacket packet = new DatagramPacket(
                     message,
                     message.length,
@@ -156,35 +136,35 @@ public class DrawerSimulator extends JFrame implements MouseListener, MouseMotio
             );
 
             socket.send(packet);
-
-        } catch (SocketException se) {
-            System.err.println("SocketException: " + se.getMessage());
         } catch (IOException ioe) {
             System.err.println("IOException: " + ioe.getMessage());
         }
     }
+    
+    
+    
 
     /**
      * Mouse clicked event.
-     * Set the position and repaint the frame.
+     * Set the pixelToSend and repaint the frame.
      *
      * @param e Mouse clicked event.
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        position = e.getPoint();
+        pixelToSend = e.getPoint();
         repaint();
     }
 
     /**
      * Mouse pressed event.
-     * Set the position and repaint the frame.
+     * Set the pixelToSend and repaint the frame.
      *
      * @param e Mouse pressed event.
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        position = e.getPoint();
+        pixelToSend = e.getPoint();
         repaint();
     }
 
@@ -220,13 +200,13 @@ public class DrawerSimulator extends JFrame implements MouseListener, MouseMotio
 
     /**
      * Mouse dragged event.
-     * Set the position and repaint the frame.
+     * Set the pixelToSend and repaint the frame.
      *
      * @param e Mouse dragged event.
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        position = e.getPoint();
+        pixelToSend = e.getPoint();
         repaint();
     }
 

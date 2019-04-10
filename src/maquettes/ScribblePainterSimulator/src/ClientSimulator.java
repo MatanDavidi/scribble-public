@@ -35,12 +35,16 @@ import javax.swing.JFrame;
  * @version 1.2 (2019-04-03)
  */
 public class ClientSimulator extends JFrame implements PointListener {
-
+    
     /**
-     * New pixel.
-     * Pixel to design.
+     * Size in pixels of the window x and y axis.
      */
-    private Point[] pixels;
+    private final int SIZE = 256;
+    
+    /**
+     * Received pixel to draw.
+     */
+    private Point pixelToDraw;
 
     /**
      * Transmission method.
@@ -51,6 +55,11 @@ public class ClientSimulator extends JFrame implements PointListener {
      * Point listener.
      */
     private ListeningThread listeningThread;
+    
+    /**
+     * Array containing the status of all pixels.
+     */
+    private boolean[][] pixelStatus;
 
     /**
      * Create ClientSimulator.
@@ -60,11 +69,12 @@ public class ClientSimulator extends JFrame implements PointListener {
      */
     public ClientSimulator(String title) throws IOException {
         super(title);
-        this.setSize(200, 200);
-        this.setPreferredSize(new Dimension(200, 200));
+        this.setSize(this.SIZE, this.SIZE);
+        this.setPreferredSize(new Dimension(this.SIZE, this.SIZE));
         this.setBackground(Color.white);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         listeningThread = new ListeningThread(this);
+        this.pixelStatus = new boolean[256][256];
     }
 
     /**
@@ -74,37 +84,31 @@ public class ClientSimulator extends JFrame implements PointListener {
      */
     @Override
     public void pointReceived(byte[] pixels) {
-        System.out.println("size:" + pixels.length);
-        this.method = (char) pixels[pixels.length - 1];
-        this.pixels = new Point[(pixels.length - 1) / 2];
-        if ((this.pixels.length - 1) % 2 == 0) {
-            for (int i = 0; i < pixels.length - 2; i += 2) {
-                this.pixels[(int) (i / 2)] = new Point(getInt(pixels[i]), getInt(pixels[i + 1]));
+        System.out.println("ClientSimulator: Pixels packet size:" + pixels.length);
+        if(pixels.length == 2){
+            this.pixelToDraw = new Point(getInt(pixels[0]), getInt(pixels[1]));
+            if(!this.pixelStatus[this.pixelToDraw.x][this.pixelToDraw.y]){
+                this.pixelStatus[this.pixelToDraw.x][this.pixelToDraw.y] = true;
+                this.repaint();
+                for(boolean[] b:pixelStatus){
+                    System.out.println(Arrays.toString(b));
+                }
             }
         }
-        this.repaint();
     }
 
     /**
      * Paint the last point.
      *
-     * @param g Graphics fo the frame.
+     * @param g Graphics of the frame.
      */
     @Override
     public void paint(Graphics g) {
-        if (this.pixels != null && this.pixels.length > 0 && this.pixels[0] != null) {
-            if (this.method == DrawerSimulator.SEND_ALL_PIXEL_MODE) {
-                g.clearRect(0, 0, getWidth(), getHeight());
-                System.out.println(Arrays.toString(pixels));
-                for (Point p : this.pixels) {
-                    g.fillRect(p.x, p.y, 1, 1);
-                }
-            } else if (this.method == DrawerSimulator.SEND_SINGLE_PIXEL_MODE) {
-                g.fillRect(this.pixels[0].x, this.pixels[0].y, 1, 1);
-            }
+        if(this.pixelToDraw != null){
+            g.fillRect(this.pixelToDraw.x, this.pixelToDraw.y, 1, 1);
         }
     }
-
+    
     /**
      * Get int from unsigned byte.
      *
