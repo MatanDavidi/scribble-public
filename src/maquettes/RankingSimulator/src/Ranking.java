@@ -1,13 +1,3 @@
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-
 /*
  * The MIT License
  *
@@ -31,6 +21,17 @@ import java.util.List;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Players ranking management.
  *
@@ -55,7 +56,7 @@ public class Ranking {
      *
      * @param csvPath Path of the csv file.
      */
-    public Ranking(Path csvPath) throws IOException {
+    public Ranking(Path csvPath) throws IOException{
         if (Files.exists(csvPath)) {
             if (Files.isReadable(csvPath)) {
                 setCsvPath(csvPath);
@@ -143,9 +144,9 @@ public class Ranking {
         try {
             FileWriter w = new FileWriter(csvPath.toString());
             BufferedWriter b = new BufferedWriter(w);
-            b.write("Username, Score\n");
+            b.write("Username, Score\n\r");
             for (Player player : players) {
-                b.write(player.getUsername() + "," + player.getScore());
+                b.write(player.getUsername() + ", " + player.getScore()+"\n\r");
             }
             b.flush();
         } catch (IOException ie) {
@@ -169,5 +170,32 @@ public class Ranking {
         FileWriter writer = new FileWriter(csvFile);
         writer.write("username,score");
         writer.close();
+    }
+    
+    public static void main(String[] args) throws IOException {
+        Path path = Paths.get("ranking.csv");
+        Ranking ranking = new Ranking(path);
+        
+        Player player1 = new Player("Mario", 220);
+        ranking.addPlayer(player1);
+        
+        Player player2 = new Player("Luigi", 500);
+        ranking.addPlayer(player1);
+        
+        Player player3 = new Player("Giuseppe", 100);
+        ranking.addPlayer(player1);
+        
+        Player player5 = new Player("Giovanni", 1110);
+        ranking.addPlayer(player1);
+        
+        Player player6 = new Player("Francesco", 50);
+        ranking.addPlayer(player1);
+        
+        ranking.sortPlayers();
+        
+        ranking.writingRankings();
+        
+        String rankingText = ranking.readingRankings();
+        System.out.println(rankingText);
     }
 }
