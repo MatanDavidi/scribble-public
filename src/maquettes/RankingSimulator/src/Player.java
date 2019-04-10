@@ -57,7 +57,7 @@ public class Player {
      * @param score Total score of the player.
      */
     public Player(String username, int score) {
-        this(username);
+        setUsername(username);
         setScore(score);
     }
 
@@ -84,7 +84,7 @@ public class Player {
      *
      * @param username Username of the player.
      */
-    private void setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -93,7 +93,7 @@ public class Player {
      *
      * @param score Total score of the player.
      */
-    private void setScore(int score) {
+    public void setScore(int score) {
         if (score < 0) {
             score = 0;
         }
