@@ -5,7 +5,6 @@ import java.net.DatagramPacket;
  * MessagesManagerListener Interfaccia della classe MessagesManager.
  *
  * @author Nemanja Stojanovic
- * @version 14.02.2019
  */
 public interface MessagesManagerListener {
 

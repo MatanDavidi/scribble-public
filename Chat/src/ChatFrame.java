@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
  * ChatFrame Semplice chat strutturata sul protocollo UDP.
  *
  * @author Nemanja Stojanovic
- * @version 14.02.2019
  */
 public class ChatFrame extends JFrame implements MessagesManagerListener {
 

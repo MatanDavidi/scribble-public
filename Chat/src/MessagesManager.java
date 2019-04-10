@@ -9,7 +9,6 @@ import java.net.InetAddress;
  * UDP.
  *
  * @author Nemanja Stojanovic
- * @version 14.02.2019
  */
 public class MessagesManager extends Thread {
 
