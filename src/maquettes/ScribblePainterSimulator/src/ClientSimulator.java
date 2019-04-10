@@ -24,7 +24,6 @@
 
 import java.awt.*;
 import java.io.*;
-import java.util.Arrays;
 import javax.swing.JFrame;
 
 /**
@@ -34,7 +33,7 @@ import javax.swing.JFrame;
  * @author giuliobosco
  * @version 1.2 (2019-04-03)
  */
-public class ClientSimulator extends JFrame implements PointListener {
+public class ClientSimulator extends JFrame implements PointListener{
     
     /**
      * Size in pixels of the window x and y axis.
@@ -45,11 +44,6 @@ public class ClientSimulator extends JFrame implements PointListener {
      * Received pixel to draw.
      */
     private Point pixelToDraw;
-
-    /**
-     * Transmission method.
-     */
-    private char method;
 
     /**
      * Point listener.
@@ -71,9 +65,8 @@ public class ClientSimulator extends JFrame implements PointListener {
         super(title);
         this.setSize(this.SIZE, this.SIZE);
         this.setPreferredSize(new Dimension(this.SIZE, this.SIZE));
-        this.setBackground(Color.white);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        listeningThread = new ListeningThread(this);
+        this.setBackground(Color.lightGray);
+        this.listeningThread = new ListeningThread(this);
         this.pixelStatus = new boolean[256][256];
     }
 
@@ -90,9 +83,6 @@ public class ClientSimulator extends JFrame implements PointListener {
             if(!this.pixelStatus[this.pixelToDraw.x][this.pixelToDraw.y]){
                 this.pixelStatus[this.pixelToDraw.x][this.pixelToDraw.y] = true;
                 this.repaint();
-                for(boolean[] b:pixelStatus){
-                    System.out.println(Arrays.toString(b));
-                }
             }
         }
     }
@@ -104,8 +94,47 @@ public class ClientSimulator extends JFrame implements PointListener {
      */
     @Override
     public void paint(Graphics g) {
+        
+        int cols = SIZE;
+        int rows = SIZE;   
+        int w = getWidth();
+        int h = getHeight();
+        double widthInPixels;
+        
+        if(w/cols > h/rows){
+            widthInPixels = h/rows;
+        }else{
+            widthInPixels = w/cols;
+        }
+        
+        double left = (w - widthInPixels * cols)/2;
+        double top = (h - widthInPixels * rows)/2;
+        
+        g.clearRect(0, 0, w, h);
+        g.setColor(Color.white);
+        g.fillRect((int)left, (int)top, (int)widthInPixels * SIZE, (int)widthInPixels * SIZE);
+        g.setColor(Color.black);
+        
+        for(int i = 0; i < pixelStatus.length; i++){
+            for(int j = 0; j < pixelStatus[i].length; j++){
+                if(pixelStatus[i][j]){
+                    g.fillRect(
+                        (int)left + i * (int)widthInPixels, 
+                        (int)top + j * (int)widthInPixels, 
+                        (int)widthInPixels, 
+                        (int)widthInPixels
+                    );
+                }
+            }
+        }
+        
         if(this.pixelToDraw != null){
-            g.fillRect(this.pixelToDraw.x, this.pixelToDraw.y, 1, 1);
+            g.fillRect(
+                    (int)left + this.pixelToDraw.x * (int)widthInPixels, 
+                    (int)top + this.pixelToDraw.y * (int)widthInPixels, 
+                    (int)widthInPixels, 
+                    (int)widthInPixels
+            );
         }
     }
     
@@ -118,21 +147,17 @@ public class ClientSimulator extends JFrame implements PointListener {
     private int getInt(byte b) {
         return 0xFF & b;
     }
-
-    /**
-     * Main method of the class, used for test it.
-     *
-     * @param args Command line arguments.
-     */
-    public static void main(String[] args) {
+    
+    public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new ClientSimulator("My Client Simulator").setVisible(true);
-                } catch (IOException ex) {
+                    new ClientSimulator("Client Simulator").setVisible(true);
+                }catch(IOException ex){
                     System.err.println("IOException: " + ex.getMessage());
                 }
             }
         });
     }
+    
 }

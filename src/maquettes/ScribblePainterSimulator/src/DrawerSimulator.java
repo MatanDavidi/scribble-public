@@ -85,7 +85,7 @@ public class DrawerSimulator extends JFrame implements MouseListener, MouseMotio
         this.pixelsStatus = new boolean[256][256];
         this.group = InetAddress.getByName("224.0.0.1");
         this.socket = new MulticastSocket(PORT);
-        socket.joinGroup(group);
+        this.socket.joinGroup(group);
     }
     
     /**
@@ -140,9 +140,6 @@ public class DrawerSimulator extends JFrame implements MouseListener, MouseMotio
             System.err.println("IOException: " + ioe.getMessage());
         }
     }
-    
-    
-    
 
     /**
      * Mouse clicked event.
@@ -219,18 +216,13 @@ public class DrawerSimulator extends JFrame implements MouseListener, MouseMotio
     public void mouseMoved(MouseEvent e) {
 
     }
-
-    /**
-     * Main method of the class, create the frame.
-     *
-     * @param args Command line arguments.
-     */
-    public static void main(String[] args) {
+    
+    public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new DrawerSimulator("My Drawer Simulator").setVisible(true);
-                } catch (IOException ex) {
+                    new DrawerSimulator("Drawer Simulator").setVisible(true);
+                }catch(IOException ex){
                     System.err.println("IOException: " + ex.getMessage());
                 }
             }
