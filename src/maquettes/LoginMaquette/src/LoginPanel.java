@@ -39,7 +39,7 @@ public class LoginPanel extends javax.swing.JPanel implements ChatListener {
      * server.
      */
     private LoginClient client;
-    
+
     /**
      * Il server presso il quale registrarsi.
      */
@@ -143,7 +143,6 @@ public class LoginPanel extends javax.swing.JPanel implements ChatListener {
         }
 
     }//GEN-LAST:event_loginButtonMouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ipLabel;

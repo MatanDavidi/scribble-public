@@ -99,8 +99,8 @@ public class LoginServer extends Thread {
     }
 
     /**
-     * Controlla se un utente è già registrato e, se non lo è, lo aggiunge alla
-     * lista users.
+     * Controlla se un utente è già registrato e, se non lo è, lo aggiunge
+     * alla lista users.
      *
      * @param newUser Il nome utente dell'utente da registrare.
      * @return true se è stato possibile aggiungere l'utente alla lista o false
