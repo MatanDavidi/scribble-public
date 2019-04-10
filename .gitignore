@@ -25,3 +25,13 @@ hs_err_pid*
 src/maquettes/ScribblePainterSimulator/nbproject/private/private.xml
 /src/maquettes/RankingSimulator/build/
 /src/maquettes/RankingSimulator/dist/
+
+# NetBeans files
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
