@@ -112,7 +112,7 @@ public class Ranking {
         int temp = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 1; j < (n - i); j++) {
-                if (players.get(j - 1).getScore() > players.get(j).getScore()) {
+                if (players.get(j - 1).getScore() < players.get(j).getScore()) {
                     //swap elements  
                     temp = players.get(j - 1).getScore();
                     players.get(j - 1).setScore(players.get(j).getScore());
@@ -180,16 +180,16 @@ public class Ranking {
         ranking.addPlayer(player1);
         
         Player player2 = new Player("Luigi", 500);
-        ranking.addPlayer(player1);
+        ranking.addPlayer(player2);
         
         Player player3 = new Player("Giuseppe", 100);
-        ranking.addPlayer(player1);
+        ranking.addPlayer(player3);
         
-        Player player5 = new Player("Giovanni", 1110);
-        ranking.addPlayer(player1);
+        Player player4 = new Player("Giovanni", 1110);
+        ranking.addPlayer(player4);
         
-        Player player6 = new Player("Francesco", 50);
-        ranking.addPlayer(player1);
+        Player player5 = new Player("Francesco", 50);
+        ranking.addPlayer(player5);
         
         ranking.sortPlayers();
         
