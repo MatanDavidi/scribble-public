@@ -1,0 +1,22 @@
+﻿/'
+' Scribble: the player disconnects from a game in progress.
+'
+' @author Mattia Ruberto
+' @author Gabriele Alessi
+' @version 1.3 (03.04.2019)
+'/
+
+@startuml playerDisconnected
+
+actor Player
+Player->Client:player disconnected
+activate Client
+Client->Server:leave(nickname, ip, port)
+activate Server
+Server->Server:removePlayer(nickname, ip)
+activate Broadcast
+Server->Broadcast:updateChat(LEAVED, nickname)
+Server->Client:serverAck
+Client->Player:ack
+
+@enduml

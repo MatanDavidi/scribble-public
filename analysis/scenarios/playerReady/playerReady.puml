@@ -1,0 +1,31 @@
+@startuml playerReady
+
+actor Player as p
+participant Client as c
+participant Server as s
+participant Broadcast as b
+
+activate p
+p->c:readyToPlay()
+activate c
+
+c->s:readyToPlay()
+
+opt is p signed up
+  activate s
+  s->s:updatePlayersList()
+  s->s:appendToChat("player is ready")
+  activate b
+  s->b:appendToChat("player is ready")
+  deactivate b
+  s->c:readyAck()
+  c->p:serverAck()
+else
+  s->c:error(msg)
+  c->p:error(msg)
+  deactivate s
+  deactivate c
+  deactivate p
+end
+
+@enduml

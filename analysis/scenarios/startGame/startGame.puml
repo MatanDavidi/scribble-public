@@ -1,0 +1,19 @@
+@startuml
+
+actor player
+
+activate player
+activate client
+activate server
+
+opt all player are ready
+  server-->client:startGame()
+  client-->player:startGame()
+else
+end
+
+deactivate server
+deactivate client
+deactivate player
+
+@enduml

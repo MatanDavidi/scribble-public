@@ -1,0 +1,47 @@
+@startuml
+
+actor Player as p
+participant Client as c
+participant Server as s
+participant Broadcast as b
+
+activate s
+s -> s: pickWord()
+s -> s: pickSketcher()
+
+activate c
+activate b
+s -> b: sketcher(player)
+
+activate p
+opt is player guesser
+  loop while word not guessed
+    p -> c: guess(word)
+    c -> s: guess(word)
+    opt is word right
+      s -> s: updatePlayerScore(player, time)
+      s -> b: wordGuessed(player)
+      s -> c: wordGuessed(word, newScore)
+      c -> c: disableChat()
+      c -> p: wordGuessed(word, newScore)
+    else
+      s -> c: wrongWord()
+    end
+  end
+else
+  s -> c: wordToDraw(word)
+  c -> p: wordToDraw(word)
+  loop while word not guessed
+    p -> c: draw
+    c -> s: sendDrawing(drawing)
+    s -> b: sendDrawing(drawing)
+    b -> p: drawDrawing(drawing)
+  end
+end
+
+deactivate b
+deactivate c
+deactivate s
+deactivate p
+
+@enduml
