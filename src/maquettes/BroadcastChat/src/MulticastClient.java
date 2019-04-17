@@ -12,11 +12,6 @@ import javax.swing.JFrame;
 public class MulticastClient extends Thread{
     
     /**
-     * Il nickname dell'utente
-     */
-    String nickname;
-    
-    /**
      * Il socket di dati.
      */
     MulticastSocket socket;
@@ -100,7 +95,7 @@ public class MulticastClient extends Thread{
             while(true){
                 DatagramPacket packet = new DatagramPacket(sendBuf, sendBuf.length);
                 socket.receive(packet);
-                messageReceived = packet.getSocketAddress().toString() + " -> "+ new String(packet.getData(), 0, packet.getLength());
+                messageReceived = new String(packet.getData(), 0, packet.getLength());
                 
                 messageListener.messageReceived();
             }
