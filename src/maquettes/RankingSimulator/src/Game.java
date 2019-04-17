@@ -22,24 +22,97 @@
  * THE SOFTWARE.
  */
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Simulation of a game.
  *
  * @author mattiaruberto
  * @author gabrialessi
- * @version 1.0 (17.04.2019)
+ * @version 1.1 (17.04.2019)
  */
 public class Game {
 
-    public Game() {
+    /**
+     * List of players.
+     */
+    private List<Player> players = new ArrayList<>();
+
+    /**
+     * Ranking of the game.
+     */
+    private Ranking ranking;
+
+    /**
+     * Constructor method where players and ranking of the game are defined.
+     *
+     * @param players List of players of the game.
+     * @param ranking Ranking of the game.
+     */
+    public Game(List<Player> players, Ranking ranking) {
+        this.players = players;
+        this.ranking = ranking;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Ranking getRanking() {
+        return ranking;
+    }
+
+    /**
+     * Add player to the List.
+     *
+     * @param player attribute representing the player to be added.
+     */
+    public void addPlayer(Player player) {
+        players.add(player);
+    }
+
+    /**
+     * Remove player to the list.
+     *
+     * @param player attribute representing the player to be removed.
+     */
+    public void removePlayer(Player player) {
+        players.remove(player);
     }
 
     /**
      * Main method.
-     * @param args Command line arguments. 
+     *
+     * @param args Command line arguments.
      */
     public static void main(String[] args) {
-        Game game = new Game();
+        try {
+            // Creation of players, ranking and game.
+            List<Player> players = new ArrayList<>();
+            Path path = Paths.get("data", "ranking.csv");
+            Ranking ranking = new Ranking(path);
+            Game game = new Game(players, ranking);
+            Ranking gameRanking = game.getRanking();
+            // Adding players to the game.
+            game.addPlayer(new Player("Mario", 220));
+            game.addPlayer(new Player("Luigi", 500));
+            game.addPlayer(new Player("Giuseppe", 100));
+            game.addPlayer(new Player("Giovanni", 1110));
+            game.addPlayer(new Player("Francesco", 50));
+            // Sorting players
+            gameRanking.rankPlayers(game.getPlayers());
+            // Writing the ranking.
+            gameRanking.writeRanking(game.getPlayers());
+            // Reading the generated ranking.
+            String rankingText = ranking.readRanking();
+            System.out.println(rankingText);
+        } catch (IOException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
     }
 
 }
