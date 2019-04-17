@@ -29,43 +29,34 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Players ranking management.
  *
  * @author mattiaruberto
  * @author gabrialessi
- * @version 1.1 (10.04.2019)
+ * @version 1.2 (17.04.2019)
  */
 public class Ranking {
 
     /**
      * Default path of the ranking csv file.
      */
-    private Path csvPath = null;
+    public static final Path CSV_PATH = Paths.get("data", "ranking.csv");
 
     /**
-     * List of players.
+     * Path of the ranking csv file.
      */
-    public List<Player> players = new ArrayList();
+    private Path csvPath = CSV_PATH;
 
     /**
      * Constructor method where the path of the csv file is defined.
      *
      * @param csvPath Path of the csv file.
+     * @throws java.io.IOException If an input or output exception is occurred.
      */
-    public Ranking(Path csvPath) throws IOException{
-        if (Files.exists(csvPath)) {
-            if (Files.isReadable(csvPath)) {
-                setCsvPath(csvPath);
-            } else {
-                throw new IOException("File non leggibile!");
-            }
-        } else {
-            throw new IOException("File non accessibile!");
-        }
+    public Ranking(Path csvPath) throws IOException {
+        setCsvPath(csvPath);
     }
 
     /**
@@ -82,26 +73,16 @@ public class Ranking {
      *
      * @param csvPath Path of the csv file.
      */
-    private void setCsvPath(Path csvPath) {
-        this.csvPath = csvPath;
-    }
-
-    /**
-     * Add player to the List.
-     *
-     * @param player attribute representing the player to be added.
-     */
-    public void addPlayer(Player player) {
-        players.add(player);
-    }
-
-    /**
-     * Remove player to the list.
-     *
-     * @param player attribute representing the player to be removed.
-     */
-    public void removePlayer(Player player) {
-        players.remove(player);
+    private void setCsvPath(Path csvPath) throws IOException {
+        if (Files.exists(csvPath) && !Files.notExists(csvPath)) {
+            if (Files.isReadable(csvPath)) {
+                this.csvPath = csvPath;
+            } else {
+                throw new IOException("File not readable!");
+            }
+        } else {
+            throw new IOException("File not accessible!");
+        }
     }
 
     /**
@@ -146,7 +127,7 @@ public class Ranking {
             BufferedWriter b = new BufferedWriter(w);
             b.write("Username, Score\n\r");
             for (Player player : players) {
-                b.write(player.getUsername() + ", " + player.getScore()+"\n\r");
+                b.write(player.getUsername() + ", " + player.getScore() + "\n\r");
             }
             b.flush();
         } catch (IOException ie) {
@@ -171,31 +152,5 @@ public class Ranking {
         writer.write("username,score");
         writer.close();
     }
-    
-    public static void main(String[] args) throws IOException {
-        Path path = Paths.get("ranking.csv");
-        Ranking ranking = new Ranking(path);
-        
-        Player player1 = new Player("Mario", 220);
-        ranking.addPlayer(player1);
-        
-        Player player2 = new Player("Luigi", 500);
-        ranking.addPlayer(player2);
-        
-        Player player3 = new Player("Giuseppe", 100);
-        ranking.addPlayer(player3);
-        
-        Player player4 = new Player("Giovanni", 1110);
-        ranking.addPlayer(player4);
-        
-        Player player5 = new Player("Francesco", 50);
-        ranking.addPlayer(player5);
-        
-        ranking.sortPlayers();
-        
-        ranking.writingRankings();
-        
-        String rankingText = ranking.readingRankings();
-        System.out.println(rankingText);
-    }
+
 }
