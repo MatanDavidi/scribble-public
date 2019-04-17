@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -92,12 +93,17 @@ public class Ranking {
         int listSize = players.size();
         int temp = 0;
         for (int i = 0; i < listSize; i++) {
+            boolean flag = false;
             for (int j = 1; j < (listSize - i); j++) {
                 if (players.get(j - 1).getScore() < players.get(j).getScore()) {
                     temp = players.get(j - 1).getScore();
                     players.get(j - 1).setScore(players.get(j).getScore());
                     players.get(j).setScore(temp);
+                    flag=true;
                 }
+            }
+            if(!flag){
+                i = listSize;
             }
         }
     }
@@ -125,9 +131,11 @@ public class Ranking {
      */
     public void writeRanking(List<Player> players) {
         try {
+            List<String> lines = new ArrayList<>();
             for (Player player : players) {
-                Files.write(getCsvPath(), (player.getUsername() + ", " + player.getScore() + "\n\r").getBytes());
+                lines.add((player.getUsername() + ", " + player.getScore()));
             }
+            Files.write(getCsvPath(), lines);
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
