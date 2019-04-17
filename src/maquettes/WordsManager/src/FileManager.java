@@ -10,6 +10,7 @@ import java.util.List;
 /**
  *
  * @author Bryan Beffa
+ * @author Matteo Forni
  */
 public class FileManager {
 
@@ -61,9 +62,8 @@ public class FileManager {
      */
     public List<String> getWords() {
         List<String> lines = new ArrayList<>();
-        Charset charset = Charset.forName("ISO-8859-1");
         try {
-            lines = Files.readAllLines(path, charset);
+            lines = Files.readAllLines(path);
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
