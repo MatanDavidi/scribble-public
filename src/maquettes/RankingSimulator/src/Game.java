@@ -33,7 +33,7 @@ import java.util.List;
  *
  * @author mattiaruberto
  * @author gabrialessi
- * @version 1.1 (17.04.2019)
+ * @version 2.0 (17.04.2019)
  */
 public class Game {
 
@@ -56,14 +56,25 @@ public class Game {
     public Game(List<Player> players, Ranking ranking) {
         this.players = players;
         this.ranking = ranking;
+        this.ranking.rankPlayers(this.players);
     }
 
+    /**
+     * Get the list of players.
+     *
+     * @return List of players of the game.
+     */
     public List<Player> getPlayers() {
-        return players;
+        return this.players;
     }
 
+    /**
+     * Get the ranking of the game.
+     *
+     * @return The ranking of the game.
+     */
     public Ranking getRanking() {
-        return ranking;
+        return this.ranking;
     }
 
     /**
@@ -72,7 +83,8 @@ public class Game {
      * @param player attribute representing the player to be added.
      */
     public void addPlayer(Player player) {
-        players.add(player);
+        getPlayers().add(player);
+        getRanking().insertionSort(getPlayers());
     }
 
     /**
@@ -81,7 +93,7 @@ public class Game {
      * @param player attribute representing the player to be removed.
      */
     public void removePlayer(Player player) {
-        players.remove(player);
+        getPlayers().remove(player);
     }
 
     /**
@@ -96,20 +108,16 @@ public class Game {
             Path path = Paths.get("data", "ranking.csv");
             Ranking ranking = new Ranking(path);
             Game game = new Game(players, ranking);
-            Ranking gameRanking = game.getRanking();
-            // Adding players to the game.
-            game.addPlayer(new Player("Mario", 220));
-            game.addPlayer(new Player("Luigi", 500));
+            // Adding players to the game with insertion sort.
             game.addPlayer(new Player("Giuseppe", 100));
-            game.addPlayer(new Player("Giovanni", 1110));
+            game.addPlayer(new Player("Mario", 220));
             game.addPlayer(new Player("Francesco", 50));
-            // Sorting players
-            gameRanking.rankPlayers(game.getPlayers());
+            game.addPlayer(new Player("Giovanni", 1110));
+            game.addPlayer(new Player("Luigi", 500));
             // Writing the ranking.
-            gameRanking.writeRanking(game.getPlayers());
-            // Reading the generated ranking.
-            String rankingText = ranking.readRanking();
-            System.out.println(rankingText);
+            game.getRanking().writeRanking(game.getPlayers());
+            // Reading and printing the generated ranking.
+            System.out.println(ranking.readRanking());
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
