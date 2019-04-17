@@ -22,20 +22,18 @@
  * THE SOFTWARE.
  */
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 /**
  * Players ranking management.
  *
  * @author mattiaruberto
  * @author gabrialessi
- * @version 1.2 (17.04.2019)
+ * @version 1.3 (17.04.2019)
  */
 public class Ranking {
 
@@ -86,71 +84,53 @@ public class Ranking {
     }
 
     /**
-     * Method that orders players by their score.
+     * Rank players by their score.
+     *
+     * @param players List of players.
      */
-    public void sortPlayers() {
-        int n = players.size();
+    public void rankPlayers(List<Player> players) {
+        int listSize = players.size();
         int temp = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 1; j < (n - i); j++) {
+        for (int i = 0; i < listSize; i++) {
+            for (int j = 1; j < (listSize - i); j++) {
                 if (players.get(j - 1).getScore() < players.get(j).getScore()) {
-                    //swap elements  
                     temp = players.get(j - 1).getScore();
                     players.get(j - 1).setScore(players.get(j).getScore());
                     players.get(j).setScore(temp);
                 }
-
             }
         }
     }
 
     /**
-     * Method that takes the players and saves a ranking in the text file.
+     * Read the ranking in the file.
+     *
+     * @return The ranking in the file.
      */
-    public String readingRankings() {
+    public String readRanking() {
+        String ranking = "";
         try {
-            byte[] bytes = Files.readAllBytes(csvPath);
-            String ranking = new String(bytes);
-            return ranking;
-        } catch (IOException ie) {
-            System.out.println("Error: " + ie.getMessage());
+            byte[] bytes = Files.readAllBytes(getCsvPath());
+            ranking = new String(bytes);
+        } catch (IOException ex) {
+            System.out.println("Error: " + ex.getMessage());
         }
-        return "";
+        return ranking;
     }
 
     /**
-     * Method that takes the players and saves a ranking in the text file.
+     * Write the ranking in the file.
+     *
+     * @param players List of players.
      */
-    public void writingRankings() {
+    public void writeRanking(List<Player> players) {
         try {
-            FileWriter w = new FileWriter(csvPath.toString());
-            BufferedWriter b = new BufferedWriter(w);
-            b.write("Username, Score\n\r");
             for (Player player : players) {
-                b.write(player.getUsername() + ", " + player.getScore() + "\n\r");
+                Files.write(getCsvPath(), (player.getUsername() + ", " + player.getScore() + "\n\r").getBytes());
             }
-            b.flush();
-        } catch (IOException ie) {
-            System.out.println("Error: " + ie.getMessage());
+        } catch (IOException ex) {
+            System.out.println("Error: " + ex.getMessage());
         }
-    }
-
-    /**
-     * Creation of the csv file.
-     */
-    private void createCsv() throws IOException {
-        // Get the file.
-        File csvFile = new File(getCsvPath().toString());
-        // Create the file if not exists.
-        if (csvFile.createNewFile()) {
-            System.out.println("File created.");
-        } else {
-            System.out.println("File not created: already exists.");
-        }
-        // Write ranking csv header.
-        FileWriter writer = new FileWriter(csvFile);
-        writer.write("username,score");
-        writer.close();
     }
 
 }
