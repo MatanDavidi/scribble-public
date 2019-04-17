@@ -27,12 +27,11 @@ public class ChatForm extends javax.swing.JFrame implements MessageListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ConnectionPanel = new javax.swing.JPanel();
-        IpLabel = new javax.swing.JLabel();
-        IpTextField = new javax.swing.JTextField();
-        PortLabel = new javax.swing.JLabel();
-        PortSpinner = new javax.swing.JSpinner();
+        NicknamePanel = new javax.swing.JPanel();
+        NicknameLabel = new javax.swing.JLabel();
+        NicknameTextField = new javax.swing.JTextField();
         MessagePanel = new javax.swing.JPanel();
+        MessageLabel = new javax.swing.JLabel();
         MessageTextArea = new javax.swing.JTextArea();
         SendPanel = new javax.swing.JPanel();
         ButtonPanel = new javax.swing.JPanel();
@@ -49,23 +48,20 @@ public class ChatForm extends javax.swing.JFrame implements MessageListener{
         });
         getContentPane().setLayout(new java.awt.BorderLayout(0, 5));
 
-        ConnectionPanel.setPreferredSize(new java.awt.Dimension(60, 60));
-        ConnectionPanel.setLayout(new java.awt.GridLayout(2, 2));
+        NicknamePanel.setPreferredSize(new java.awt.Dimension(60, 60));
+        NicknamePanel.setLayout(new java.awt.GridLayout(1, 2));
 
-        IpLabel.setText(" IP:");
-        ConnectionPanel.add(IpLabel);
-        ConnectionPanel.add(IpTextField);
+        NicknameLabel.setText("Nickname:");
+        NicknamePanel.add(NicknameLabel);
+        NicknamePanel.add(NicknameTextField);
 
-        PortLabel.setText(" Port:");
-        ConnectionPanel.add(PortLabel);
-
-        PortSpinner.setModel(new javax.swing.SpinnerNumberModel(5555, 1024, 65535, 1));
-        ConnectionPanel.add(PortSpinner);
-
-        getContentPane().add(ConnectionPanel, java.awt.BorderLayout.PAGE_START);
+        getContentPane().add(NicknamePanel, java.awt.BorderLayout.PAGE_START);
 
         MessagePanel.setPreferredSize(new java.awt.Dimension(20, 20));
-        MessagePanel.setLayout(new java.awt.GridLayout(1, 0));
+        MessagePanel.setLayout(new java.awt.GridLayout(2, 0));
+
+        MessageLabel.setText("Message:");
+        MessagePanel.add(MessageLabel);
 
         MessageTextArea.setColumns(20);
         MessageTextArea.setRows(5);
@@ -108,13 +104,12 @@ public class ChatForm extends javax.swing.JFrame implements MessageListener{
      * @param evt L'evento del bottone cliccato.
      */
     private void SendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SendButtonMouseClicked
-        String ip = IpTextField.getText();
-        int port = (int)(PortSpinner.getValue());
-        String message = MessageTextArea.getText();
+        String nickname = NicknameTextField.getText()+": ";
+        String message = nickname+MessageTextArea.getText();
         
         MessageTextArea.setText("");
         
-        messageClient.setInfo(ip, port, message);
+        messageClient.setInfo(message);
         messageClient.sendMessage();
     }//GEN-LAST:event_SendButtonMouseClicked
 
@@ -170,13 +165,12 @@ public class ChatForm extends javax.swing.JFrame implements MessageListener{
     private javax.swing.JPanel ChatPanel;
     private javax.swing.JScrollPane ChatScrollPanel;
     private javax.swing.JTextArea ChatTextArea;
-    private javax.swing.JPanel ConnectionPanel;
-    private javax.swing.JLabel IpLabel;
-    private javax.swing.JTextField IpTextField;
+    private javax.swing.JLabel MessageLabel;
     private javax.swing.JPanel MessagePanel;
     private javax.swing.JTextArea MessageTextArea;
-    private javax.swing.JLabel PortLabel;
-    private javax.swing.JSpinner PortSpinner;
+    private javax.swing.JLabel NicknameLabel;
+    private javax.swing.JPanel NicknamePanel;
+    private javax.swing.JTextField NicknameTextField;
     private javax.swing.JButton SendButton;
     private javax.swing.JPanel SendPanel;
     // End of variables declaration//GEN-END:variables

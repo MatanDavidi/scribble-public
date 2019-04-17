@@ -10,6 +10,12 @@ import javax.swing.JFrame;
  * Il client multicast della chat.
  */
 public class MulticastClient extends Thread{
+    
+    /**
+     * Il nickname dell'utente
+     */
+    String nickname;
+    
     /**
      * Il socket di dati.
      */
@@ -133,20 +139,18 @@ public class MulticastClient extends Thread{
      * @param jf Il frame in cui impostare il titolo.
      */
     public void setPortAsTitle(JFrame jf){
-        jf.setTitle("IP: " + group.getHostAddress() + " - Port: " + Integer.toString(socket.getLocalPort()));
+        jf.setTitle("Chat Scribble");
     }
     
     /**
      * Imposta le informazioni di destinazione.
-     * @param ip L'indirizzo ip.
-     * @param port La porta.
      * @param message Il messaggio.
      */
-    public void setInfo(String ip, int port, String message){
+    public void setInfo(String message){
         try {
-            group = InetAddress.getByName(ip);
+            group = InetAddress.getByName("224.12.12.12");
             if(port >= 1024 && port <= 65535){
-                destinationPort = port;
+                destinationPort = 5555;
             }
             messageToSend = message;
         }
