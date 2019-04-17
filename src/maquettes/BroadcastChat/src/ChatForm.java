@@ -104,8 +104,8 @@ public class ChatForm extends javax.swing.JFrame implements MessageListener{
      * @param evt L'evento del bottone cliccato.
      */
     private void SendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SendButtonMouseClicked
-        String nickname = NicknameTextField.getText()+": ";
-        String message = nickname+MessageTextArea.getText();
+        String nickname = NicknameTextField.getText();
+        String message = nickname+" : "+MessageTextArea.getText();
         
         MessageTextArea.setText("");
         
