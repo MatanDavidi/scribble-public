@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ import java.util.List;
  *
  * @author mattiaruberto
  * @author gabrialessi
- * @version 1.3 (17.04.2019)
+ * @version 2.0 (17.04.2019)
  */
 public class Ranking {
 
@@ -90,20 +91,44 @@ public class Ranking {
      * @param players List of players.
      */
     public void rankPlayers(List<Player> players) {
-        int listSize = players.size();
         int temp = 0;
-        for (int i = 0; i < listSize; i++) {
-            boolean flag = false;
-            for (int j = 1; j < (listSize - i); j++) {
+        boolean flag;
+        for (int i = 0; i < players.size(); i++) {
+            flag = false;
+            for (int j = 1; j < (players.size() - i); j++) {
                 if (players.get(j - 1).getScore() < players.get(j).getScore()) {
                     temp = players.get(j - 1).getScore();
                     players.get(j - 1).setScore(players.get(j).getScore());
                     players.get(j).setScore(temp);
-                    flag=true;
+                    flag = true;
+                }
+                if (!flag) {
+                    i = players.size();
                 }
             }
-            if(!flag){
-                i = listSize;
+        }
+    }
+
+    /**
+     * Insertion sort in the ranking when there is a new player.
+     *
+     * @param players The list of players.
+     */
+    public void insertionSort(List<Player> players) {
+        boolean flag;
+        for (int i = 1; i < players.size(); i++) {
+            flag = true;
+            Player key = players.get(i);
+            for (int j = i - 1; j >= 0 && flag; j--) {
+                if (key.getScore() > players.get(j).getScore()) {
+                    players.set(j + 1, players.get(j));
+                    if (j == 0) {
+                        players.set(0, key);
+                    }
+                } else {
+                    players.set(j + 1, key);
+                    flag = false;
+                }
             }
         }
     }
@@ -133,9 +158,9 @@ public class Ranking {
         try {
             List<String> lines = new ArrayList<>();
             for (Player player : players) {
-                lines.add((player.getUsername() + ", " + player.getScore()));
+                lines.add((player.getUsername() + "," + player.getScore()));
             }
-            Files.write(getCsvPath(), lines);
+            Files.write(getCsvPath(), lines, StandardOpenOption.APPEND);
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
