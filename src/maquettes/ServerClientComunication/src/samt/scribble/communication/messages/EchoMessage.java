@@ -21,33 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+ 
+package samt.scribble.communication.messages;
 
-package samt.scribble.communication;
+import samt.scribble.communication.Commands;
 
 /**
- * Messaggio di informazione.
+ * Comando echo, ritorna al mittente il messaggio.
  *
  * @author giuliobosco (giuliobva@gmail.com)
  * @version 1.0 (2019-04-19)
  */
-public class InformationMessage extends Message {
+public class EchoMessage extends Message {
 
     /**
-     * Crea messaggio di informazione con i bytes.
+     * Create echo message.
      *
-     * @param message Messaggio in bytes.
+     * @param text EchoMessage message.
      */
-    public InformationMessage(byte[] message) {
-        super(Commands.INFORMATION, message);
+    public EchoMessage(String text) {
+        super(Commands.ECHO, text.getBytes());
     }
 
     /**
-     * Crea messaggio di informazione con una stringa.
+     * Testare la classe il messaggio echo e la classe Message.
      *
-     * @param message Stringa del messaggio di informazione
+     * @param args Argomenti da linea di comando.
      */
-    public InformationMessage(String message) {
-        super(Commands.INFORMATION, message.getBytes());
-    }
+    public static void main(String[] args) {
+        String message = "echo";
+        EchoMessage echo = new EchoMessage(message);
+        byte[] bytes = echo.getBytes();
 
+        String rebuild = "";
+        for (int i = 1; i < bytes.length; i++) {
+            rebuild += (char) bytes[i];
+        }
+
+        assert message.equals(rebuild);
+        System.out.println(message.equals(rebuild));
+    }
+    
 }

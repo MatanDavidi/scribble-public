@@ -21,24 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
-package samt.scribble.communication;
+
+package samt.scribble.communication.messages;
+
+import samt.scribble.communication.Commands;
 
 /**
- * Messaggio di join con il nome del giocatore.
+ * Messaggio di informazione.
  *
  * @author giuliobosco (giuliobva@gmail.com)
  * @version 1.0 (2019-04-19)
  */
-public class JoinMessage extends Message {
+public class InformationMessage extends Message {
 
     /**
-     * Crea messaggio di join con il nickname del giocatore.
+     * Crea messaggio di informazione con i bytes.
      *
-     * @param nickname Nickname del giocatore.
+     * @param message Messaggio in bytes.
      */
-    public JoinMessage(String nickname) {
-        super(Commands.JOIN, nickname.getBytes());
+    public InformationMessage(byte[] message) {
+        super(Commands.INFORMATION, message);
     }
-    
+
+    /**
+     * Crea messaggio di informazione con una stringa.
+     *
+     * @param message Stringa del messaggio di informazione
+     */
+    public InformationMessage(String message) {
+        super(Commands.INFORMATION, message.getBytes());
+    }
+
 }

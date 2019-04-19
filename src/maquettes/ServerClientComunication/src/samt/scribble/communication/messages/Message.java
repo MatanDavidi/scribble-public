@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package samt.scribble.communication;
+package samt.scribble.communication.messages;
+
+import samt.scribble.communication.Commands;
 
 /**
  * La classe astratta Message permette di stabilire un byte di comando e un

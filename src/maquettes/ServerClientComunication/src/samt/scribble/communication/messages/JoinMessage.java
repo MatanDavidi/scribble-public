@@ -22,42 +22,25 @@
  * THE SOFTWARE.
  */
  
-package samt.scribble.communication;
+package samt.scribble.communication.messages;
+
+import samt.scribble.communication.Commands;
 
 /**
- * Comando echo, ritorna al mittente il messaggio.
+ * Messaggio di join con il nome del giocatore.
  *
  * @author giuliobosco (giuliobva@gmail.com)
  * @version 1.0 (2019-04-19)
  */
-public class EchoMessage extends Message {
+public class JoinMessage extends Message {
 
     /**
-     * Create echo message.
+     * Crea messaggio di join con il nickname del giocatore.
      *
-     * @param text EchoMessage message.
+     * @param nickname Nickname del giocatore.
      */
-    public EchoMessage(String text) {
-        super(Commands.ECHO, text.getBytes());
-    }
-
-    /**
-     * Testare la classe il messaggio echo e la classe Message.
-     *
-     * @param args Argomenti da linea di comando.
-     */
-    public static void main(String[] args) {
-        String message = "echo";
-        EchoMessage echo = new EchoMessage(message);
-        byte[] bytes = echo.getBytes();
-
-        String rebuild = "";
-        for (int i = 1; i < bytes.length; i++) {
-            rebuild += (char) bytes[i];
-        }
-
-        assert message.equals(rebuild);
-        System.out.println(message.equals(rebuild));
+    public JoinMessage(String nickname) {
+        super(Commands.JOIN, nickname.getBytes());
     }
     
 }
