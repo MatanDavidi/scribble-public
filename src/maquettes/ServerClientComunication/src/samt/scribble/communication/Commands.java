@@ -30,7 +30,7 @@ public class Commands {
     /**
      * Il numero totale di byte comando definiti.
      */
-    public final static short COMMANDS_NUMBER = 6;
+    public final static short COMMANDS_NUMBER = 7;
 
     /**
      * Un byte di comando che segnala che il messaggio inviato è di tipo
@@ -67,5 +67,10 @@ public class Commands {
      * sono il nickname del giocatore.
      */
     public final static byte JOIN = 5;
+
+    /**
+     * Un byte di comando che segnala l'indirizzo del gruppo multicast.
+     */
+    public final static byte GROUP_ADDRESS_MESSAGE = 6;
 
 }
