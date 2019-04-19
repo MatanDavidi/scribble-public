@@ -30,8 +30,8 @@ public class Commands {
     /**
      * Il numero totale di byte comando definiti.
      */
-    public final static short COMMANDS_NUMBER = 5;
-    
+    public final static short COMMANDS_NUMBER = 6;
+
     /**
      * Un byte di comando che segnala che il messaggio inviato è di tipo
      * informativo.
@@ -61,5 +61,11 @@ public class Commands {
      * indietro come sono stati ricevuti.
      */
     public final static byte ECHO = 4;
+
+    /**
+     * Un byte di comando che segnala la richiesta di entrare nel gioco scribble. I byte seguenti
+     * sono il nickname del giocatore.
+     */
+    public final static byte JOIN = 5;
 
 }
