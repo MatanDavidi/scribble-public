@@ -22,7 +22,8 @@ package samt.scribble.communication;
  * inviando.
  *
  * @author Matan Davidi
- * @version 2019-04-16
+ * @author giuliobosco
+ * @version 2019-04-19
  */
 public class Commands {
 
@@ -54,5 +55,11 @@ public class Commands {
      * tentativo di indovinare la parola che sta disegnando il disegnatore.
      */
     public final static byte WORD_GUESS = 3;
+
+    /**
+     * Un byte di comando che segnala che i byte seguenti devono essere rimandati al mittente
+     * indietro come sono stati ricevuti.
+     */
+    public final static byte ECHO = 4;
 
 }
