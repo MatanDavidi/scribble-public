@@ -60,6 +60,15 @@ public class GroupConnection extends Thread {
     private List<DatagramListener> datagramListeners;
 
     /**
+     * Getter per l'indirizzo IP del gruppo multicast.
+     *
+     * @return Indirizzo IP del gruppo mulicast.
+     */
+    public InetAddress getGroupIp() {
+        return this.groupIp;
+    }
+
+    /**
      * Crea la connessione al gruppo, con l'indirizzo IP del gruppo, e la porta.
      *
      * @param groupIp Indirizzo ip del gruppo.
