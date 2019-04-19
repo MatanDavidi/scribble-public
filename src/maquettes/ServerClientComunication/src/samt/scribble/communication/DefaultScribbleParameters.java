@@ -28,9 +28,14 @@ package samt.scribble.communication;
  * Parametri di default di scribble.
  *
  * @author giuliobosco (giuliobva@gmail.com)
- * @version 1.0 (2019-04-19)
+ * @version 1.0.1 (2019-04-19)
  */
 public class DefaultScribbleParameters {
+
+    /**
+     * Porta del gruppo multicast di default.
+     */
+    public static final int DEFAULT_GROUP_PORT = 5000;
 
     /**
      * Porta di ascolto di default del server scribble.
