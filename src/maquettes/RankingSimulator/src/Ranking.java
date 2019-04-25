@@ -135,15 +135,19 @@ public class Ranking {
      *
      * @return La classifica in una stringa.
      */
-    public String readRanking() {
-        String ranking = "";
+    public List<Player> readRanking() {
+        List<Player> rankingPlayers = new ArrayList<>();
         try {
-            byte[] bytes = Files.readAllBytes(getCsvPath());
-            ranking = new String(bytes);
-        } catch (IOException ex) {
+            List<String> lines = Files.readAllLines(getCsvPath());
+            for(String line : lines){
+                String[] arguments = line.split(",");
+                Player player = new Player(arguments[0], Integer.parseInt(arguments[1]));
+                rankingPlayers.add(player);
+            }
+        } catch (IOException | NumberFormatException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
-        return ranking;
+        return rankingPlayers;
     }
 
     /**
