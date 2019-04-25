@@ -86,6 +86,30 @@ public class Ranking {
     }
 
     /**
+     * Rank players by their score.
+     *
+     * @param players List of players.
+     */
+    public void rankPlayers(List<Player> players) {
+        int temp = 0;
+        boolean flag;
+        for (int i = 0; i < players.size(); i++) {
+            flag = false;
+            for (int j = 1; j < (players.size() - i); j++) {
+                if (players.get(j - 1).getScore() < players.get(j).getScore()) {
+                    temp = players.get(j - 1).getScore();
+                    players.get(j - 1).setScore(players.get(j).getScore());
+                    players.get(j).setScore(temp);
+                    flag = true;
+                }
+                if (!flag) {
+                    i = players.size();
+                }
+            }
+        }
+    }
+
+    /**
      * Insertion sort in the ranking when there is a new player.
      *
      * @param players The list of players.
