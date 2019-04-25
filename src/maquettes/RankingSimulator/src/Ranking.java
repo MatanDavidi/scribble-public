@@ -91,22 +91,19 @@ public class Ranking {
      * @param players List of players.
      */
     public void rankPlayers(List<Player> players) {
-        int temp = 0;
-        boolean flag;
-        for (int i = 0; i < players.size(); i++) {
-            flag = false;
-            for (int j = 1; j < (players.size() - i); j++) {
+        boolean thereIsBubbling;
+        Player temp;
+        do {
+            thereIsBubbling = false;
+            for (int j = 1; j < players.size(); j++) {
                 if (players.get(j - 1).getScore() < players.get(j).getScore()) {
-                    temp = players.get(j - 1).getScore();
-                    players.get(j - 1).setScore(players.get(j).getScore());
-                    players.get(j).setScore(temp);
-                    flag = true;
-                }
-                if (!flag) {
-                    i = players.size();
+                    temp = players.get(j - 1);
+                    players.set(j - 1, players.get(j));
+                    players.set(j, temp);
+                    thereIsBubbling=true;
                 }
             }
-        }
+        }while(thereIsBubbling);
     }
 
     /**
@@ -160,7 +157,7 @@ public class Ranking {
             for (Player player : players) {
                 lines.add((player.getUsername() + "," + player.getScore()));
             }
-            Files.write(getCsvPath(), lines, StandardOpenOption.APPEND);
+            Files.write(getCsvPath(), lines);
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
