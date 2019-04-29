@@ -30,12 +30,12 @@ public abstract class Message {
     /**
      * Il byte di comando che specifica che tipo di messaggio sarà inviato.
      */
-    public byte command;
+    protected byte command;
 
     /**
      * Il messaggio da inviare sotto forma di array di byte.
      */
-    public byte[] message;
+    protected byte[] message;
 
     /**
      * Istanzia nuovi oggetti di tipo Message, permettendo di assegnare un
@@ -59,7 +59,6 @@ public abstract class Message {
      * sarà inviato.
      */
     private void setCommand(byte command) {
-        //Aggiungere controlli sulla validità
 
         if (isCommandByteValid(command)) {
 
