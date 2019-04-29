@@ -80,9 +80,10 @@ public abstract class Message {
     }
 
     /**
-     * Ritorna l'intero messaggio come bytes.
+     * Ritorna l'intero messaggio.
      *
-     * @return Bytes del messaggio con primo byte
+     * @return Un array di byte contenente il messaggio, il cui primo byte è
+     * quello di comando e quelli successivi sono il messaggio.
      */
         byte[] bytes = new byte[this.message.length + 1];
         bytes[0] = this.command;
