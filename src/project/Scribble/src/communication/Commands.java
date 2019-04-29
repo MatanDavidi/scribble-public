@@ -29,8 +29,8 @@ public class Commands {
     /**
      * Il numero totale di byte comando definiti.
      */
-    public final static short COMMANDS_NUMBER = 4;
-    
+    public final static short COMMANDS_NUMBER = 7;
+
     /**
      * Un byte di comando che segnala che il messaggio inviato è di tipo
      * informativo.
@@ -44,15 +44,39 @@ public class Commands {
     public final static byte GENERAL_ERROR = 1;
 
     /**
+     * Un byte di comando che segnala che il messaggio inviato contiene una
+     * richiesta di registrarsi al server.
+     */
+    public final static byte LOGIN = 2;
+
+    /**
+     * Un byte di comando che segnala che il messaggio inviato contiene un
+     * riconoscimento che un utente si è registrato.
+     */
+    public final static byte LOGIN_ACKNOWLEDGEMENT = 3;
+
+    /**
+     * Un byte di comando che segnala che il messaggio inviato contiene una
+     * richiesta di ottenere la lista di utenti attualmente connessi.
+     */
+    public final static byte USERS_LIST_REQUEST = 4;
+
+    /**
+     * Un byte di comando che segnala che il messaggio inviato contiene la lista
+     * di utenti.
+     */
+    public final static byte USERS_LIST = 4;
+
+    /**
      * Un byte di comando che segnala che il messaggio inviato contiene il
      * disegno fatto dal disegnatore.
      */
-    public final static byte DRAWING = 2;
+    public final static byte DRAWING = 5;
 
     /**
      * Un byte di comando che segnala che il messaggio inviato contiene un
      * tentativo di indovinare la parola che sta disegnando il disegnatore.
      */
-    public final static byte WORD_GUESS = 3;
+    public final static byte WORD_GUESS = 6;
 
 }
