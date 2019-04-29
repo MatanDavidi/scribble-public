@@ -24,7 +24,7 @@ package communication;
  * Esempio di sottoclasse di Message.
  *
  * @author Matan Davidi
- * @version 2019-04-16s
+ * @version 2019-04-16
  */
 public class WordGuessMessage extends Message {
 
@@ -32,9 +32,22 @@ public class WordGuessMessage extends Message {
      * Istanzia nuovi oggetti di tipo WordGuessMessage con un byte di comando
      * fisso e permettendo di specificare un valore per il campo message.
      *
+     * @param message Una stringa contenente il tentativo di indovinare
+     * (parola).
+     */
+    public WordGuessMessage(String message) {
+
+        this(message.getBytes());
+
+    }
+
+    /**
+     * Istanzia nuovi oggetti di tipo WordGuessMessage con un byte di comando
+     * fisso e permettendo di specificare un valore per il campo message.
+     *
      * @param message Il messaggio da inviare sotto forma di array di byte.
      */
-    public WordGuessMessage(byte[] message) {
+    private WordGuessMessage(byte[] message) {
 
         super(Commands.WORD_GUESS, message);
 
