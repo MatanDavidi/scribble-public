@@ -26,50 +26,52 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Players ranking management.
+ * Classe che gestisce la classifica dei giocatori.
  *
  * @author mattiaruberto
  * @author gabrialessi
- * @version 1.3 (17.04.2019)
+ * @version 2.0 (17.04.2019)
  */
 public class Ranking {
 
     /**
-     * Default path of the ranking csv file.
+     * Attributo che rappresenta il percorso di default del file csv.
      */
     public static final Path CSV_PATH = Paths.get("data", "ranking.csv");
 
     /**
-     * Path of the ranking csv file.
+     * Attributo che rappresenta il percorso del file csv che rappresenta la classifica.
      */
     private Path csvPath = CSV_PATH;
 
     /**
-     * Constructor method where the path of the csv file is defined.
+     * Metodo costruttore che inizializza la classe con il percorso del file csv.
      *
-     * @param csvPath Path of the csv file.
-     * @throws java.io.IOException If an input or output exception is occurred.
+     * @param csvPath Percorso del file csv.
+     * @throws java.io.IOException Se si verifica un'eccezione di input o di output.
      */
     public Ranking(Path csvPath) throws IOException {
         setCsvPath(csvPath);
     }
 
     /**
-     * Get the path of the csv file.
+     * Metodo che ritrona il percorso del file csv.
      *
-     * @return Path of the csv file.
+     * @return Percorso del file csv.
      */
     public Path getCsvPath() {
         return this.csvPath;
     }
 
     /**
-     * Set the path of the csv file.
+     * Metodo che setta il percorso del file csv.
      *
-     * @param csvPath Path of the csv file.
+     * @param csvPath Percorso del file csv.
      */
     private void setCsvPath(Path csvPath) throws IOException {
         if (Files.exists(csvPath) && !Files.notExists(csvPath)) {
@@ -84,50 +86,82 @@ public class Ranking {
     }
 
     /**
-     * Rank players by their score.
+     * Metodo che ordina la classica per il punteggio.
      *
-     * @param players List of players.
+     * @param players Lista dei giocatori.
      */
     public void rankPlayers(List<Player> players) {
-        int listSize = players.size();
-        int temp = 0;
-        for (int i = 0; i < listSize; i++) {
-            for (int j = 1; j < (listSize - i); j++) {
+        boolean thereIsBubbling;
+        Player temp;
+        do {
+            thereIsBubbling = false;
+            for (int j = 1; j < players.size(); j++) {
                 if (players.get(j - 1).getScore() < players.get(j).getScore()) {
-                    temp = players.get(j - 1).getScore();
-                    players.get(j - 1).setScore(players.get(j).getScore());
-                    players.get(j).setScore(temp);
+                    temp = players.get(j - 1);
+                    players.set(j - 1, players.get(j));
+                    players.set(j, temp);
+                    thereIsBubbling=true;
+                }
+            }
+        }while(thereIsBubbling);
+    }
+
+    /**
+     * Metodo che inserisce il giocatore nella lista nell'ordine giusto.
+     *
+     * @param players Lista dei giocatori.
+     */
+    public void insertionSort(List<Player> players) {
+        boolean flag;
+        for (int i = 1; i < players.size(); i++) {
+            flag = true;
+            Player key = players.get(i);
+            for (int j = i - 1; j >= 0 && flag; j--) {
+                if (key.getScore() > players.get(j).getScore()) {
+                    players.set(j + 1, players.get(j));
+                    if (j == 0) {
+                        players.set(0, key);
+                    }
+                } else {
+                    players.set(j + 1, key);
+                    flag = false;
                 }
             }
         }
     }
 
     /**
-     * Read the ranking in the file.
+     * Lettura della classifica dal file csv.
      *
-     * @return The ranking in the file.
+     * @return La classifica in una stringa.
      */
-    public String readRanking() {
-        String ranking = "";
+    public List<Player> readRanking() {
+        List<Player> rankingPlayers = new ArrayList<>();
         try {
-            byte[] bytes = Files.readAllBytes(getCsvPath());
-            ranking = new String(bytes);
-        } catch (IOException ex) {
+            List<String> lines = Files.readAllLines(getCsvPath());
+            for(String line : lines){
+                String[] arguments = line.split(",");
+                Player player = new Player(arguments[0], Integer.parseInt(arguments[1]));
+                rankingPlayers.add(player);
+            }
+        } catch (IOException | NumberFormatException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
-        return ranking;
+        return rankingPlayers;
     }
 
     /**
-     * Write the ranking in the file.
+     * Metodo che scrive la lista dei giocatori nel file csv.
      *
-     * @param players List of players.
+     * @param players Lista dei giocatori.
      */
     public void writeRanking(List<Player> players) {
         try {
+            List<String> lines = new ArrayList<>();
             for (Player player : players) {
-                Files.write(getCsvPath(), (player.getUsername() + ", " + player.getScore() + "\n\r").getBytes());
+                lines.add((player.getUsername() + "," + player.getScore()));
             }
+            Files.write(getCsvPath(), lines);
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
         }

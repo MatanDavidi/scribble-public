@@ -1,71 +1,77 @@
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  *
  * @author Bryan Beffa
+ * @author Matteo Forni
+ * @version 18.04.2019
  */
 public class FileManager {
 
     /**
-     * Path of the file.
+     * Percorso del file.
      */
-    private Path path;
+    private final Path WORDS_FILE_PATH = Paths.get("data", "list.txt");
+
+    private Path wordsFilePath;
 
     /**
-     * Constructor that needs the file path.
+     * Metodo costruttore vuoto.
      *
-     * @param path path of the file.
+     * @throws java.io.IOException
+     */
+    public FileManager() throws IOException {
+        //controllo se il file esiste
+        if (Files.exists(WORDS_FILE_PATH) && !Files.notExists(WORDS_FILE_PATH)) {
+
+            //conntrollo se il file è leggibile
+            if (!Files.isReadable(WORDS_FILE_PATH)) {
+                throw new IOException("Il file non è accessibile in lettura");
+            }
+        } else {
+            throw new IOException("Il file non esiste");
+        }
+        wordsFilePath = WORDS_FILE_PATH;
+    }
+
+    /**
+     * Metodo costruttore che richiede il percorso del file.
+     *
+     * @param path percorso del file.
      * @throws java.io.IOException
      */
     public FileManager(Path path) throws IOException {
-        //check if the file exists
+        //controllo se il file esiste
         if (Files.exists(path) && !Files.notExists(path)) {
 
-            //check if the file is readable
+            //conntrollo se il file è leggibile
             if (!Files.isReadable(path)) {
                 throw new IOException("Il file non è accessibile in lettura");
             }
         } else {
             throw new IOException("Il file non esiste");
         }
-        this.path = path;
+        wordsFilePath = path;
     }
 
     /**
-     * Method that returns the bytes of the content.
+     * Metodo che ritorna la lista di parole contenute nel file.
      *
-     * @return the bytes of the content.
+     * @return la lista di parole contenute nel file.
+     * @throws java.io.IOException
      */
-    public byte[] getContentBytes() {
-        byte[] bytes = null;
-        try {
-            bytes = Files.readAllBytes(path);
-            return bytes;
-        } catch (IOException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        }
-        return bytes;
-    }
-
-    /**
-     * Methods that returns the a list that contains the content of the file.
-     * 
-     * @return the list that contains the words (lines of the file).
-     */
-    public List<String> getWords() {
+    public List<String> getWords() throws IOException {
         List<String> lines = new ArrayList<>();
-        Charset charset = Charset.forName("ISO-8859-1");
         try {
-            lines = Files.readAllLines(path, charset);
+            lines = Files.readAllLines(wordsFilePath);
         } catch (IOException ex) {
-            System.out.println("Error: " + ex.getMessage());
+            throw new IOException("Errore: " + ex.getMessage());
         }
         return lines;
     }

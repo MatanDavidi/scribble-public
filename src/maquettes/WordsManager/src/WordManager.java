@@ -7,86 +7,126 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *
+ * 
+ * 
  * @author Bryan Beffa
+ * @author Matteo Forni
+ * @version 18.04.2019
  */
 public class WordManager {
+
     /**
-     * List that contains the word without duplicates.
+     * Lista che contiene tutte le parole del file.
      */
     private List<String> words = new ArrayList<>();
 
     /**
-     * Method that returns a random line from the list.
-     * 
-     * @param list list of the words.
-     * @return a random line of the list.
+     * Lista che contiene le parole già estratte.
      */
-    private String getRandomWord(List<String> list) {
-        //random number
-        int rnd = (int) (Math.random() * list.size());
+    private List<String> pickedWords = new ArrayList<>();
 
-        return list.get(rnd);
-    }
-    
     /**
-     * Method that sorts alphabetically the list of the words.
-     * 
-     * @param list list of the words.
+     * Attributo booleano che indica se la modalità debug è attiva. Valore di
+     * default = false.
      */
-    public void sortList(List<String> list){
-        Collections.sort(list);
-        
-        for(String line : list){
-            System.out.println("Word: " + line);
-        }
-    }
-    
+    private boolean debug = false;
+
     /**
-     * Methods that returns a word that it didn't already get previously.
-     * 
-     * @param list list of the words.
-     * @return the unique new word.
+     * Metodo costruttore che richiede la lista di parole del file.
+     *
+     * @param words lista di parole del file.
      */
-    public String getUniqueNewWord(List<String> list){
-        String word = "";
-        boolean duplicateWord = true;
-        
-        while(duplicateWord){
-            word = getRandomWord(list);
-            //check if the word is unique
-            if(!words.contains(word)){
-                words.add(word);
-                duplicateWord = false;
+    public WordManager(List<String> words) {
+        this.words = words;
+    }
+
+    /**
+     * Metodo costruttore che richiede la lista di parole del file e se la
+     * modalità debug è attiva o meno.
+     *
+     * @param words lista di parole del file.
+     * @param debug parametro che indica se la modalità debug è attiva.
+     */
+    public WordManager(List<String> words, boolean debug) {
+        this.words = words;
+        this.debug = debug;
+    }
+
+    /**
+     * Metodo che ritorna una parola casuale dalla lista delle parole non ancora
+     * estratte.
+     */
+    private String getRandomWord() {
+        //numero casuale
+        int rnd = (int) (Math.random() * words.size());
+
+        return words.get(rnd);
+    }
+
+    /**
+     * Metodo che ordina la lista di parole estratte in ordine alfabetico.
+     */
+    public void sortList() {
+        Collections.sort(pickedWords);
+
+        if (debug) {
+            for (String word : pickedWords) {
+                System.out.println("Word: " + word);
             }
         }
+    }
+
+    /**
+     * Metodo che ritorna una parola casuale non ancora estratta.
+     * 
+     * @return parola casuale non ancora estratta.
+     */
+    public String getUniqueNewWord() {
+        //controllo se la lista di parole non estratte è vuota
+        if (words.size() > 0) {
+            String word = getRandomWord();
+
+            words.remove(word);
+            pickedWords.add(word);
+
+            return word;
+        }
         
-        return word;
+        words = pickedWords;
+        pickedWords = new ArrayList<>();
+
+        if (debug) {
+            System.out.println("Parole terminate: ricarico la lista");
+        }
+
+        //chiamata recursiva
+        return getUniqueNewWord();
     }
 
     public static void main(String[] args) {
 
-        //create the file path
-        Path path = Paths.get("data", "words.txt");
+        //creo il percorso del file
+        Path path = Paths.get("data", "list.txt");
         FileManager fManager;
         WordManager wManager;
 
         try {
-            //create a new FileManager
+            //creo il file manager
             fManager = new FileManager(path);
             List<String> wordsList = fManager.getWords();
-            
-            //create a new WordManager
-            wManager = new WordManager();
-            
-            for (int i = 0; i < 200; i++) {
-                //get a word never picked
-                System.out.println("Parola scelta: " + 
-                        wManager.getUniqueNewWord(wordsList));                
+
+            //creo il WordManager
+            wManager = new WordManager(wordsList, true);
+
+            System.out.println("Lista parole casuali");
+            for (int i = 0; i < 1000; i++) {
+                //ottengo una parola non ancora estratta
+                System.out.println(i + ". Parola scelta: "
+                        + wManager.getUniqueNewWord());
             }
-            
-            //sort list
-            wManager.sortList(wordsList);
+
+            //ordino la lista
+            wManager.sortList();
 
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
