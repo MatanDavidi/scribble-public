@@ -61,7 +61,7 @@ public abstract class Message {
     private void setCommand(byte command) {
         //Aggiungere controlli sulla validità
 
-        if (command > -1 && command <= Commands.COMMANDS_NUMBER) {
+        if (isCommandByteValid(command)) {
 
             this.command = command;
 
@@ -95,7 +95,21 @@ public abstract class Message {
         }
 
         return bytes;
-        
+
+    }
+
+    /**
+     * Controlla se un byte di commando è valido e all'interno dei byte di
+     * comando disponibili (vedi samt.scribble.communication.Commands).
+     *
+     * @param command Il byte di comando che specifica che tipo di messaggio
+     * sarà inviato.
+     * @return true se il byte di comando è valido, false se non lo è.
+     */
+    private boolean isCommandByteValid(byte command) {
+
+        return command > -1 && command <= Commands.COMMANDS_NUMBER;
+
     }
 
 }
