@@ -156,7 +156,7 @@ public class GroupConnection extends Thread {
      * @throws IOException Errore durante l'invio del pacchetto.
      */
     public void send(Message message) throws IOException {
-        DatagramPacket packet = new DatagramPacket(message.getBytes(), message.getBytes().length, groupIp, port);
+        DatagramPacket packet = new DatagramPacket(message.getWholeMessage(), message.getWholeMessage().length, groupIp, port);
         this.socket.send(packet);
     }
 

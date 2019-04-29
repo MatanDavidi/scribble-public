@@ -51,7 +51,7 @@ public class EchoMessage extends Message {
     public static void main(String[] args) {
         String message = "echo";
         EchoMessage echo = new EchoMessage(message);
-        byte[] bytes = echo.getBytes();
+        byte[] bytes = echo.getWholeMessage();
 
         String rebuild = "";
         for (int i = 1; i < bytes.length; i++) {

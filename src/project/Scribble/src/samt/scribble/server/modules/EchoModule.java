@@ -49,7 +49,7 @@ public class EchoModule {
             bytes[i - 1] = datagramPacket.getData()[i];
         }
         InformationMessage message = new InformationMessage(bytes);
-        return new DatagramPacket(message.getBytes(), message.getBytes().length, datagramPacket.getAddress(), DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
+        return new DatagramPacket(message.getWholeMessage(), message.getWholeMessage().length, datagramPacket.getAddress(), DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
     }
 
 }

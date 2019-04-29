@@ -84,9 +84,9 @@ public abstract class Message {
      *
      * @return Bytes del messaggio con primo byte
      */
-    public byte[] getBytes() {
         byte[] bytes = new byte[this.message.length + 1];
         bytes[0] = this.command;
+    public byte[] getWholeMessage() {
 
         for (int i = 0; i < this.message.length; i++) {
             bytes[i + 1] = this.message[i];

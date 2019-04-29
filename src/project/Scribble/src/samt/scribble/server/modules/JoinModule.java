@@ -74,11 +74,11 @@ public class JoinModule {
             message = new ErrorMessage(pare.getMessage());
         }
 
-        System.out.println(new String(message.getBytes()));
+        System.out.println(new String(message.getWholeMessage()));
 
         return new DatagramPacket(
-                message.getBytes(),
-                message.getBytes().length,
+                message.getWholeMessage(),
+                message.getWholeMessage().length,
                 datagramPacket.getAddress(),
                 DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
 
