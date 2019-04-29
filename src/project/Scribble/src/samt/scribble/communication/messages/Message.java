@@ -85,15 +85,17 @@ public abstract class Message {
      * @return Un array di byte contenente il messaggio, il cui primo byte è
      * quello di comando e quelli successivi sono il messaggio.
      */
+    public byte[] getWholeMessage() {
+
         byte[] bytes = new byte[this.message.length + 1];
         bytes[0] = this.command;
-    public byte[] getWholeMessage() {
 
         for (int i = 0; i < this.message.length; i++) {
             bytes[i + 1] = this.message[i];
         }
 
         return bytes;
+        
     }
 
 }
