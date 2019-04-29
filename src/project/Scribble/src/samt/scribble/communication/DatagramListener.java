@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Matan Davidi.
+ * Copyright 2019 giuliobosco.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,43 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package communication;
+ 
+package samt.scribble.communication;
+
+import java.net.DatagramPacket;
 
 /**
- * La classe WordGuessMessage è una sottoclasse di Message che contiene le
- * informazioni relative a un tentativo di indovinare la parola che sta
- * disegnando il disegnatore.
+ * Scribble datagram listener. Quando la thread di ascolto riceve un pacchetto lo invia a tutti i
+ * listener.
  *
- * Esempio di sottoclasse di Message.
- *
- * @author Matan Davidi
- * @version 2019-04-16
+ * @author giuliobosco (giuliobva@gmail.com)
+ * @version 1.0 (2019-04-19)
  */
-public class WordGuessMessage extends Message {
+public interface DatagramListener {
 
     /**
-     * Istanzia nuovi oggetti di tipo WordGuessMessage con un byte di comando
-     * fisso e permettendo di specificare un valore per il campo message.
+     * Messaggio ricevuto sulla thread di ascolto.
      *
-     * @param message Una stringa contenente il tentativo di indovinare
-     * (parola).
+     * @param datagramPacket Messaggio ricevuto.
      */
-    public WordGuessMessage(String message) {
-
-        this(message.getBytes());
-
-    }
-
-    /**
-     * Istanzia nuovi oggetti di tipo WordGuessMessage con un byte di comando
-     * fisso e permettendo di specificare un valore per il campo message.
-     *
-     * @param message Il messaggio da inviare sotto forma di array di byte.
-     */
-    private WordGuessMessage(byte[] message) {
-
-        super(Commands.WORD_GUESS, message);
-
-    }
-
+    void messageReceived(DatagramPacket datagramPacket);
 }
