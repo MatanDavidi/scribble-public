@@ -117,7 +117,11 @@ public class Game {
             // Writing the ranking.
             game.getRanking().writeRanking(game.getPlayers());
             // Reading and printing the generated ranking.
-            System.out.println(ranking.readRanking());
+            List<Player> playersRanking = ranking.readRanking();
+            
+            for(Player playerRanking : playersRanking){
+                System.out.println(playerRanking.getUsername()+" "+playerRanking.getScore());
+            }
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
