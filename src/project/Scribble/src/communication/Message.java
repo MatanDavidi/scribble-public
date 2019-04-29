@@ -28,12 +28,18 @@ public abstract class Message {
     /**
      * Il byte di comando che specifica che tipo di messaggio sarà inviato.
      */
-    public byte command;
+    protected byte command;
 
     /**
      * Il messaggio da inviare sotto forma di array di byte.
      */
-    public byte[] message;
+    protected byte[] message;
+    
+    protected byte[] buffer;
+    
+    protected DatagramSocket socket;
+    
+    protected MulticastSocket multicastSocket;
 
     /**
      * Istanzia nuovi oggetti di tipo Message, permettendo di assegnare un
@@ -47,6 +53,7 @@ public abstract class Message {
 
         setCommand(command);
         setMessage(message);
+        buffer = new byte[256];
 
     }
 
@@ -77,4 +84,10 @@ public abstract class Message {
         this.message = message;
     }
 
+    public void sendPacket(InetAddress address, int port) throws IOException {
+        
+        DatagramPacket packet = new DatagramPacket(buffer, command, address, port);
+        socket.send(packet);
+        
+    }
 }
