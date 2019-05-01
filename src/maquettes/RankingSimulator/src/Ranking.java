@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -88,18 +89,18 @@ public class Ranking {
     /**
      * Metodo che ordina la classica per il punteggio.
      *
-     * @param players Lista dei giocatori.
+     * @param records Lista dei giocatori.
      */
-    public void rankPlayers(List<Player> players) {
+    public void rankPlayers(List<Record> records) {
         boolean thereIsBubbling;
-        Player temp;
+        Record temp;
         do {
             thereIsBubbling = false;
-            for (int j = 1; j < players.size(); j++) {
-                if (players.get(j - 1).getScore() < players.get(j).getScore()) {
-                    temp = players.get(j - 1);
-                    players.set(j - 1, players.get(j));
-                    players.set(j, temp);
+            for (int j = 1; j < records.size(); j++) {
+                if (records.get(j - 1).getScore() < records.get(j).getScore()) {
+                    temp = records.get(j - 1);
+                    records.set(j - 1, records.get(j));
+                    records.set(j, temp);
                     thereIsBubbling=true;
                 }
             }
@@ -109,21 +110,21 @@ public class Ranking {
     /**
      * Metodo che inserisce il giocatore nella lista nell'ordine giusto.
      *
-     * @param players Lista dei giocatori.
+     * @param records Lista dei giocatori.
      */
-    public void insertionSort(List<Player> players) {
+    public void insertionSort(List<Record> records) {
         boolean flag;
-        for (int i = 1; i < players.size(); i++) {
+        for (int i = 1; i < records.size(); i++) {
             flag = true;
-            Player key = players.get(i);
+            Record key = records.get(i);
             for (int j = i - 1; j >= 0 && flag; j--) {
-                if (key.getScore() > players.get(j).getScore()) {
-                    players.set(j + 1, players.get(j));
+                if (key.getScore() > records.get(j).getScore()) {
+                    records.set(j + 1, records.get(j));
                     if (j == 0) {
-                        players.set(0, key);
+                        records.set(0, key);
                     }
                 } else {
-                    players.set(j + 1, key);
+                    records.set(j + 1, key);
                     flag = false;
                 }
             }
@@ -135,13 +136,13 @@ public class Ranking {
      *
      * @return La classifica in una stringa.
      */
-    public List<Player> readRanking() {
-        List<Player> rankingPlayers = new ArrayList<>();
+    public List<Record> readRanking() {
+        List<Record> rankingPlayers = new ArrayList<>();
         try {
             List<String> lines = Files.readAllLines(getCsvPath());
             for(String line : lines){
                 String[] arguments = line.split(",");
-                Player player = new Player(arguments[0], Integer.parseInt(arguments[1]));
+                Record player = new Record(arguments[0], Integer.parseInt(arguments[1]));
                 rankingPlayers.add(player);
             }
         } catch (IOException | NumberFormatException ex) {
@@ -153,15 +154,19 @@ public class Ranking {
     /**
      * Metodo che scrive la lista dei giocatori nel file csv.
      *
-     * @param players Lista dei giocatori.
+     * @param records Lista dei giocatori.
      */
-    public void writeRanking(List<Player> players) {
+    public void writeRanking(List<Record> records) {
         try {
-            List<String> lines = new ArrayList<>();
-            for (Player player : players) {
-                lines.add((player.getUsername() + "," + player.getScore()));
+            try{
+                List<String> lines = new ArrayList<>();
+                for (Record player : records) {
+                    lines.add((player.getUsername() + "," + player.getScore()));
+                }
+                Files.write(getCsvPath(), lines);
+            }catch(FileNotFoundException fn){
+                System.out.println("Error: " + fn.getMessage());
             }
-            Files.write(getCsvPath(), lines);
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
         }

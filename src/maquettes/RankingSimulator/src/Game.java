@@ -40,7 +40,7 @@ public class Game {
     /**
      * List of players.
      */
-    private List<Player> players = new ArrayList<>();
+    private List<Record> records = new ArrayList<>();
 
     /**
      * Ranking of the game.
@@ -50,13 +50,13 @@ public class Game {
     /**
      * Constructor method where players and ranking of the game are defined.
      *
-     * @param players List of players of the game.
+     * @param records List of players of the game.
      * @param ranking Ranking of the game.
      */
-    public Game(List<Player> players, Ranking ranking) {
-        this.players = players;
+    public Game(List<Record> records, Ranking ranking) {
+        this.records = records;
         this.ranking = ranking;
-        this.ranking.rankPlayers(this.players);
+        this.ranking.rankPlayers(this.records);
     }
 
     /**
@@ -64,8 +64,8 @@ public class Game {
      *
      * @return List of players of the game.
      */
-    public List<Player> getPlayers() {
-        return this.players;
+    public List<Record> getPlayers() {
+        return this.records;
     }
 
     /**
@@ -82,8 +82,8 @@ public class Game {
      *
      * @param player attribute representing the player to be added.
      */
-    public void addPlayer(Player player) {
-        getPlayers().add(player);
+    public void addPlayer(Record records) {
+        getPlayers().add(records);
         getRanking().insertionSort(getPlayers());
     }
 
@@ -92,8 +92,8 @@ public class Game {
      *
      * @param player attribute representing the player to be removed.
      */
-    public void removePlayer(Player player) {
-        getPlayers().remove(player);
+    public void removePlayer(Record records) {
+        getPlayers().remove(records);
     }
 
     /**
@@ -104,24 +104,28 @@ public class Game {
     public static void main(String[] args) {
         try {
             // Creation of players, ranking and game.
-            List<Player> players = new ArrayList<>();
+            List<Record> records = new ArrayList<>();
             Path path = Paths.get("data", "ranking.csv");
             Ranking ranking = new Ranking(path);
-            Game game = new Game(players, ranking);
+            Game game = new Game(records, ranking);
+            
             // Adding players to the game with insertion sort.
-            game.addPlayer(new Player("Giuseppe", 100));
-            game.addPlayer(new Player("Mario", 220));
-            game.addPlayer(new Player("Francesco", 50));
-            game.addPlayer(new Player("Giovanni", 1110));
-            game.addPlayer(new Player("Luigi", 500));
+            game.addPlayer(new Record("Giuseppe", 100));
+            game.addPlayer(new Record("Mario", 220));
+            game.addPlayer(new Record("Francesco", 50));
+            game.addPlayer(new Record("Giovanni", 1110));
+            game.addPlayer(new Record("Luigi", 500));
+            
             // Writing the ranking.
             game.getRanking().writeRanking(game.getPlayers());
-            // Reading and printing the generated ranking.
-            List<Player> playersRanking = ranking.readRanking();
             
-            for(Player playerRanking : playersRanking){
+            // Reading the generated ranking.
+            List<Record> rankingRecords = ranking.readRanking();
+            
+            // Printing the ranking
+            for(Record playerRanking : rankingRecords){
                 System.out.println(playerRanking.getUsername()+" "+playerRanking.getScore());
-            }
+            }        
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
         }

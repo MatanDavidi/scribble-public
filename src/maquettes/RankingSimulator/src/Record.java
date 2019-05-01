@@ -23,75 +23,75 @@
  */
 
 /**
- * Representation of a player.
+ * Classe che rappresenta il nome utente e il punteggio di un giocatore.
  *
  * @author mattiaruberto
  * @author gabrialessi
  * @version 1.1 (10.04.2019)
  */
-public class Player {
+public class Record {
 
     /**
-     * Username of the player. Default value: "UNKNOWN".
+     * Attributo che rappresenta il nome utente. Valore di default: "UNKNOWN".
      */
     private String username = "UNKNOWN";
 
     /**
-     * Total score of the player. Default value: 0.
+     * Attributo che rappresenta il punteggio. Valore di default: 0.
      */
     private int score = 0;
 
     /**
-     * Constructor method where the username is defined.
+     * Metodo costruttore che definisce la classe con il nome utente.
      *
-     * @param username Username of the player.
+     * @param username Nome utente del giocatore.
      */
-    public Player(String username) {
+    public Record(String username) {
         setUsername(username);
     }
 
     /**
-     * Constructor method where the username and the total score are defined.
+     * Metodo costruttore che definisce la classe con il nome utente e il punteggio.
      *
-     * @param username Username of the player.
-     * @param score Total score of the player.
+     * @param username Nome utente del giocatore.
+     * @param score Punteggio del giocatore.
      */
-    public Player(String username, int score) {
+    public Record(String username, int score) {
         setUsername(username);
         setScore(score);
     }
 
     /**
-     * Get the username of the player.
+     * Metodo che ritorna il nome utente.
      *
-     * @return Username of the player.
+     * @return Nome utente del giocatore.
      */
     public String getUsername() {
         return this.username;
     }
 
     /**
-     * Get the total score of the player.
+     * Metodo che ritorna il punteggio.
      *
-     * @return Total score of the player.
+     * @return Punteggio del giocatore.
      */
     public int getScore() {
         return this.score;
     }
 
     /**
-     * Set the username of the player.
+     * Metodo che setta il nome utente.
      *
-     * @param username Username of the player.
+     * @param username Nome utente del giocatore.
      */
     public void setUsername(String username) {
         this.username = username;
     }
 
     /**
-     * Set the total score of the player.
+     * Metodo che setta il punteggio.
      *
-     * @param score Total score of the player.
+     * @param score Punteggio del giocatore.
      */
     public void setScore(int score) {
         if (score < 0) {
