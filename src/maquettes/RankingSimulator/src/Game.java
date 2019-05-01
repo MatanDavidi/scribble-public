@@ -110,17 +110,34 @@ public class Game {
             Game game = new Game(records, ranking);
 
             // Inserimento dei giocatori nella partita.
-            game.addPlayer(new Record("Giuseppe", 100));
-            game.addPlayer(new Record("Mario", 220));
-            game.addPlayer(new Record("Francesco", 50));
-            game.addPlayer(new Record("Giovanni", 1110));
-            game.addPlayer(new Record("Luigi", 500));
+            game.addPlayer(new Record("Giuseppe", 40));
+            game.addPlayer(new Record("Mario", 10));
+            game.addPlayer(new Record("Giovanni", 50));
+            game.addPlayer(new Record("Luigi", 20));
+            game.addPlayer(new Record("Franco", 30));
 
             // Scrittura della classifica.
             game.getRanking().writeRanking(game.getRecords());
 
             // Lettura della classifica.
             List<Record> rankingRecords = ranking.readRanking();
+
+            // Stampa della classifica.
+            for (Record record : rankingRecords) {
+                System.out.println(record.getUsername() + " " + record.getScore());
+            }
+
+            System.out.println("");
+
+            // Inserimento di altri giocatori nella partita.
+            game.addPlayer(new Record("Paolo", 35));
+            game.addPlayer(new Record("Carlo", 15));
+
+            // Scrittura della classifica.
+            game.getRanking().writeRanking(game.getRecords());
+
+            // Lettura della classifica.
+            rankingRecords = ranking.readRanking();
 
             // Stampa della classifica.
             for (Record record : rankingRecords) {
