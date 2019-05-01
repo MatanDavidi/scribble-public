@@ -87,7 +87,7 @@ public class Record {
      * @param username Username del giocatore.
      */
     public void setUsername(String username) {
-        String regex = "^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
+        String regex = "^(?=.{1,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
         if (username.matches(regex)) {
             this.username = username;
         }
