@@ -27,44 +27,46 @@
  *
  * @author mattiaruberto
  * @author gabrialessi
- * @version 1.1 (10.04.2019)
+ * @version 2019-05-01
  */
 public class Record {
 
     /**
-     * Attributo che rappresenta il nome utente. Valore di default: "UNKNOWN".
+     * Attributo che rappresenta il nome di un giocatore. Valore di default:
+     * "UNKNOWN".
      */
     private String username = "UNKNOWN";
 
     /**
-     * Attributo che rappresenta il punteggio. Valore di default: 0.
+     * Attributo che rappresenta il punteggio di un giocatore. Valore di
+     * default: 0.
      */
     private int score = 0;
 
     /**
-     * Metodo costruttore che definisce la classe con il nome utente.
+     * Metodo costruttore dove si definisce lo username.
      *
-     * @param username Nome utente del giocatore.
+     * @param username Username del giocatore.
      */
     public Record(String username) {
         setUsername(username);
     }
 
     /**
-     * Metodo costruttore che definisce la classe con il nome utente e il punteggio.
+     * Metodo costruttore dove si definiscono username e punteggio.
      *
-     * @param username Nome utente del giocatore.
+     * @param username Username del giocatore.
      * @param score Punteggio del giocatore.
      */
     public Record(String username, int score) {
-        setUsername(username);
+        this(username);
         setScore(score);
     }
 
     /**
-     * Metodo che ritorna il nome utente.
+     * Metodo che ritorna lo username.
      *
-     * @return Nome utente del giocatore.
+     * @return Username del giocatore.
      */
     public String getUsername() {
         return this.username;
@@ -80,16 +82,19 @@ public class Record {
     }
 
     /**
-     * Metodo che setta il nome utente.
+     * Metodo che imposta lo username.
      *
-     * @param username Nome utente del giocatore.
+     * @param username Username del giocatore.
      */
     public void setUsername(String username) {
-        this.username = username;
+        String regex = "^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
+        if (username.matches(regex)) {
+            this.username = username;
+        }
     }
 
     /**
-     * Metodo che setta il punteggio.
+     * Metodo che imposta il punteggio.
      *
      * @param score Punteggio del giocatore.
      */

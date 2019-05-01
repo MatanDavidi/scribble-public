@@ -29,29 +29,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Simulation of a game.
+ * Simulazione di una partita con la classifica.
  *
  * @author mattiaruberto
  * @author gabrialessi
- * @version 2.0 (17.04.2019)
+ * @version 2019-05-01
  */
 public class Game {
 
     /**
-     * List of players.
+     * Lista dei giocatori.
      */
     private List<Record> records = new ArrayList<>();
 
     /**
-     * Ranking of the game.
+     * Classifica della partita.
      */
     private Ranking ranking;
 
     /**
-     * Constructor method where players and ranking of the game are defined.
+     * Metodo costruttore dove si definiscono la lista di giocatori e la
+     * classifica.
      *
-     * @param records List of players of the game.
-     * @param ranking Ranking of the game.
+     * @param records Lista dei giocatori.
+     * @param ranking Classifica della partita.
      */
     public Game(List<Record> records, Ranking ranking) {
         this.records = records;
@@ -60,72 +61,71 @@ public class Game {
     }
 
     /**
-     * Get the list of players.
+     * Ottenimento della lista dei giocatori.
      *
-     * @return List of players of the game.
+     * @return Lista dei giocatori.
      */
-    public List<Record> getPlayers() {
+    public List<Record> getRecords() {
         return this.records;
     }
 
     /**
-     * Get the ranking of the game.
+     * Ottenimento della classifica.
      *
-     * @return The ranking of the game.
+     * @return Classifica della partita.
      */
     public Ranking getRanking() {
         return this.ranking;
     }
 
     /**
-     * Add player to the List.
+     * Inserimento di un giocatore nella lista.
      *
-     * @param player attribute representing the player to be added.
+     * @param record Giocatore da aggiungere.
      */
-    public void addPlayer(Record records) {
-        getPlayers().add(records);
-        getRanking().insertionSort(getPlayers());
+    public void addPlayer(Record record) {
+        getRanking().insertRecord(getRecords(), record);
     }
 
     /**
-     * Remove player to the list.
+     * Rimozione di un giocatore dalla lista.
      *
-     * @param player attribute representing the player to be removed.
+     * @param record Giocatore da rimuovere.
      */
-    public void removePlayer(Record records) {
-        getPlayers().remove(records);
+    public void removePlayer(Record record) {
+        getRecords().remove(record);
     }
 
     /**
-     * Main method.
+     * Metodo in cui si effettua il test di una partita con la classifica.
      *
-     * @param args Command line arguments.
+     * @param args Argomenti a linea di comando.
      */
     public static void main(String[] args) {
         try {
-            // Creation of players, ranking and game.
+            // Creazione dei giocatori, della classifica e della partita.
             List<Record> records = new ArrayList<>();
             Path path = Paths.get("data", "ranking.csv");
             Ranking ranking = new Ranking(path);
             Game game = new Game(records, ranking);
-            
-            // Adding players to the game with insertion sort.
+
+            // Inserimento dei giocatori nella partita.
             game.addPlayer(new Record("Giuseppe", 100));
             game.addPlayer(new Record("Mario", 220));
             game.addPlayer(new Record("Francesco", 50));
             game.addPlayer(new Record("Giovanni", 1110));
             game.addPlayer(new Record("Luigi", 500));
-            
-            // Writing the ranking.
-            game.getRanking().writeRanking(game.getPlayers());
-            
-            // Reading the generated ranking.
+
+            // Scrittura della classifica.
+            game.getRanking().writeRanking(game.getRecords());
+
+            // Lettura della classifica.
             List<Record> rankingRecords = ranking.readRanking();
-            
-            // Printing the ranking
-            for(Record playerRanking : rankingRecords){
-                System.out.println(playerRanking.getUsername()+" "+playerRanking.getScore());
-            }        
+
+            // Stampa della classifica.
+            for (Record record : rankingRecords) {
+                System.out.println(record.getUsername() + " " + record.getScore());
+            }
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
         }

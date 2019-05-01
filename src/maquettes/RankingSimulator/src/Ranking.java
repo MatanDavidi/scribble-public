@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +35,7 @@ import java.util.List;
  *
  * @author mattiaruberto
  * @author gabrialessi
- * @version 2.0 (17.04.2019)
+ * @version 2019-05-01
  */
 public class Ranking {
 
@@ -46,15 +45,17 @@ public class Ranking {
     public static final Path CSV_PATH = Paths.get("data", "ranking.csv");
 
     /**
-     * Attributo che rappresenta il percorso del file csv che rappresenta la classifica.
+     * Attributo che rappresenta il percorso del file csv che contiene la
+     * classifica.
      */
     private Path csvPath = CSV_PATH;
 
     /**
-     * Metodo costruttore che inizializza la classe con il percorso del file csv.
+     * Metodo costruttore dove si definisce il percorso del file.
      *
      * @param csvPath Percorso del file csv.
-     * @throws java.io.IOException Se si verifica un'eccezione di input o di output.
+     * @throws java.io.IOException Se si verifica un'eccezione di input o di
+     * output.
      */
     public Ranking(Path csvPath) throws IOException {
         setCsvPath(csvPath);
@@ -70,7 +71,7 @@ public class Ranking {
     }
 
     /**
-     * Metodo che setta il percorso del file csv.
+     * Metodo che imposta il percorso del file csv.
      *
      * @param csvPath Percorso del file csv.
      */
@@ -79,10 +80,10 @@ public class Ranking {
             if (Files.isReadable(csvPath)) {
                 this.csvPath = csvPath;
             } else {
-                throw new IOException("File not readable!");
+                throw new IOException("File non leggibile!");
             }
         } else {
-            throw new IOException("File not accessible!");
+            throw new IOException("File non accessibile!");
         }
     }
 
@@ -92,27 +93,29 @@ public class Ranking {
      * @param records Lista dei giocatori.
      */
     public void rankPlayers(List<Record> records) {
-        boolean thereIsBubbling;
+        boolean isDone;
         Record temp;
         do {
-            thereIsBubbling = false;
-            for (int j = 1; j < records.size(); j++) {
-                if (records.get(j - 1).getScore() < records.get(j).getScore()) {
-                    temp = records.get(j - 1);
-                    records.set(j - 1, records.get(j));
-                    records.set(j, temp);
-                    thereIsBubbling=true;
+            isDone = true;
+            for (int i = 1; i < records.size(); i++) {
+                if (records.get(i - 1).getScore() < records.get(i).getScore()) {
+                    temp = records.get(i - 1);
+                    records.set(i - 1, records.get(i));
+                    records.set(i, temp);
+                    isDone = false;
                 }
             }
-        }while(thereIsBubbling);
+        } while (!isDone);
     }
 
     /**
-     * Metodo che inserisce il giocatore nella lista nell'ordine giusto.
+     * Metodo che ordina il giocatore appena inserito nella posizione giusta
+     * della classifica.
      *
      * @param records Lista dei giocatori.
+     * @param record Giocatore appena inserito.
      */
-    public void insertionSort(List<Record> records) {
+    public void insertRecord(List<Record> records, Record record) {
         boolean flag;
         for (int i = 1; i < records.size(); i++) {
             flag = true;
@@ -129,6 +132,7 @@ public class Ranking {
                 }
             }
         }
+        records.add(0, record);
     }
 
     /**
@@ -140,7 +144,7 @@ public class Ranking {
         List<Record> rankingPlayers = new ArrayList<>();
         try {
             List<String> lines = Files.readAllLines(getCsvPath());
-            for(String line : lines){
+            for (String line : lines) {
                 String[] arguments = line.split(",");
                 Record player = new Record(arguments[0], Integer.parseInt(arguments[1]));
                 rankingPlayers.add(player);
@@ -158,13 +162,13 @@ public class Ranking {
      */
     public void writeRanking(List<Record> records) {
         try {
-            try{
+            try {
                 List<String> lines = new ArrayList<>();
                 for (Record player : records) {
                     lines.add((player.getUsername() + "," + player.getScore()));
                 }
                 Files.write(getCsvPath(), lines);
-            }catch(FileNotFoundException fn){
+            } catch (FileNotFoundException fn) {
                 System.out.println("Error: " + fn.getMessage());
             }
         } catch (IOException ex) {
