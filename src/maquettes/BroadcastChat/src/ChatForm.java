@@ -3,7 +3,7 @@
  * @author Mattia Lazzaroni
  * @version 20.02.2019
  */
-public class ChatForm extends javax.swing.JFrame implements MessageListener{
+public class ChatForm extends javax.swing.JFrame implements ChatListener{
 
     /**
      * Il client che comunica.
@@ -176,7 +176,7 @@ public class ChatForm extends javax.swing.JFrame implements MessageListener{
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void messageReceived() {
+    public void appendToChat(String newline) {
         ChatTextArea.append(messageClient.getMessageReceived());
         ChatTextArea.append("\n");
     }

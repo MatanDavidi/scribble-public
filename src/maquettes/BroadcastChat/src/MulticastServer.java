@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -7,13 +8,11 @@ import java.net.UnknownHostException;
 import javax.swing.JFrame;
 
 /**
- * 
- * 
+ *
  * @author Thor Düblin & Nemanja Stojanovic
  * @version 2019.04.18
  */
-public class MulticastClient extends Thread{
-    
+public class MulticastServer extends Thread {
     /**
      * Il socket di dati.
      */
@@ -63,7 +62,7 @@ public class MulticastClient extends Thread{
      * Metodo costruttore personalizzato con 1 parametro.
      * @param jf Il frame in cui avviene la comunicazione.
      */
-    public MulticastClient(ChatForm jf) {
+    public MulticastServer(ChatForm jf) {
         try {
             socket = new MulticastSocket(5555);
             
@@ -76,10 +75,6 @@ public class MulticastClient extends Thread{
         }
         
         port = socket.getLocalPort();
-        
-        setPortAsTitle(jf);
-        
-        messageListener = jf;
     }
     
     /**
@@ -130,31 +125,5 @@ public class MulticastClient extends Thread{
         catch (IOException ex) {
             System.out.println("ERRORE: " + ex.getMessage());
         }
-    }
-    
-    /**
-     * Imposta la porta come titolo del frame.
-     * @param jf Il frame in cui impostare il titolo.
-     */
-    public void setPortAsTitle(JFrame jf){
-        jf.setTitle("Chat Scribble");
-    }
-    
-    /**
-     * Imposta le informazioni di destinazione.
-     * @param message Il messaggio.
-     */
-    public void setInfo(String message){
-        try {
-            group = InetAddress.getByName("224.12.12.12");
-            if(port >= 1024 && port <= 65535){
-                destinationPort = 5555;
-            }
-            messageToSend = message;
-        }
-        catch (UnknownHostException | NullPointerException ex) {
-            System.err.println("ERRORE: IP inserito non valido!");
-        }
-        
     }
 }
