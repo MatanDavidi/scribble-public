@@ -97,11 +97,11 @@ public class Ranking {
         Record temp;
         do {
             isDone = true;
-            for (int i = 1; i < records.size(); i++) {
-                if (records.get(i - 1).getScore() < records.get(i).getScore()) {
-                    temp = records.get(i - 1);
-                    records.set(i - 1, records.get(i));
-                    records.set(i, temp);
+            for (int i = 0; i < records.size() - 1; i++) {
+                if (records.get(i).getScore() > records.get(i + 1).getScore()) {
+                    temp = records.get(i);
+                    records.set(i, records.get(i + 1));
+                    records.set(i + 1, temp);
                     isDone = false;
                 }
             }
@@ -113,32 +113,26 @@ public class Ranking {
      * della classifica.
      *
      * @param records Lista dei giocatori.
-     * @param record Giocatore appena inserito.
+     * @param newRecord Giocatore appena inserito.
      */
-    public void insertRecord(List<Record> records, Record record) {
-        boolean flag;
-        for (int i = 1; i < records.size(); i++) {
-            flag = true;
-            Record key = records.get(i);
-            for (int j = i - 1; j >= 0 && flag; j--) {
-                if (key.getScore() > records.get(j).getScore()) {
-                    records.set(j + 1, records.get(j));
-                    if (j == 0) {
-                        records.set(0, key);
-                    }
-                } else {
-                    records.set(j + 1, key);
-                    flag = false;
-                }
+    public void insertRecord(List<Record> records, Record newRecord) {
+        boolean isDone = false;
+        int index = 0;
+        for (int i = 0; i < records.size() && !isDone; i++) {
+            if (newRecord.getScore() >= records.get(i).getScore()) {
+                index = i;
+                isDone = true;
+            } else if (i == records.size() - 1) {
+                index = i + 1;
             }
         }
-        records.add(0, record);
+        records.add(index, newRecord);
     }
 
     /**
      * Lettura della classifica dal file csv.
      *
-     * @return La classifica in una stringa.
+     * @return La lista della classifica.
      */
     public List<Record> readRanking() {
         List<Record> rankingPlayers = new ArrayList<>();
