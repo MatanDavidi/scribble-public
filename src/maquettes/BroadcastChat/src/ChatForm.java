@@ -1,10 +1,9 @@
 /**
  * Il form della chat.
- * @author Mattia Lazzaroni
- * @version 20.02.2019
+ * @author Nemanja e Thr
+ * @version 01.05.2019
  */
 public class ChatForm extends javax.swing.JFrame implements ChatListener{
-
     /**
      * Il client che comunica.
      */
@@ -156,6 +155,7 @@ public class ChatForm extends javax.swing.JFrame implements ChatListener{
                 cf.setVisible(true);
                 cf.setSize(400, 400);
                 cf.setResizable(false);
+                cf.setTitle("Chat form");
             }
         });
     }

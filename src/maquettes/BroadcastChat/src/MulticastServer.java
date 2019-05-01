@@ -9,8 +9,8 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author Thor Düblin & Nemanja Stojanovic
- * @version 2019.04.18
+ * @author Nemanja e Thor
+ * @version 01.05.2019
  */
 public class MulticastServer extends Thread {
     /**

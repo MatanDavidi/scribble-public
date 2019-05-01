@@ -1,6 +1,6 @@
 /**
- *
- * @author Thor Düblin & Nemanja Stojanovic
+ * @author Nemanja e Thor
+ * @version 01.05.2019
  */
 public interface ChatListener {
     /**

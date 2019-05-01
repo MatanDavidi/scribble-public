@@ -8,9 +8,8 @@ import javax.swing.JFrame;
 
 /**
  * 
- * 
- * @author Thor Düblin & Nemanja Stojanovic
- * @version 2019.04.18
+ * @author Nemanja e Thor
+ * @version 01.05.2019
  */
 public class MulticastClient extends Thread{
     
@@ -59,28 +58,7 @@ public class MulticastClient extends Thread{
      */
     private ChatForm messageListener;
     
-    /**
-     * Metodo costruttore personalizzato con 1 parametro.
-     * @param jf Il frame in cui avviene la comunicazione.
-     */
-    public MulticastClient(ChatForm jf) {
-        try {
-            socket = new MulticastSocket(5555);
-            
-            group = InetAddress.getByName("224.12.12.12");
-            
-            socket.joinGroup(group);
-            
-        } catch (IOException ex) {
-            System.out.println("ERRORE: " + ex.getMessage());
-        }
-        
-        port = socket.getLocalPort();
-        
-        setPortAsTitle(jf);
-        
-        messageListener = jf;
-    }
+    
     
     /**
      * Ritorna il messaggio ricevuto.
@@ -114,47 +92,16 @@ public class MulticastClient extends Thread{
             System.out.println("ERRORE: " + ex.getMessage());
         }
     }
-    
-    /**
-     * Metodo che serve a mandare i messaggi.
-     */
-    public void sendMessage(){
-        try {
-            byte[] data = messageToSend.getBytes();
-            DatagramPacket packet = new DatagramPacket(data, data.length, group, destinationPort);
-            socket.send(packet);
-        }
-        catch (SocketException ex) {
-            System.out.println("ERRORE: " + ex.getMessage());
-        }
-        catch (IOException ex) {
-            System.out.println("ERRORE: " + ex.getMessage());
-        }
-    }
-    
-    /**
-     * Imposta la porta come titolo del frame.
-     * @param jf Il frame in cui impostare il titolo.
-     */
-    public void setPortAsTitle(JFrame jf){
-        jf.setTitle("Chat Scribble");
-    }
-    
-    /**
-     * Imposta le informazioni di destinazione.
-     * @param message Il messaggio.
-     */
-    public void setInfo(String message){
+
+    void setInfo(String message) {
         try {
             group = InetAddress.getByName("224.12.12.12");
             if(port >= 1024 && port <= 65535){
                 destinationPort = 5555;
             }
             messageToSend = message;
-        }
-        catch (UnknownHostException | NullPointerException ex) {
+        }catch (UnknownHostException | NullPointerException ex) {
             System.err.println("ERRORE: IP inserito non valido!");
         }
-        
     }
 }
