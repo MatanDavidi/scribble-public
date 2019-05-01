@@ -80,7 +80,8 @@ public class JoinModule {
                 message.getBytes(),
                 message.getBytes().length,
                 datagramPacket.getAddress(),
-                DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
+                DefaultScribbleParameters.DEFAULT_CLIENT_PORT
+        );
 
     }
     

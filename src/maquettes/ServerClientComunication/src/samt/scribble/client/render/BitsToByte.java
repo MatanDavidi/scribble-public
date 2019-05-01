@@ -10,25 +10,25 @@ package samt.scribble.client.render;
 public class BitsToByte {
 
     /**
-     * Converti 8 bit in un byte.
+     * Converte 8 bit in un byte.
      *
      * @param bits 8 bit da convertire.
      * @return 8 bit convertiti in un byte.
      */
     private static byte getByte(boolean[] bits) {
         if (bits.length == 8) {
-            int bitesSum = 0;
+            int bitsSum = 0;
             for (int i = bits.length - 1; i >= 0; i--) {
-                bitesSum += Math.pow(2, (bits.length - i - 1)) * (bits[i] ? 1 : 0);
+                bitsSum += Math.pow(2, (bits.length - i - 1)) * (bits[i] ? 1 : 0);
             }
-            return (byte) bitesSum;
+            return (byte) bitsSum;
         } else {
             throw new IllegalArgumentException("Bits must have at least 8 elements.");
         }
     }
 
     /**
-     * Converti una matrice di bit (il cui numero totale di celle &egrave; multiplo di 8), in un
+     * Converte una matrice di bit (il cui numero totale di celle &egrave; multiplo di 8), in un
      * array di byte.
      *
      * @param matrix Matrice da convertire in bytes.
@@ -61,7 +61,7 @@ public class BitsToByte {
     }
 
     /**
-     * Converti un byte in 8 bits (array di booleani).
+     * Converte un byte in 8 bits (array di booleani).
      *
      * @param b Byte da convertire in bits.
      * @return Bits convertiti dal byte.
@@ -87,7 +87,7 @@ public class BitsToByte {
     }
 
     /**
-     * Converti un array di byte in una matrice di booleani.
+     * Converte un array di byte in una matrice di booleani.
      *
      * @param bytes Bytes da convertire.
      * @param rows Righe della matrice
