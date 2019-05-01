@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package communication;
+package samt.scribble.communication;
 
 /**
  * La classe Commands contiene tutti i byte di comando che è possibile inviare
@@ -22,15 +22,16 @@ package communication;
  * inviando.
  *
  * @author Matan Davidi
- * @version 2019-04-16
+ * @author giuliobosco
+ * @version 2019-04-19
  */
 public class Commands {
 
     /**
      * Il numero totale di byte comando definiti.
      */
-    public final static short COMMANDS_NUMBER = 4;
-    
+    public final static short COMMANDS_NUMBER = 7;
+
     /**
      * Un byte di comando che segnala che il messaggio inviato è di tipo
      * informativo.
@@ -54,5 +55,22 @@ public class Commands {
      * tentativo di indovinare la parola che sta disegnando il disegnatore.
      */
     public final static byte WORD_GUESS = 3;
+
+    /**
+     * Un byte di comando che segnala che i byte seguenti devono essere rimandati al mittente
+     * indietro come sono stati ricevuti.
+     */
+    public final static byte ECHO = 4;
+
+    /**
+     * Un byte di comando che segnala la richiesta di entrare nel gioco scribble. I byte seguenti
+     * sono il nickname del giocatore.
+     */
+    public final static byte JOIN = 5;
+
+    /**
+     * Un byte di comando che segnala l'indirizzo del gruppo multicast.
+     */
+    public final static byte GROUP_ADDRESS_MESSAGE = 6;
 
 }

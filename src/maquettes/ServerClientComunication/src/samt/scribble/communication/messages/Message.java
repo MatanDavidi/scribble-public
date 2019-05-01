@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package communication;
+package samt.scribble.communication.messages;
+
+import samt.scribble.communication.Commands;
 
 /**
  * La classe astratta Message permette di stabilire un byte di comando e un
@@ -75,6 +77,22 @@ public abstract class Message {
     private void setMessage(byte[] message) {
         //Aggiungere controlli sulla validità
         this.message = message;
+    }
+
+    /**
+     * Ritorna l'intero messaggio come bytes.
+     *
+     * @return Bytes del messaggio con primo byte
+     */
+    public byte[] getBytes() {
+        byte[] bytes = new byte[this.message.length + 1];
+        bytes[0] = this.command;
+
+        for (int i = 0; i < this.message.length; i++) {
+            bytes[i + 1] = this.message[i];
+        }
+
+        return bytes;
     }
 
 }
