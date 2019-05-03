@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package communication;
+package samt.scribble.communication.messages;
+
+import samt.scribble.communication.Commands;
 
 /**
  * La classe astratta Message permette di stabilire un byte di comando e un
@@ -28,12 +30,12 @@ public abstract class Message {
     /**
      * Il byte di comando che specifica che tipo di messaggio sarà inviato.
      */
-    public byte command;
+    protected byte command;
 
     /**
      * Il messaggio da inviare sotto forma di array di byte.
      */
-    public byte[] message;
+    protected byte[] message;
 
     /**
      * Istanzia nuovi oggetti di tipo Message, permettendo di assegnare un
@@ -57,9 +59,8 @@ public abstract class Message {
      * sarà inviato.
      */
     private void setCommand(byte command) {
-        //Aggiungere controlli sulla validità
 
-        if (command > -1 && command <= Commands.COMMANDS_NUMBER) {
+        if (isCommandByteValid(command)) {
 
             this.command = command;
 
@@ -75,6 +76,39 @@ public abstract class Message {
     private void setMessage(byte[] message) {
         //Aggiungere controlli sulla validità
         this.message = message;
+    }
+
+    /**
+     * Ritorna l'intero messaggio.
+     *
+     * @return Un array di byte contenente il messaggio, il cui primo byte è
+     * quello di comando e quelli successivi sono il messaggio.
+     */
+    public byte[] getWholeMessage() {
+
+        byte[] bytes = new byte[this.message.length + 1];
+        bytes[0] = this.command;
+
+        for (int i = 0; i < this.message.length; i++) {
+            bytes[i + 1] = this.message[i];
+        }
+
+        return bytes;
+
+    }
+
+    /**
+     * Controlla se un byte di commando è valido e all'interno dei byte di
+     * comando disponibili (vedi samt.scribble.communication.Commands).
+     *
+     * @param command Il byte di comando che specifica che tipo di messaggio
+     * sarà inviato.
+     * @return true se il byte di comando è valido, false se non lo è.
+     */
+    private boolean isCommandByteValid(byte command) {
+
+        return command > -1 && command <= Commands.COMMANDS_NUMBER;
+
     }
 
 }

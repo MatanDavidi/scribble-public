@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package communication;
+package samt.scribble.communication.messages;
+
+import samt.scribble.communication.Commands;
 
 /**
  * La classe WordGuessMessage è una sottoclasse di Message che contiene le

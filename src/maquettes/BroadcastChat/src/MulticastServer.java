@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -7,12 +8,11 @@ import java.net.UnknownHostException;
 import javax.swing.JFrame;
 
 /**
- * 
+ *
  * @author Nemanja e Thor
  * @version 01.05.2019
  */
-public class MulticastClient extends Thread{
-    
+public class MulticastServer extends Thread {
     /**
      * Il socket di dati.
      */
@@ -58,7 +58,24 @@ public class MulticastClient extends Thread{
      */
     private ChatForm messageListener;
     
-    
+    /**
+     * Metodo costruttore personalizzato con 1 parametro.
+     * @param jf Il frame in cui avviene la comunicazione.
+     */
+    public MulticastServer(ChatForm jf) {
+        try {
+            socket = new MulticastSocket(5555);
+            
+            group = InetAddress.getByName("224.12.12.12");
+            
+            socket.joinGroup(group);
+            
+        } catch (IOException ex) {
+            System.out.println("ERRORE: " + ex.getMessage());
+        }
+        
+        port = socket.getLocalPort();
+    }
     
     /**
      * Ritorna il messaggio ricevuto.
@@ -92,16 +109,21 @@ public class MulticastClient extends Thread{
             System.out.println("ERRORE: " + ex.getMessage());
         }
     }
-
-    void setInfo(String message) {
+    
+    /**
+     * Metodo che serve a mandare i messaggi.
+     */
+    public void sendMessage(){
         try {
-            group = InetAddress.getByName("224.12.12.12");
-            if(port >= 1024 && port <= 65535){
-                destinationPort = 5555;
-            }
-            messageToSend = message;
-        }catch (UnknownHostException | NullPointerException ex) {
-            System.err.println("ERRORE: IP inserito non valido!");
+            byte[] data = messageToSend.getBytes();
+            DatagramPacket packet = new DatagramPacket(data, data.length, group, destinationPort);
+            socket.send(packet);
+        }
+        catch (SocketException ex) {
+            System.out.println("ERRORE: " + ex.getMessage());
+        }
+        catch (IOException ex) {
+            System.out.println("ERRORE: " + ex.getMessage());
         }
     }
 }

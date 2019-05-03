@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package communication;
+package samt.scribble.communication;
 
 /**
  * La classe Commands contiene tutti i byte di comando che è possibile inviare
@@ -22,15 +22,16 @@ package communication;
  * inviando.
  *
  * @author Matan Davidi
- * @version 2019-04-16
+ * @author giuliobosco
+ * @version 2019-04-29
  */
 public class Commands {
 
     /**
      * Il numero totale di byte comando definiti.
      */
-    public final static short COMMANDS_NUMBER = 4;
-    
+    public final static short COMMANDS_NUMBER = 9;
+
     /**
      * Un byte di comando che segnala che il messaggio inviato è di tipo
      * informativo.
@@ -44,15 +45,44 @@ public class Commands {
     public final static byte GENERAL_ERROR = 1;
 
     /**
+     * Un byte di comando che segnala che il messaggio inviato contiene una
+     * richiesta di ottenere la lista di utenti attualmente connessi.
+     */
+    public final static byte USERS_LIST_REQUEST = 2;
+
+    /**
+     * Un byte di comando che segnala che il messaggio inviato contiene la lista
+     * di utenti.
+     */
+    public final static byte USERS_LIST = 3;
+
+    /**
      * Un byte di comando che segnala che il messaggio inviato contiene il
      * disegno fatto dal disegnatore.
      */
-    public final static byte DRAWING = 2;
+    public final static byte DRAWING = 4;
 
     /**
      * Un byte di comando che segnala che il messaggio inviato contiene un
      * tentativo di indovinare la parola che sta disegnando il disegnatore.
      */
-    public final static byte WORD_GUESS = 3;
+    public final static byte WORD_GUESS = 5;
+
+    /**
+     * Un byte di comando che segnala che i byte seguenti devono essere
+     * rimandati al mittente indietro come sono stati ricevuti.
+     */
+    public final static byte ECHO = 6;
+
+    /**
+     * Un byte di comando che segnala la richiesta di entrare nel gioco
+     * scribble. I byte seguenti sono il nickname del giocatore.
+     */
+    public final static byte JOIN = 7;
+
+    /**
+     * Un byte di comando che segnala l'indirizzo del gruppo multicast.
+     */
+    public final static byte GROUP_ADDRESS_MESSAGE = 8;
 
 }

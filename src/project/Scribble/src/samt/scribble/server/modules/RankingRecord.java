@@ -21,77 +21,83 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package samt.scribble.server.modules;
 
 /**
- * Representation of a player.
+ * Classe che rappresenta il nome utente e il punteggio di un giocatore.
  *
  * @author mattiaruberto
  * @author gabrialessi
- * @version 1.1 (10.04.2019)
+ * @version 2019-05-01
  */
-public class Player {
+public class RankingRecord {
 
     /**
-     * Username of the player. Default value: "UNKNOWN".
+     * Attributo che rappresenta il nome di un giocatore. Valore di default:
+     * "UNKNOWN".
      */
     private String username = "UNKNOWN";
 
     /**
-     * Total score of the player. Default value: 0.
+     * Attributo che rappresenta il punteggio di un giocatore. Valore di
+     * default: 0.
      */
     private int score = 0;
 
     /**
-     * Constructor method where the username is defined.
+     * Metodo costruttore dove si definisce lo username.
      *
-     * @param username Username of the player.
+     * @param username Username del giocatore.
      */
-    public Player(String username) {
+    public RankingRecord(String username) {
         setUsername(username);
     }
 
     /**
-     * Constructor method where the username and the total score are defined.
+     * Metodo costruttore dove si definiscono username e punteggio.
      *
-     * @param username Username of the player.
-     * @param score Total score of the player.
+     * @param username Username del giocatore.
+     * @param score Punteggio del giocatore.
      */
-    public Player(String username, int score) {
-        setUsername(username);
+    public RankingRecord(String username, int score) {
+        this(username);
         setScore(score);
     }
 
     /**
-     * Get the username of the player.
+     * Metodo che ritorna lo username.
      *
-     * @return Username of the player.
+     * @return Username del giocatore.
      */
     public String getUsername() {
         return this.username;
     }
 
     /**
-     * Get the total score of the player.
+     * Metodo che ritorna il punteggio.
      *
-     * @return Total score of the player.
+     * @return Punteggio del giocatore.
      */
     public int getScore() {
         return this.score;
     }
 
     /**
-     * Set the username of the player.
+     * Metodo che imposta lo username.
      *
-     * @param username Username of the player.
+     * @param username Username del giocatore.
      */
     public void setUsername(String username) {
-        this.username = username;
+        String regex = "^(?=.{1,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
+        if (username.matches(regex)) {
+            this.username = username;
+        }
     }
 
     /**
-     * Set the total score of the player.
+     * Metodo che imposta il punteggio.
      *
-     * @param score Total score of the player.
+     * @param score Punteggio del giocatore.
      */
     public void setScore(int score) {
         if (score < 0) {
