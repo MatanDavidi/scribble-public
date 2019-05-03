@@ -1,0 +1,6 @@
+﻿cosa
+anno
+uomo
+giorno
+volta
+casa

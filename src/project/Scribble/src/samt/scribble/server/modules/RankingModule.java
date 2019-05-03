@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package samt.scribble.server.modules;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -35,13 +36,9 @@ import java.util.List;
  *
  * @author mattiaruberto
  * @author gabrialessi
- * @version 2019-05-01
+ * @version 2019-05-02
  */
-public class Ranking {
-    /**
-     * Attributoc che rappresenta la lista dei giocatori.
-     */
-    private List<Record> records = new ArrayList<>();
+public class RankingModule {
 
     /**
      * Attributo che rappresenta il percorso di default del file csv.
@@ -55,45 +52,25 @@ public class Ranking {
     private Path csvPath = CSV_PATH;
 
     /**
-     * Metodo costruttore dove si definisce il percorso del file.
+     * Attributo che rappresenta la lista dei giocatori nella classifica.
+     */
+    private List<RankingRecord> records = new ArrayList<>();
+
+    /**
+     * Metodo costruttore dove si definiscono percorso del file e giocatori.
      *
      * @param csvPath Percorso del file csv.
+     * @param records Giocatori della classifica.
      * @throws java.io.IOException Se si verifica un'eccezione di input o di
      * output.
      */
-    public Ranking(Path csvPath) throws IOException {
+    public RankingModule(Path csvPath, List<RankingRecord> records) throws IOException {
         setCsvPath(csvPath);
+        setRecords(records);
     }
 
     /**
-     * Ottenimento della lista dei giocatori.
-     *
-     * @return Lista dei giocatori.
-     */
-    public List<Record> getRecords() {
-        return this.records;
-    }
-    
-    /**
-     * Inserimento di un giocatore nella lista.
-     *
-     * @param record Giocatore da aggiungere.
-     */
-    public void addPlayer(Record record) {
-        insertRecord(record);
-    }
-
-    /**
-     * Rimozione di un giocatore dalla lista.
-     *
-     * @param record Giocatore da rimuovere.
-     */
-    public void removePlayer(Record record) {
-        getRecords().remove(record);
-    }
-    
-    /**
-     * Metodo che ritrona il percorso del file csv.
+     * Metodo che ritorna il percorso del file csv.
      *
      * @return Percorso del file csv.
      */
@@ -119,13 +96,31 @@ public class Ranking {
     }
 
     /**
+     * Metodo che ritrona i giocatori della classifica.
+     *
+     * @return Giocatori della classifica.
+     */
+    public List<RankingRecord> getRecords() {
+        return this.records;
+    }
+
+    /**
+     * Metodo che imposta i giocatori nella classifica.
+     *
+     * @param csvPath Giocatori della classifica.
+     */
+    private void setRecords(List<RankingRecord> records) {
+        this.records = records;
+    }
+
+    /**
      * Metodo che ordina la classica per il punteggio.
      *
      * @param records Lista dei giocatori.
      */
-    public void rankPlayers(List<Record> records) {
+    private void rankPlayers(List<RankingRecord> records) {
         boolean isDone;
-        Record temp;
+        RankingRecord temp;
         do {
             isDone = true;
             for (int i = 0; i < records.size() - 1; i++) {
@@ -144,20 +139,20 @@ public class Ranking {
      * della classifica.
      *
      * @param records Lista dei giocatori.
-     * @param newRecord Giocatore appena inserito.
+     * @param newRankingRecord Giocatore appena inserito.
      */
-    public void insertRecord(Record newRecord) {
+    private void insertRankingRecord(List<RankingRecord> records, RankingRecord newRankingRecord) {
         boolean isDone = false;
         int index = 0;
         for (int i = 0; i < records.size() && !isDone; i++) {
-            if (newRecord.getScore() >= records.get(i).getScore()) {
+            if (newRankingRecord.getScore() >= records.get(i).getScore()) {
                 index = i;
                 isDone = true;
             } else if (i == records.size() - 1) {
                 index = i + 1;
             }
         }
-        records.add(index, newRecord);
+        records.add(index, newRankingRecord);
     }
 
     /**
@@ -165,13 +160,13 @@ public class Ranking {
      *
      * @return La lista della classifica.
      */
-    public List<Record> readRanking() {
-        List<Record> rankingPlayers = new ArrayList<>();
+    public List<RankingRecord> readRanking() {
+        List<RankingRecord> rankingPlayers = new ArrayList<>();
         try {
             List<String> lines = Files.readAllLines(getCsvPath());
             for (String line : lines) {
                 String[] arguments = line.split(",");
-                Record player = new Record(arguments[0], Integer.parseInt(arguments[1]));
+                RankingRecord player = new RankingRecord(arguments[0], Integer.parseInt(arguments[1]));
                 rankingPlayers.add(player);
             }
         } catch (IOException | NumberFormatException ex) {
@@ -185,11 +180,11 @@ public class Ranking {
      *
      * @param records Lista dei giocatori.
      */
-    public void writeRanking() {
+    public void writeRanking(List<RankingRecord> records) {
         try {
             try {
                 List<String> lines = new ArrayList<>();
-                for (Record player : records) {
+                for (RankingRecord player : records) {
                     lines.add((player.getUsername() + "," + player.getScore()));
                 }
                 Files.write(getCsvPath(), lines);

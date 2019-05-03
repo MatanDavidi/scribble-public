@@ -14,6 +14,8 @@ import java.util.List;
  * @version 18.04.2019
  */
 public class WordManager {
+    
+    private FileManager fManager;
 
     /**
      * Lista che contiene tutte le parole del file.
@@ -25,33 +27,29 @@ public class WordManager {
      */
     private List<String> pickedWords = new ArrayList<>();
 
+    private String currentWord = "";
+    
     /**
      * Attributo booleano che indica se la modalità debug è attiva. Valore di
      * default = false.
      */
     private boolean debug = false;
 
-    /**
-     * Metodo costruttore che richiede la lista di parole del file.
-     *
-     * @param words lista di parole del file.
-     */
-    public WordManager(List<String> words) {
-        this.words = words;
+    public WordManager(Path filePath) throws IOException{
+        fManager = new FileManager(filePath);
+        this.words = fManager.getWords();
     }
-
-    /**
-     * Metodo costruttore che richiede la lista di parole del file e se la
-     * modalità debug è attiva o meno.
-     *
-     * @param words lista di parole del file.
-     * @param debug parametro che indica se la modalità debug è attiva.
-     */
-    public WordManager(List<String> words, boolean debug) {
-        this.words = words;
+    
+    public WordManager(Path filePath, boolean debug) throws IOException{
+        fManager = new FileManager(filePath);
+        this.words = fManager.getWords();
         this.debug = debug;
     }
 
+    public String getCurrentWord(){
+        return currentWord;
+    }
+    
     /**
      * Metodo che ritorna una parola casuale dalla lista delle parole non ancora
      * estratte.
@@ -61,6 +59,28 @@ public class WordManager {
         int rnd = (int) (Math.random() * words.size());
 
         return words.get(rnd);
+    }
+    
+    public boolean isGuessedWord(String userWord){
+        
+        userWord = userWord.trim();
+        
+        System.out.println("Parola corrente: '" + currentWord + "' " + currentWord.trim().length());
+        System.out.println("Parola dell'utente: '" + userWord + "' " + userWord.length());
+        System.out.println("Statement: " + userWord.equalsIgnoreCase(currentWord));
+        
+        
+//        for (int i = 0; i < currentWord.length(); i++) {
+//            System.out.println((int)currentWord.charAt(i) + " " + currentWord.charAt(i));
+//        }
+        
+        if(currentWord.equalsIgnoreCase(userWord.trim())){
+            System.out.println("Parola indovinata");
+            return true;
+        } 
+        
+        System.out.println("Parola sbagliata");
+        return false;
     }
 
     /**
@@ -88,7 +108,8 @@ public class WordManager {
 
             words.remove(word);
             pickedWords.add(word);
-
+            currentWord = word.trim();
+            
             return word;
         }
         
@@ -99,38 +120,7 @@ public class WordManager {
             System.out.println("Parole terminate: ricarico la lista");
         }
 
-        //chiamata recursiva
+        //chiamata ricursiva
         return getUniqueNewWord();
-    }
-
-    public static void main(String[] args) {
-
-        //creo il percorso del file
-        Path path = Paths.get("data", "list.txt");
-        FileManager fManager;
-        WordManager wManager;
-
-        try {
-            //creo il file manager
-            fManager = new FileManager(path);
-            List<String> wordsList = fManager.getWords();
-
-            //creo il WordManager
-            wManager = new WordManager(wordsList, true);
-
-            System.out.println("Lista parole casuali");
-            for (int i = 0; i < 1000; i++) {
-                //ottengo una parola non ancora estratta
-                System.out.println(i + ". Parola scelta: "
-                        + wManager.getUniqueNewWord());
-            }
-
-            //ordino la lista
-            wManager.sortList();
-
-        } catch (IOException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        }
-
     }
 }
