@@ -38,6 +38,10 @@ import java.util.List;
  * @version 2019-05-01
  */
 public class Ranking {
+    /**
+     * Attributoc che rappresenta la lista dei giocatori.
+     */
+    private List<Record> records = new ArrayList<>();
 
     /**
      * Attributo che rappresenta il percorso di default del file csv.
@@ -61,6 +65,33 @@ public class Ranking {
         setCsvPath(csvPath);
     }
 
+    /**
+     * Ottenimento della lista dei giocatori.
+     *
+     * @return Lista dei giocatori.
+     */
+    public List<Record> getRecords() {
+        return this.records;
+    }
+    
+    /**
+     * Inserimento di un giocatore nella lista.
+     *
+     * @param record Giocatore da aggiungere.
+     */
+    public void addPlayer(Record record) {
+        insertRecord(record);
+    }
+
+    /**
+     * Rimozione di un giocatore dalla lista.
+     *
+     * @param record Giocatore da rimuovere.
+     */
+    public void removePlayer(Record record) {
+        getRecords().remove(record);
+    }
+    
     /**
      * Metodo che ritrona il percorso del file csv.
      *
@@ -115,7 +146,7 @@ public class Ranking {
      * @param records Lista dei giocatori.
      * @param newRecord Giocatore appena inserito.
      */
-    public void insertRecord(List<Record> records, Record newRecord) {
+    public void insertRecord(Record newRecord) {
         boolean isDone = false;
         int index = 0;
         for (int i = 0; i < records.size() && !isDone; i++) {
@@ -154,7 +185,7 @@ public class Ranking {
      *
      * @param records Lista dei giocatori.
      */
-    public void writeRanking(List<Record> records) {
+    public void writeRanking() {
         try {
             try {
                 List<String> lines = new ArrayList<>();

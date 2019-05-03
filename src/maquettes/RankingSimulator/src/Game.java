@@ -36,88 +36,22 @@ import java.util.List;
  * @version 2019-05-01
  */
 public class Game {
-
-    /**
-     * Lista dei giocatori.
-     */
-    private List<Record> records = new ArrayList<>();
-
-    /**
-     * Classifica della partita.
-     */
-    private Ranking ranking;
-
-    /**
-     * Metodo costruttore dove si definiscono la lista di giocatori e la
-     * classifica.
-     *
-     * @param records Lista dei giocatori.
-     * @param ranking Classifica della partita.
-     */
-    public Game(List<Record> records, Ranking ranking) {
-        this.records = records;
-        this.ranking = ranking;
-        this.ranking.rankPlayers(this.records);
-    }
-
-    /**
-     * Ottenimento della lista dei giocatori.
-     *
-     * @return Lista dei giocatori.
-     */
-    public List<Record> getRecords() {
-        return this.records;
-    }
-
-    /**
-     * Ottenimento della classifica.
-     *
-     * @return Classifica della partita.
-     */
-    public Ranking getRanking() {
-        return this.ranking;
-    }
-
-    /**
-     * Inserimento di un giocatore nella lista.
-     *
-     * @param record Giocatore da aggiungere.
-     */
-    public void addPlayer(Record record) {
-        getRanking().insertRecord(getRecords(), record);
-    }
-
-    /**
-     * Rimozione di un giocatore dalla lista.
-     *
-     * @param record Giocatore da rimuovere.
-     */
-    public void removePlayer(Record record) {
-        getRecords().remove(record);
-    }
-
-    /**
-     * Metodo in cui si effettua il test di una partita con la classifica.
-     *
-     * @param args Argomenti a linea di comando.
-     */
     public static void main(String[] args) {
         try {
             // Creazione dei giocatori, della classifica e della partita.
             List<Record> records = new ArrayList<>();
             Path path = Paths.get("data", "ranking.csv");
             Ranking ranking = new Ranking(path);
-            Game game = new Game(records, ranking);
 
             // Inserimento dei giocatori nella partita.
-            game.addPlayer(new Record("Giuseppe", 40));
-            game.addPlayer(new Record("Mario", 10));
-            game.addPlayer(new Record("Giovanni", 50));
-            game.addPlayer(new Record("Luigi", 20));
-            game.addPlayer(new Record("Franco", 30));
+            ranking.addPlayer(new Record("Giuseppe", 40));
+            ranking.addPlayer(new Record("Mario", 10));
+            ranking.addPlayer(new Record("Giovanni", 50));
+            ranking.addPlayer(new Record("Luigi", 20));
+            ranking.addPlayer(new Record("Franco", 30));
 
             // Scrittura della classifica.
-            game.getRanking().writeRanking(game.getRecords());
+            ranking.writeRanking();
 
             // Lettura della classifica.
             List<Record> rankingRecords = ranking.readRanking();
@@ -130,11 +64,11 @@ public class Game {
             System.out.println("");
 
             // Inserimento di altri giocatori nella partita.
-            game.addPlayer(new Record("Paolo", 35));
-            game.addPlayer(new Record("Carlo", 15));
+            ranking.addPlayer(new Record("Paolo", 35));
+            ranking.addPlayer(new Record("Carlo", 15));
 
             // Scrittura della classifica.
-            game.getRanking().writeRanking(game.getRecords());
+            ranking.writeRanking();
 
             // Lettura della classifica.
             rankingRecords = ranking.readRanking();
