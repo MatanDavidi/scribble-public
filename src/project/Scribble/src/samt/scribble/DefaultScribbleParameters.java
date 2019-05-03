@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
 package samt.scribble.communication;
 
 /**
@@ -46,5 +45,11 @@ public class DefaultScribbleParameters {
      * Porta di ascolto di default del server scribble.
      */
     public static final int DEFAULT_SERVER_PORT = 5002;
+
+    /**
+     * Il numero minimo di giocatori che devono essere registrati per poter
+     * avviare la partita.
+     */
+    public static final int MINIMUM_PLAYERS_NUMBER = 3;
 
 }
