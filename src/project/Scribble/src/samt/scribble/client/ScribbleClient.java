@@ -21,19 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package samt.scribble.client;
 
 import javax.swing.*;
 import java.awt.*;
+import samt.scribble.DebugVerbosity;
+import samt.scribble.DefaultScribbleParameters;
+import samt.scribble.communication.Connection;
+import samt.scribble.communication.GroupConnection;
+import samt.scribble.communication.ListeningThread;
+import samt.scribble.communication.MessageSender;
 
 /**
  * Scribble client.
  *
  * @author giuliobosco (giuliobva@gmail.com)
- * @version 1.0 (2019-05-04 - 2019-05-04)
+ * @author Matan Davidi
+ * @version 1.1 (2019-05-04 - 2019-05-04)
  */
-public class ScribbleClient extends JFrame {
+public class ScribbleClient extends JFrame implements LoginListener {
     // ---------------------------------------------------------------- Costants
     // -------------------------------------------------------------- Attributes
 
@@ -42,9 +48,20 @@ public class ScribbleClient extends JFrame {
      */
     private ScribblePanel scribblePanel;
 
+    /**
+     * Istanza di LoginPanel che contiene i componenti e la logica per
+     * effettuare l'accesso presso il server.
+     */
+    private LoginPanel loginPanel;
+
+    /**
+     * L'istanza di Connection che contiene i membri per gestire la connessione
+     * con il server.
+     */
+    private Connection serverConnection;
+
     // ------------------------------------------------------- Getters & Setters
     // ------------------------------------------------------------ Constructors
-
     /**
      * Crea scribble client.
      */
@@ -56,9 +73,10 @@ public class ScribbleClient extends JFrame {
 
         // Set Frame Layout.
         this.getContentPane().setLayout(new BorderLayout());
-        
-        this.scribblePanel = new ScribblePanel();
-        this.getContentPane().add(this.scribblePanel, BorderLayout.CENTER);
+
+        loginPanel = new LoginPanel();
+        loginPanel.setListener(this);
+        add(loginPanel);
 
         pack();
     }
@@ -66,7 +84,6 @@ public class ScribbleClient extends JFrame {
     // ------------------------------------------------------------ Help Methods
     // --------------------------------------------------------- General Methods
     // ------------------------------------------------------- Static Components
-
     /**
      * Avvio di scribble (client).
      *
@@ -78,6 +95,24 @@ public class ScribbleClient extends JFrame {
                 new ScribbleClient().setVisible(true);
             }
         });
+    }
+
+    @Override
+    public void loggedIn(String username, GroupConnection groupConnectionResponse) {
+
+        if (DefaultScribbleParameters.DEBUG_VERBOSITY.equals(DebugVerbosity.Debug)) {
+
+            System.out.println(username + ": logged into group " + groupConnectionResponse.getGroupIp().getHostAddress());
+        }
+
+        serverConnection = new Connection(groupConnectionResponse, new ListeningThread(DefaultScribbleParameters.DEFAULT_CLIENT_PORT), new MessageSender());
+        scribblePanel = new ScribblePanel(serverConnection);
+        getContentPane().remove(loginPanel);
+        getContentPane().add(scribblePanel);
+        getContentPane().validate();
+        getContentPane().repaint();
+        pack();
+
     }
 
 }
