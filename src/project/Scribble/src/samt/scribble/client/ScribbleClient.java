@@ -34,16 +34,16 @@ import java.awt.*;
  * @version 1.0 (2019-05-04 - 2019-05-04)
  */
 public class ScribbleClient extends JFrame {
-    // ------------------------------------------------------------------------------------ Costants
-    // ---------------------------------------------------------------------------------- Attributes
+    // ---------------------------------------------------------------- Costants
+    // -------------------------------------------------------------- Attributes
 
     /**
      * Pannello scribble, dove verrà disegnato il disegno.
      */
     private ScribblePanel scribblePanel;
 
-    // --------------------------------------------------------------------------- Getters & Setters
-    // -------------------------------------------------------------------------------- Constructors
+    // ------------------------------------------------------- Getters & Setters
+    // ------------------------------------------------------------ Constructors
 
     /**
      * Crea scribble client.
@@ -56,16 +56,16 @@ public class ScribbleClient extends JFrame {
 
         // Set Frame Layout.
         this.getContentPane().setLayout(new BorderLayout());
-
+        
         this.scribblePanel = new ScribblePanel();
         this.getContentPane().add(this.scribblePanel, BorderLayout.CENTER);
 
         pack();
     }
 
-    // -------------------------------------------------------------------------------- Help Methods
-    // ----------------------------------------------------------------------------- General Methods
-    // --------------------------------------------------------------------------- Static Components
+    // ------------------------------------------------------------ Help Methods
+    // --------------------------------------------------------- General Methods
+    // ------------------------------------------------------- Static Components
 
     /**
      * Avvio di scribble (client).
