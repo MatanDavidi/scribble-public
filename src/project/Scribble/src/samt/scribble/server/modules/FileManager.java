@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -92,9 +91,23 @@ public class FileManager {
      * Lettura del contenuto del file.
      *
      * @return La lista con il contenuto del file.
+     * @throws java.io.IOException Se si verifica un'eccezione di input o di
+     * output.
      */
     public List<String> readFile() throws IOException {
         List<String> lines = Files.readAllLines(getFilePath());
         return lines;
     }
+
+    /**
+     * Scrittura del file.
+     *
+     * @param lines Il contenuto da scrivere nel file.
+     * @throws java.io.IOException Se si verifica un'eccezione di input o di
+     * output.
+     */
+    public void writeFile(List<String> lines) throws IOException {
+        Files.write(getFilePath(), lines);
+    }
+
 }
