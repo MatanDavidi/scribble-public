@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package samt.scribble.server;
 
 import java.net.InetAddress;
@@ -50,14 +49,15 @@ public class PlayerManager {
     }
 
     /**
-     * Controlla se il nickname &egrave; registrato nella lista dei giocatori di scribble.
+     * Controlla se il username &egrave; registrato nella lista dei giocatori di
+     * scribble.
      *
-     * @param nickname Nickname da controllare se &egrave; nella lista.
+     * @param username Username da controllare se &egrave; nella lista.
      * @return True se il giocatore &egrave; registrato.
      */
-    public boolean isRegisteredPlayer(String nickname) {
+    public boolean isRegisteredPlayer(String username) {
         for (Player player : this.players) {
-            if (player.getNickname().equals(nickname)) {
+            if (player.getUsername().equals(username)) {
                 return true;
             }
         }
@@ -66,7 +66,8 @@ public class PlayerManager {
     }
 
     /**
-     * Controlla se l'ip è già stato registrato nella lista dei giocatori di scribble.
+     * Controlla se l'ip è già stato registrato nella lista dei giocatori di
+     * scribble.
      *
      * @param ip IP da controllare se &egrave; nella lista.
      * @return True se l'IP &egrave; registrato.
@@ -82,15 +83,17 @@ public class PlayerManager {
     }
 
     /**
-     * Controlla se il nickname e l'IP sono registrati nella lista dei giocatori di scribble.
+     * Controlla se il username e l'IP sono registrati nella lista dei giocatori
+     * di scribble.
      *
-     * @param nickname Nickname da controllare se &egrave; nella lista.
-     * @param ip       IP da controlla se &egrave; nella lista.
-     * @return True se il nickname e l'IP sono nella lista dei giocatori di scribble.
+     * @param username Username da controllare se &egrave; nella lista.
+     * @param ip IP da controlla se &egrave; nella lista.
+     * @return True se il username e l'IP sono nella lista dei giocatori di
+     * scribble.
      */
-    public boolean isRegisteredPlayer(String nickname, InetAddress ip) {
+    public boolean isRegisteredPlayer(String username, InetAddress ip) {
         for (Player player : this.players) {
-            if (player.getNickname().equals(nickname) && player.getIp().equals(ip)) {
+            if (player.getUsername().equals(username) && player.getIp().equals(ip)) {
                 return true;
             }
         }
@@ -102,12 +105,13 @@ public class PlayerManager {
      * Registra il giocatore nella lista dei giocatori di scribble.
      *
      * @param player Giocatore di scribble.
-     * @throws PlayerAlreadyRegisteredException Il nickname del giocatore è già in uso.
+     * @throws PlayerAlreadyRegisteredException Il username del giocatore è già
+     * in uso.
      */
     public void registerPlayer(Player player) throws PlayerAlreadyRegisteredException {
         for (Player playerInList : this.players) {
-            if (playerInList.getNickname().equals(player.getNickname())) {
-                String message = "Il nickname \"" + player.getNickname() + "\" è già in uso!";
+            if (playerInList.getUsername().equals(player.getUsername())) {
+                String message = "Il username \"" + player.getUsername() + "\" è già in uso!";
                 throw new PlayerAlreadyRegisteredException(message);
             }
         }
@@ -130,13 +134,13 @@ public class PlayerManager {
             Player p3 = new Player("player2", InetAddress.getByName("localhost"), 2003);
 
             playerManager.registerPlayer(p0);
-            System.out.println(p0.getNickname() + " registrato!");
+            System.out.println(p0.getUsername() + " registrato!");
             playerManager.registerPlayer(p1);
-            System.out.println(p1.getNickname() + " registrato!");
+            System.out.println(p1.getUsername() + " registrato!");
             playerManager.registerPlayer(p2);
-            System.out.println(p2.getNickname() + " registrato!");
+            System.out.println(p2.getUsername() + " registrato!");
             playerManager.registerPlayer(p3);
-            System.out.println(p3.getNickname() + " registrato!");
+            System.out.println(p3.getUsername() + " registrato!");
         } catch (PlayerAlreadyRegisteredException | UnknownHostException ex) {
             System.out.println(ex.getMessage());
         }
