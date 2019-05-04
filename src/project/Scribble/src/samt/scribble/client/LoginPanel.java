@@ -160,6 +160,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
                     if (username != null && listener != null) {
 
                         listener.loggedIn(username, groupConnection);
+                        listeningThread.interrupt();
 
                     }
 
