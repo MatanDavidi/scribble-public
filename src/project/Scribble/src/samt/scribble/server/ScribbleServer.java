@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
 
 /**
@@ -103,7 +104,10 @@ public class ScribbleServer implements DatagramListener {
                                 groupConnection));
                         break;
                 }
-            } catch (IOException ignored) {
+            } catch (IOException ex) {
+                if (DefaultScribbleParameters.DEBUG_VERBOSITY.equals(DebugVerbosity.Errors)) {
+                    System.out.println("ScribbleServer: " + ex.getMessage());
+                }
             }
         }
     }
