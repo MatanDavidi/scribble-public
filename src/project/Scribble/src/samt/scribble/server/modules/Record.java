@@ -30,7 +30,7 @@ package samt.scribble.server.modules;
  * @author gabrialessi
  * @version 2019-05-01
  */
-public class RankingRecord {
+public class Record {
 
     /**
      * Attributo che rappresenta il nome di un giocatore. Valore di default:
@@ -47,7 +47,7 @@ public class RankingRecord {
     /**
      * Metodo costruttore vuoto.
      */
-    public RankingRecord() {
+    public Record() {
 
     }
 
@@ -56,7 +56,7 @@ public class RankingRecord {
      *
      * @param username Username del giocatore.
      */
-    public RankingRecord(String username) {
+    public Record(String username) {
         setUsername(username);
     }
 
@@ -66,7 +66,7 @@ public class RankingRecord {
      * @param username Username del giocatore.
      * @param score Punteggio del giocatore.
      */
-    public RankingRecord(String username, int score) {
+    public Record(String username, int score) {
         this(username);
         setScore(score);
     }

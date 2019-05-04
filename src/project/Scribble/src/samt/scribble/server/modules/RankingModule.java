@@ -45,7 +45,7 @@ public class RankingModule {
     /**
      * Attributo che rappresenta la lista dei giocatori nella classifica.
      */
-    private List<RankingRecord> records = new ArrayList<>();
+    private List<Record> records = new ArrayList<>();
 
     /**
      * Attributo che rappresenta il gestore del file.
@@ -71,7 +71,7 @@ public class RankingModule {
      * @throws java.io.IOException Se si verifica un'eccezione di input o di
      * output.
      */
-    public RankingModule(Path filePath, List<RankingRecord> records) throws IOException {
+    public RankingModule(Path filePath, List<Record> records) throws IOException {
         this(filePath);
         setRecords(records);
     }
@@ -81,7 +81,7 @@ public class RankingModule {
      *
      * @return Giocatori della classifica.
      */
-    public List<RankingRecord> getRecords() {
+    public List<Record> getRecords() {
         return this.records;
     }
 
@@ -90,7 +90,7 @@ public class RankingModule {
      *
      * @param csvPath Giocatori della classifica.
      */
-    private void setRecords(List<RankingRecord> records) {
+    private void setRecords(List<Record> records) {
         this.records = records;
     }
 
@@ -108,7 +108,7 @@ public class RankingModule {
      *
      * @param record Giocatore da inserire.
      */
-    public void addPlayer(RankingRecord record) {
+    public void addPlayer(Record record) {
         boolean isDone = false;
         for (int i = 0; i < getRecords().size() && !isDone; i++) {
             if (record.getScore() >= getRecords().get(i).getScore()) {
@@ -125,7 +125,7 @@ public class RankingModule {
      *
      * @param record Giocatore da rimuovere.
      */
-    public void removePlayer(RankingRecord record) {
+    public void removePlayer(Record record) {
         getRecords().remove(record);
     }
 
@@ -134,9 +134,9 @@ public class RankingModule {
      *
      * @param records Lista dei giocatori.
      */
-    private void rankPlayers(List<RankingRecord> records) {
+    private void rankPlayers(List<Record> records) {
         boolean isDone = false;
-        RankingRecord temp = new RankingRecord();
+        Record temp = new Record();
         do {
             isDone = true;
             for (int i = 0; i < records.size() - 1; i++) {
@@ -157,13 +157,13 @@ public class RankingModule {
      * @throws java.io.IOException Se si verifica un'eccezione di input o di
      * output.
      */
-    public List<RankingRecord> readRanking() throws IOException {
-        List<RankingRecord> records = new ArrayList<>();
+    public List<Record> readRanking() throws IOException {
+        List<Record> records = new ArrayList<>();
         List<String> lines = getFileManager().readFile();
         for (String line : lines) {
             String username = line.split(SEP)[0];
             int score = Integer.parseInt(line.split(SEP)[1]);
-            RankingRecord record = new RankingRecord(username, score);
+            Record record = new Record(username, score);
             records.add(record);
         }
         return records;
@@ -176,9 +176,9 @@ public class RankingModule {
      * @throws java.io.IOException Se si verifica un'eccezione di input o di
      * output.
      */
-    public void writeRanking(List<RankingRecord> records) throws IOException {
+    public void writeRanking(List<Record> records) throws IOException {
         List<String> lines = new ArrayList<>();
-        for (RankingRecord player : records) {
+        for (Record player : records) {
             lines.add((player.getUsername() + SEP + player.getScore()));
         }
         getFileManager().writeFile(lines);
