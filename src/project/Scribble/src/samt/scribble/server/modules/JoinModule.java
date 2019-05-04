@@ -32,6 +32,7 @@ import samt.scribble.server.PlayerAlreadyRegisteredException;
 import samt.scribble.server.PlayerManager;
 
 import java.net.DatagramPacket;
+import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
 
 /**
@@ -74,7 +75,11 @@ public class JoinModule {
             message = new ErrorMessage(pare.getMessage());
         }
 
-        System.out.println(new String(message.getWholeMessage()));
+        if (DefaultScribbleParameters.DEBUG_VERBOSITY.equals(DebugVerbosity.Debug)) {
+
+            System.out.println(new String(message.getWholeMessage()));
+
+        }
 
         return new DatagramPacket(
                 message.getWholeMessage(),
