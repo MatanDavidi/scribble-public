@@ -28,7 +28,7 @@ package samt.scribble.communication;
  * Controllo della comunicazione.
  *
  * @author giuliobosco (giuliobva@gmail.com)
- * @version 1.0 (2019-05-04 - 2019-05-04)
+ * @version 1.0.1 (2019-05-04 - 2019-05-04)
  */
 public class Connection {
     // ------------------------------------------------------------------------------------ Costants
@@ -90,6 +90,17 @@ public class Connection {
     }
 
     // -------------------------------------------------------------------------------- Help Methods
+
+    /**
+     * Aggungere un ascoltatore di datagrammi alla connessione al gruppo ed alla thread di ascolto.
+     *
+     * @param datagramListener Ascoltatore di datagrammi da aggiungere.
+     */
+    public void addDatagramListener(DatagramListener datagramListener) {
+        this.groupConnection.addDatagramListener(datagramListener);
+        this.listeningThread.addDatagramListener(datagramListener);
+    }
+
     // ----------------------------------------------------------------------------- General Methods
     // --------------------------------------------------------------------------- Static Components
 
