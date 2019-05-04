@@ -58,8 +58,7 @@ public class Record {
      * @param username Username del giocatore.
      */
     public Record(String username) {
-        setUsername(username);
-        setScore(0);
+        this(username, 0);
     }
 
     /**
