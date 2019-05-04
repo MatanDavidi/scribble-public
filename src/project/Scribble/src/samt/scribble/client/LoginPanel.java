@@ -172,7 +172,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
             }
 
-            JOptionPane.showMessageDialog(this, messageString);
+            JOptionPane.showMessageDialog(this, new String(messageBytes));
 
         }
 
