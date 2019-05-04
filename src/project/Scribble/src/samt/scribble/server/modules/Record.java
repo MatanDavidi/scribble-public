@@ -63,10 +63,10 @@ public class Record {
     }
 
     /**
-     * Metodo costruttore dove si definiscono username e punteggio..
+     * Metodo costruttore dove si definiscono username e punteggio.
      *
      * @param username Username del giocatore.
-     * @param score Puntegio del giocatore.
+     * @param score Punteggio del giocatore.
      */
     public Record(String username, int score) {
         setUsername(username);
