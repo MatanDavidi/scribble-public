@@ -24,6 +24,7 @@
  
 package samt.scribble.communication;
 
+import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.communication.messages.Message;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ import java.net.InetAddress;
  * Send scribble message as datagram.
  *
  * @author giuliobosco (giuliobva@gmail.com)
- * @version 1.0 (2019-04-29 - 2019-04-29)
+ * @version 1.0.1 (2019-04-29 - 2019-05-04)
  */
 public class MessageSender {
 
