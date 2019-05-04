@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 giuliobosco.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,23 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package samt.scribble.server;
 
+import samt.scribble.server.modules.Record;
 import java.net.InetAddress;
 
 /**
  * Giocatore di scribble, rappresenta un giocatore del gioco scribble.
  *
  * @author giuliobosco (giuliobva@gmail.com)
- * @version 1.0 (2019-04-18)
+ * @author gabrialessi
+ * @version 2019-05-04
  */
-public class Player {
-
-    /**
-     * Nick name del giocatore.
-     */
-    private String nickname;
+public class Player extends Record {
 
     /**
      * Indirizzo IP del giocatore.
@@ -50,17 +46,32 @@ public class Player {
     private int port;
 
     /**
-     * Punteggio del giocatore.
+     * Crea un giocatore con il suo username, il suo ip e la porta logica del
+     * suo client.
+     *
+     * @param username Username del giocatore.
+     * @param ip Indirizzo IP del giocatore.
+     * @param port Porta logica del client del giocatore.
      */
-    private int score;
+    public Player(String username, InetAddress ip, int port) {
+        super(username);
+        this.ip = ip;
+        this.port = port;
+    }
 
     /**
-     * Ritorna il nick name del giocatoe.
+     * Crea un giocatore con il suo username, punteggio, ip e la porta logica
+     * del suo client.
      *
-     * @return Nick name del giocatore.
+     * @param username Username del giocatore.
+     * @param score Punteggio del giocatore.
+     * @param ip Indirizzo IP del giocatore.
+     * @param port Porta logica del client del giocatore.
      */
-    public String getNickname() {
-        return this.nickname;
+    public Player(String username, int score, InetAddress ip, int port) {
+        super(username, score);
+        this.ip = ip;
+        this.port = port;
     }
 
     /**
@@ -79,44 +90,6 @@ public class Player {
      */
     public int getPort() {
         return this.port;
-    }
-
-    /**
-     * Ritorna il punteggio del giocatore.
-     *
-     * @return Punteggio del giocatore.
-     */
-    public int getScore() {
-        return this.score;
-    }
-
-    /**
-     * Setta il punteggio del giocatore, che deve essere maggiore o uguale a 0, se non lo &egrave;
-     * viene settato a zero.
-     *
-     * @param score Punteggio del giocatore.
-     */
-    public void setScore(int score) {
-        if (score < 0) {
-            score = 0;
-        }
-
-        this.score = score;
-    }
-
-    /**
-     * Crea un giocatore con il suo nickname, il suo ip ed la porta logica del suo client.
-     * Setta il punteggio a 0.
-     *
-     * @param nickname Nick name del giocatore.
-     * @param ip       Indirizzo IP del giocatore.
-     * @param port     Porta logica del client del giocatore.
-     */
-    public Player(String nickname, InetAddress ip, int port) {
-        this.nickname = nickname;
-        this.ip = ip;
-        this.port = port;
-        this.score = 0;
     }
 
 }

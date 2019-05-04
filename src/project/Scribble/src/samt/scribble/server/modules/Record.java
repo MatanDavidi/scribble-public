@@ -36,13 +36,13 @@ public class Record {
      * Attributo che rappresenta il nome di un giocatore. Valore di default:
      * "UNKNOWN".
      */
-    private String username = "UNKNOWN";
+    protected String username = "UNKNOWN";
 
     /**
      * Attributo che rappresenta il punteggio di un giocatore. Valore di
      * default: 0.
      */
-    private int score = 0;
+    protected int score = 0;
 
     /**
      * Metodo costruttore vuoto.
@@ -52,22 +52,24 @@ public class Record {
     }
 
     /**
-     * Metodo costruttore dove si definisce lo username.
+     * Metodo costruttore dove si definisce lo username e si imposta il
+     * punteggio a 0.
      *
      * @param username Username del giocatore.
      */
     public Record(String username) {
         setUsername(username);
+        setScore(0);
     }
 
     /**
-     * Metodo costruttore dove si definiscono username e punteggio.
+     * Metodo costruttore dove si definiscono username e punteggio..
      *
      * @param username Username del giocatore.
-     * @param score Punteggio del giocatore.
+     * @param score Puntegio del giocatore.
      */
     public Record(String username, int score) {
-        this(username);
+        setUsername(username);
         setScore(score);
     }
 
@@ -94,7 +96,7 @@ public class Record {
      *
      * @param username Username del giocatore.
      */
-    private void setUsername(String username) {
+    protected void setUsername(String username) {
         String regex = "^(?=.{1,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
         if (username.matches(regex)) {
             this.username = username;
@@ -106,7 +108,7 @@ public class Record {
      *
      * @param score Punteggio del giocatore.
      */
-    private void setScore(int score) {
+    protected void setScore(int score) {
         if (score < 0) {
             score = 0;
         }
