@@ -30,7 +30,9 @@ package samt.scribble;
  */
 public enum DebugVerbosity {
     
-    Debug,
-    Release
+    Errors,
+    Information,
+    Release,
+    Warnings
     
 }
