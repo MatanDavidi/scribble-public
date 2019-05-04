@@ -23,11 +23,8 @@
  */
 package samt.scribble.server.modules;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,15 +38,9 @@ import java.util.List;
 public class RankingModule {
 
     /**
-     * Attributo che rappresenta il percorso di default del file csv.
+     * Costante che definisce il separatore tra username e punteggio nel file.
      */
-    public static final Path CSV_PATH = Paths.get("data", "ranking.csv");
-
-    /**
-     * Attributo che rappresenta il percorso del file csv che contiene la
-     * classifica.
-     */
-    private Path csvPath = CSV_PATH;
+    public static final String SEP = ",";
 
     /**
      * Attributo che rappresenta la lista dei giocatori nella classifica.
@@ -57,42 +48,32 @@ public class RankingModule {
     private List<RankingRecord> records = new ArrayList<>();
 
     /**
+     * Attributo che rappresenta il gestore del file.
+     */
+    private FileManager fileManager;
+
+    /**
+     * Metodo costruttore dove si definisce il percorso del file.
+     *
+     * @param filePath Percorso del file.
+     * @throws java.io.IOException Se si verifica un'eccezione di input o di
+     * output.
+     */
+    public RankingModule(Path filePath) throws IOException {
+        this.fileManager = new FileManager(filePath);
+    }
+
+    /**
      * Metodo costruttore dove si definiscono percorso del file e giocatori.
      *
-     * @param csvPath Percorso del file csv.
+     * @param filePath Percorso del file.
      * @param records Giocatori della classifica.
      * @throws java.io.IOException Se si verifica un'eccezione di input o di
      * output.
      */
-    public RankingModule(Path csvPath, List<RankingRecord> records) throws IOException {
-        setCsvPath(csvPath);
+    public RankingModule(Path filePath, List<RankingRecord> records) throws IOException {
+        this(filePath);
         setRecords(records);
-    }
-
-    /**
-     * Metodo che ritorna il percorso del file csv.
-     *
-     * @return Percorso del file csv.
-     */
-    public Path getCsvPath() {
-        return this.csvPath;
-    }
-
-    /**
-     * Metodo che imposta il percorso del file csv.
-     *
-     * @param csvPath Percorso del file csv.
-     */
-    private void setCsvPath(Path csvPath) throws IOException {
-        if (Files.exists(csvPath) && !Files.notExists(csvPath)) {
-            if (Files.isReadable(csvPath)) {
-                this.csvPath = csvPath;
-            } else {
-                throw new IOException("File non leggibile!");
-            }
-        } else {
-            throw new IOException("File non accessibile!");
-        }
     }
 
     /**
@@ -114,10 +95,18 @@ public class RankingModule {
     }
 
     /**
-     * Metodo che ordina il giocatore appena inserito nella posizione giusta
-     * della classifica.
+     * Metodo che ritorna il gestore del file della classifica.
      *
-     * @param record Giocatore appena inserito.
+     * @return Gestore del file.
+     */
+    public FileManager getFileManager() {
+        return this.fileManager;
+    }
+
+    /**
+     * Inserimento di un giocatore nella posizione giusta della classifica.
+     *
+     * @param record Giocatore da inserire.
      */
     public void addPlayer(RankingRecord record) {
         boolean isDone = false;
@@ -146,8 +135,8 @@ public class RankingModule {
      * @param records Lista dei giocatori.
      */
     private void rankPlayers(List<RankingRecord> records) {
-        boolean isDone;
-        RankingRecord temp;
+        boolean isDone = false;
+        RankingRecord temp = new RankingRecord();
         do {
             isDone = true;
             for (int i = 0; i < records.size() - 1; i++) {
@@ -162,44 +151,37 @@ public class RankingModule {
     }
 
     /**
-     * Lettura della classifica dal file csv.
+     * Lettura della classifica dal file.
      *
      * @return La lista della classifica.
+     * @throws java.io.IOException Se si verifica un'eccezione di input o di
+     * output.
      */
-    public List<RankingRecord> readRanking() {
-        List<RankingRecord> rankingPlayers = new ArrayList<>();
-        try {
-            List<String> lines = Files.readAllLines(getCsvPath());
-            for (String line : lines) {
-                String[] arguments = line.split(",");
-                RankingRecord player = new RankingRecord(arguments[0], Integer.parseInt(arguments[1]));
-                rankingPlayers.add(player);
-            }
-        } catch (IOException | NumberFormatException ex) {
-            System.out.println("Error: " + ex.getMessage());
+    public List<RankingRecord> readRanking() throws IOException {
+        List<RankingRecord> records = new ArrayList<>();
+        List<String> lines = getFileManager().readFile();
+        for (String line : lines) {
+            String username = line.split(SEP)[0];
+            int score = Integer.parseInt(line.split(SEP)[1]);
+            RankingRecord record = new RankingRecord(username, score);
+            records.add(record);
         }
-        return rankingPlayers;
+        return records;
     }
 
     /**
-     * Metodo che scrive la lista dei giocatori nel file csv.
+     * Metodo che scrive la lista dei giocatori nel file.
      *
      * @param records Lista dei giocatori.
+     * @throws java.io.IOException Se si verifica un'eccezione di input o di
+     * output.
      */
-    public void writeRanking(List<RankingRecord> records) {
-        try {
-            try {
-                List<String> lines = new ArrayList<>();
-                for (RankingRecord player : records) {
-                    lines.add((player.getUsername() + "," + player.getScore()));
-                }
-                Files.write(getCsvPath(), lines);
-            } catch (FileNotFoundException fn) {
-                System.out.println("Error: " + fn.getMessage());
-            }
-        } catch (IOException ex) {
-            System.out.println("Error: " + ex.getMessage());
+    public void writeRanking(List<RankingRecord> records) throws IOException {
+        List<String> lines = new ArrayList<>();
+        for (RankingRecord player : records) {
+            lines.add((player.getUsername() + SEP + player.getScore()));
         }
+        getFileManager().writeFile(lines);
     }
 
 }
