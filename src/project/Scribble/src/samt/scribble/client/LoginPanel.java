@@ -151,7 +151,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
             }
 
-            if (packetData[0] == Commands.USERS_LIST) {
+            if (packetData[0] == Commands.GROUP_ADDRESS_MESSAGE) {
 
                 try {
 
