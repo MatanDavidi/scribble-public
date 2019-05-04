@@ -36,7 +36,7 @@ import java.util.List;
  *
  * @author mattiaruberto
  * @author gabrialessi
- * @version 2019-05-02
+ * @version 2019-05-04
  */
 public class RankingModule {
 
@@ -114,7 +114,34 @@ public class RankingModule {
     }
 
     /**
-     * Metodo che ordina la classica per il punteggio.
+     * Metodo che ordina il giocatore appena inserito nella posizione giusta
+     * della classifica.
+     *
+     * @param record Giocatore appena inserito.
+     */
+    public void addPlayer(RankingRecord record) {
+        boolean isDone = false;
+        for (int i = 0; i < getRecords().size() && !isDone; i++) {
+            if (record.getScore() >= getRecords().get(i).getScore()) {
+                getRecords().add(i, record);
+                isDone = true;
+            } else if (i == getRecords().size() - 1) {
+                getRecords().add(i + 1, record);
+            }
+        }
+    }
+
+    /**
+     * Rimozione di un giocatore dalla lista.
+     *
+     * @param record Giocatore da rimuovere.
+     */
+    public void removePlayer(RankingRecord record) {
+        getRecords().remove(record);
+    }
+
+    /**
+     * Metodo che ordina la classifica per il punteggio.
      *
      * @param records Lista dei giocatori.
      */
@@ -132,27 +159,6 @@ public class RankingModule {
                 }
             }
         } while (!isDone);
-    }
-
-    /**
-     * Metodo che ordina il giocatore appena inserito nella posizione giusta
-     * della classifica.
-     *
-     * @param records Lista dei giocatori.
-     * @param newRankingRecord Giocatore appena inserito.
-     */
-    private void insertRankingRecord(List<RankingRecord> records, RankingRecord newRankingRecord) {
-        boolean isDone = false;
-        int index = 0;
-        for (int i = 0; i < records.size() && !isDone; i++) {
-            if (newRankingRecord.getScore() >= records.get(i).getScore()) {
-                index = i;
-                isDone = true;
-            } else if (i == records.size() - 1) {
-                index = i + 1;
-            }
-        }
-        records.add(index, newRankingRecord);
     }
 
     /**
