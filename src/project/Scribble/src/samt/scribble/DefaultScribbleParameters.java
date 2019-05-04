@@ -37,7 +37,7 @@ public class DefaultScribbleParameters {
     public static final int DEFAULT_GROUP_PORT = 5000;
 
     /**
-     * Porta di ascolto di default del server scribble.
+     * Porta di ascolto di default del client scribble.
      */
     public static final int DEFAULT_CLIENT_PORT = 5001;
 
