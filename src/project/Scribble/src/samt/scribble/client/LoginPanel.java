@@ -144,16 +144,16 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
             byte[] messageBytes = new byte[packetData.length - 1];
 
             for (int i = 1; i < packetData.length; ++i) {
-                messageBytes[i - 1] = packetData[i];
-            }
 
-            String messageString = new String(messageBytes);
+                messageBytes[i - 1] = packetData[i];
+
+            }
 
             if (packetData[0] == Commands.USERS_LIST) {
 
                 try {
 
-                    GroupConnection groupConnection = new GroupConnection(InetAddress.getByName(messageString), DefaultScribbleParameters.DEFAULT_GROUP_PORT);
+                    GroupConnection groupConnection = new GroupConnection(InetAddress.getByAddress(messageBytes), DefaultScribbleParameters.DEFAULT_GROUP_PORT);
 
                     if (username != null && listener != null) {
 
