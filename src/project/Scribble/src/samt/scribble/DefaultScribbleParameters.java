@@ -27,7 +27,8 @@ package samt.scribble;
  * Parametri di default di scribble.
  *
  * @author giuliobosco (giuliobva@gmail.com)
- * @version 1.0.1 (2019-04-19)
+ * @author Matan Davidi
+ * @version 1.0.2 (2019-04-19 - 2019-05-04)
  */
 public class DefaultScribbleParameters {
 
@@ -51,5 +52,11 @@ public class DefaultScribbleParameters {
      * avviare la partita.
      */
     public static final int MINIMUM_PLAYERS_NUMBER = 3;
+
+    /**
+     * Il livello di verbosità delle informazioni di debug durante l'esecuzione
+     * del programma.
+     */
+    public static final DebugVerbosity DEBUG_VERBOSITY = DebugVerbosity.Debug;
 
 }
