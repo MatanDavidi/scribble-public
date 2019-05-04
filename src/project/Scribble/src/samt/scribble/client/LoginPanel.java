@@ -48,6 +48,8 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
     private String username;
 
+    private ListeningThread listeningThread;
+
     /**
      * Creates new form LoginPanel
      */
@@ -109,7 +111,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
             try {
 
                 MessageSender.sendMessage(InetAddress.getByName("127.0.0.1"), DefaultScribbleParameters.DEFAULT_SERVER_PORT, joinMessage);
-                ListeningThread listeningThread = new ListeningThread(DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
+                listeningThread = new ListeningThread(DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
                 listeningThread.addDatagramListener(this);
                 listeningThread.start();
 
