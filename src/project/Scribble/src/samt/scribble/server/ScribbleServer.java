@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package samt.scribble.server;
 
 import samt.scribble.communication.*;
@@ -32,6 +31,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import samt.scribble.DefaultScribbleParameters;
 
 /**
  * Scribble server.
@@ -60,7 +60,8 @@ public class ScribbleServer implements DatagramListener {
      * Crea server scribbe con il l'indirizzo del gruppo multicast.
      *
      * @param groupIp Indirizzo del gruppo multicast.
-     * @throws IOException Errore con il gruppo multicast o la recezione di pacchetti.
+     * @throws IOException Errore con il gruppo multicast o la recezione di
+     * pacchetti.
      */
     public ScribbleServer(InetAddress groupIp) throws IOException {
         this.listeningThread = new ListeningThread(DefaultScribbleParameters.DEFAULT_SERVER_PORT);

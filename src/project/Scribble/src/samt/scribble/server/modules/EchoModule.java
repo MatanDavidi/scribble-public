@@ -24,10 +24,10 @@
 
 package samt.scribble.server.modules;
 
-import samt.scribble.communication.DefaultScribbleParameters;
 import samt.scribble.communication.messages.InformationMessage;
 
 import java.net.DatagramPacket;
+import samt.scribble.DefaultScribbleParameters;
 
 /**
  * Ritorna al mittente il messaggio che riceve.

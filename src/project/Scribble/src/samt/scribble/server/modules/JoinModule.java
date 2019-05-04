@@ -21,10 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
 package samt.scribble.server.modules;
 
-import samt.scribble.communication.DefaultScribbleParameters;
 import samt.scribble.communication.GroupConnection;
 import samt.scribble.communication.messages.ErrorMessage;
 import samt.scribble.communication.messages.GroupAddressMessage;
@@ -34,9 +32,11 @@ import samt.scribble.server.PlayerAlreadyRegisteredException;
 import samt.scribble.server.PlayerManager;
 
 import java.net.DatagramPacket;
+import samt.scribble.DefaultScribbleParameters;
 
 /**
- * Aggiunta di un giocatore alla lista, e ritorno al giocatore l'indirizzo IP del gruppo multicast.
+ * Aggiunta di un giocatore alla lista, e ritorno al giocatore l'indirizzo IP
+ * del gruppo multicast.
  *
  * @author giuliobosco (giuliobva@gmail.com)
  * @version 1.0 (2019-04-19)
@@ -44,8 +44,8 @@ import java.net.DatagramPacket;
 public class JoinModule {
 
     /**
-     * Aggiunta di un giocatore alla lista, e ritorno al giocatore l'indirizzo IP del gruppo
-     * multicast.
+     * Aggiunta di un giocatore alla lista, e ritorno al giocatore l'indirizzo
+     * IP del gruppo multicast.
      *
      * @param datagramPacket Dagramma di richiesta join.
      * @param playerManager Gestione dei giocatori di scribble.
@@ -53,7 +53,7 @@ public class JoinModule {
      * @return Pacchetto di risposta al client.
      */
     public static DatagramPacket join(DatagramPacket datagramPacket, PlayerManager playerManager,
-                                      GroupConnection groupConnection) {
+            GroupConnection groupConnection) {
         String nickname = "";
         for (int i = 1; i < datagramPacket.getData().length; i++) {
             if (datagramPacket.getData()[i] != 0) {
@@ -83,5 +83,5 @@ public class JoinModule {
                 DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
 
     }
-    
+
 }
