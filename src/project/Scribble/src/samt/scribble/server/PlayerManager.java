@@ -27,6 +27,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import samt.scribble.DebugVerbosity;
+import samt.scribble.DefaultScribbleParameters;
 
 /**
  * Gestione della lista dei giocatori di scribble.
@@ -117,6 +119,13 @@ public class PlayerManager {
         }
 
         this.players.add(player);
+        
+        if (DefaultScribbleParameters.DEBUG_VERBOSITY.equals(DebugVerbosity.Information)) {
+            
+            System.out.println("Il giocatore " + player.getUsername() + " è stato registrato con successo.");
+            
+        }
+        
     }
 
     /**

@@ -30,6 +30,8 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
+import samt.scribble.DebugVerbosity;
+import samt.scribble.DefaultScribbleParameters;
 
 /**
  * Thread di ascolto
@@ -101,6 +103,13 @@ public class ListeningThread extends Thread {
             }
 
             datagramSocket.close();
+            
+            if (DefaultScribbleParameters.DEBUG_VERBOSITY.equals(DebugVerbosity.Information)) {
+                
+                System.out.println("ListeningThread " + getId() + " interrotta con successo.");
+                
+            }
+            
         } catch (SocketException se) {
 
         } catch (IOException ioe) {
