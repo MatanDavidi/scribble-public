@@ -27,9 +27,9 @@ import samt.scribble.communication.GroupConnection;
 import samt.scribble.communication.messages.ErrorMessage;
 import samt.scribble.communication.messages.GroupAddressMessage;
 import samt.scribble.communication.messages.Message;
-import samt.scribble.server.Player;
-import samt.scribble.server.PlayerAlreadyRegisteredException;
-import samt.scribble.server.PlayerManager;
+import samt.scribble.server.player.Player;
+import samt.scribble.server.player.PlayerAlreadyRegisteredException;
+import samt.scribble.server.player.PlayerManager;
 
 import java.net.DatagramPacket;
 import samt.scribble.DebugVerbosity;

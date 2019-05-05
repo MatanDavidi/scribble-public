@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
  
-package samt.scribble.server;
+package samt.scribble.server.player;
 
 /**
  * Giocatore gi&agrave; registrato nella lista dei giocatori scribble.

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package samt.scribble.server.modules;
+package samt.scribble.server.player;
 
 /**
  * Classe che rappresenta il nome utente e il punteggio di un giocatore.

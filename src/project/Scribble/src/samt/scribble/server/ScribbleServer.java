@@ -23,6 +23,7 @@
  */
 package samt.scribble.server;
 
+import samt.scribble.server.player.PlayerManager;
 import samt.scribble.communication.*;
 import samt.scribble.server.modules.EchoModule;
 import samt.scribble.server.modules.JoinModule;

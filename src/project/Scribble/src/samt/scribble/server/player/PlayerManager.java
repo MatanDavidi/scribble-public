@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package samt.scribble.server;
+package samt.scribble.server.player;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

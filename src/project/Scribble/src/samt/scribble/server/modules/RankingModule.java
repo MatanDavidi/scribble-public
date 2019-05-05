@@ -23,6 +23,7 @@
  */
 package samt.scribble.server.modules;
 
+import samt.scribble.server.player.Record;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
