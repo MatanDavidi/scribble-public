@@ -28,8 +28,9 @@ import java.awt.Point;
 
 /**
  *
- * @author Thor e Nemanja
- * @version 2019-05-05
+ * @author Thor
+ * @author Nemanja
+ * @version 1.0 2019-05-05
  */
 public class ScribbleGame {
     
