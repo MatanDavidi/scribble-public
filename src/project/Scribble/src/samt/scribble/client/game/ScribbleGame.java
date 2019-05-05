@@ -39,39 +39,39 @@ public class ScribbleGame {
     private byte[][] matrix;
     
     /**
-     * definisce l'altezza della matrice
+     * Definisce l'altezza della matrice.
      */
     private int height;
     
     /**
-     * definisce la larghezza della matrice
+     * Definisce la larghezza della matrice.
      */
     private int width;
     
     /**
-     * definisce la posizione del pixel che verra settato o resettato
+     * Definisce la posizione del pixel che verra settato o resettato.
      */
     private Point position;
     
     /**
-     * definisce le posizioni dei pixels che verranno settato o resettato
+     * Definisce le posizioni dei pixels che verranno settato o resettato.
      */
     private Point[] positions;
     
     /**
-     * costante che definisce il valore da settare
+     * Costante che definisce il valore da settare.
      */
     public static final byte SET = 1;
     
     /**
-     * costante che definisce il valore del reset
+     * Costante che definisce il valore del reset.
      */
     public static final byte RESET = 0;
     
     /**
-     * Metodo costruttore con i parametri che definiscono la grandezza della matrice
-     * @param height definisce l'altezza della matrice
-     * @param width definisce la larghezza della matrice
+     * Metodo costruttore con i parametri che definiscono la grandezza della matrice.
+     * @param height definisce l'altezza della matrice.
+     * @param width definisce la larghezza della matrice.
      */
     public ScribbleGame(int height, int width){
         setProperties(height, width);
@@ -79,14 +79,14 @@ public class ScribbleGame {
     }
     
     /**
-     * Metodo che setta un pixel della matrice
+     * Metodo che setta un pixel della matrice.
      */
     private void setPixel(byte value, Point position){
         matrix[position.x][position.y] = value;
     }
     
     /**
-     * Metodo che setta più punti della matrice
+     * Metodo che setta più punti della matrice.
      */
     private void setPixels(byte[] value, Point[] positions){
         for(int i = 0; i < positions.length; i++){
@@ -95,8 +95,8 @@ public class ScribbleGame {
     }
     
     /**
-     * 
-     * @return 
+     * Metodo che ritorna un array di Byte.
+     * @return array di byte.
      */
     private Byte[] BitsToByte(byte[][] matrix){
         Byte[] bytes = new Byte[height];
@@ -115,17 +115,24 @@ public class ScribbleGame {
     }
     
     /**
-     * Metodo che setta le proprietà della matrice
-     * @param height definisce l'altezza della matrice
-     * @param width definisce la larghezza della matrice
+     * Metodo che setta le proprietà della matrice.
+     * @param height definisce l'altezza della matrice.
+     * @param width definisce la larghezza della matrice.
      */
     private void setProperties(int height, int width){
+        if(height < 0){
+            height = 0;
+        }
+        if(width < 0){
+            width = 0;
+        }
+        
         this.height = height;
         this.width = width;
     }
     
     /**
-     * Metodo che setta le proprietà alla matrice
+     * Metodo che setta le proprietà alla matrice.
      */
     private void setMatrix(){
         matrix = new byte[height][width];
