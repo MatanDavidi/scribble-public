@@ -125,62 +125,13 @@ public class ScribbleGame {
     /**
      * Metodo che setta le proprietà alla matrice.
      */
-    private void setMatrix(){
+    private void resetMatrix(){
         matrix = new byte[height][width];
         for(int h = 0; h < height; h++){
             for(int w = 0; w < width; w++){
                 matrix[h][w] = RESET;
             }
         }
-    }
-    
-    /**
-     * Metodo che setta la posizione coi punti x e y
-     * @param x definisce il punto orizzontale
-     * @param y  definisce il punto verticale
-     */
-    private void setPosition(Point p){
-        
-        if(p.x > height){
-            p.x = height-1;
-        }
-        if(p.x < height){
-            p.x = 0;
-        }
-        if(p.y > width){
-            p.y = width-1;
-        }
-        if(p.y < width){
-            p.y = 0;
-        }
-        
-        position = new Point(p);
-    }
-    
-    /**
-     * Metodo che setta la posizione coi punti x e y
-     * @param x definisce il punto orizzontale
-     * @param y  definisce il punto verticale
-     */
-    private void setPositions(Point[] point){
-        for(int i = 0; i < point.length; i++){
-            
-            if(point[i].x > height){
-                point[i].x = height-1;
-            }
-            if(point[i].x < height){
-                point[i].x = 0;
-            }
-            if(point[i].y > width){
-                point[i].y = width-1;
-            }
-            if(point[i].y < width){
-                point[i].y = 0;
-            }
-
-            positions[i] = new Point(point[i]);
-        }
-        
     }
     
 }
