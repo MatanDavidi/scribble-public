@@ -29,7 +29,7 @@ import java.awt.Point;
 /**
  *
  * @author Thor e Nemanja
- * @version 05.05.2019
+ * @version 2019-05-05
  */
 public class ScribbleGame {
     
@@ -49,12 +49,12 @@ public class ScribbleGame {
     private int width;
     
     /**
-     * definisce la posizione del pixe che verrà settato o resettato
+     * definisce la posizione del pixel che verra settato o resettato
      */
     private Point position;
     
     /**
-     * 
+     * definisce le posizioni dei pixels che verranno settato o resettato
      */
     private Point[] positions;
     
