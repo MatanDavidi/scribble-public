@@ -23,7 +23,7 @@ import samt.scribble.communication.Commands;
  * messaggio fisso da inviare come pacchetto attraverso una connessione UDP.
  *
  * @author Matan Davidi
- * @version 2019-04-16
+ * @version 1.0.1 (2019-04-16 - 2019-05-05)
  */
 public abstract class Message {
 
@@ -99,7 +99,8 @@ public abstract class Message {
 
     /**
      * Controlla se un byte di commando è valido e all'interno dei byte di
-     * comando disponibili (vedi samt.scribble.communication.Commands).
+     * comando disponibili (vedi
+     * {@link samt.scribble.communication.Commands samt.scribble.communication.Commands}).
      *
      * @param command Il byte di comando che specifica che tipo di messaggio
      * sarà inviato.
