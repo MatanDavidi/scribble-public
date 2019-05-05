@@ -66,7 +66,7 @@ public class ScribbleGame {
      */
     public ScribbleGame(int height, int width){
         setProperties(height, width);
-        setMatrix();
+        resetMatrix();
     }
     
     /**
