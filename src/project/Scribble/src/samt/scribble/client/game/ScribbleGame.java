@@ -50,16 +50,6 @@ public class ScribbleGame {
     private int width;
     
     /**
-     * Definisce la posizione del pixel che verra settato o resettato.
-     */
-    private Point position;
-    
-    /**
-     * Definisce le posizioni dei pixels che verranno settato o resettato.
-     */
-    private Point[] positions;
-    
-    /**
      * Costante che definisce il valore da settare.
      */
     public static final byte SET = 1;
