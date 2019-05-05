@@ -1,0 +1,189 @@
+/*
+ * The MIT License
+ *
+ * Copyright 2019 Utente.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+package samt.scribble.game;
+
+
+import java.awt.Point;
+
+/**
+ *
+ * @author Thor e Nemanja
+ * @version 05.05.2019
+ */
+public class ScribbleGame {
+    
+    /**
+     * Array multidimensionale che definisce la matrice.
+     */
+    private byte[][] matrix;
+    
+    /**
+     * definisce l'altezza della matrice
+     */
+    private int height;
+    
+    /**
+     * definisce la larghezza della matrice
+     */
+    private int width;
+    
+    /**
+     * definisce la posizione del pixe che verrà settato o resettato
+     */
+    private Point position;
+    
+    /**
+     * 
+     */
+    private Point[] positions;
+    
+    /**
+     * costante che definisce il valore da settare
+     */
+    public static final byte SET = 1;
+    
+    /**
+     * costante che definisce il valore del reset
+     */
+    public static final byte RESET = 0;
+    
+    /**
+     * Metodo costruttore con i parametri che definiscono la grandezza della matrice
+     * @param height definisce l'altezza della matrice
+     * @param width definisce la larghezza della matrice
+     */
+    public ScribbleGame(int height, int width){
+        setProperties(height, width);
+        setMatrix();
+    }
+    
+    /**
+     * Metodo che setta un pixel della matrice
+     */
+    private void setPixel(byte value, Point position){
+        matrix[position.x][position.y] = value;
+    }
+    
+    /**
+     * Metodo che setta più punti della matrice
+     */
+    private void setPixels(byte[] value, Point[] positions){
+        for(int i = 0; i < positions.length; i++){
+            matrix[positions[i].x][positions[i].y] = value[i];
+        }
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    private Byte[] BitsToByte(byte[][] matrix){
+        Byte[] bytes = new Byte[height];
+        
+        String b = "";
+        for(int h = 0; h < height; h++){
+            for(int w = 0; w < width; w++){
+                b += matrix[height][width];
+            }
+            bytes[h] = Byte.valueOf(b);
+            b = "";
+        }
+                
+                
+        return bytes;
+    }
+    
+    /**
+     * Metodo che setta le proprietà della matrice
+     * @param height definisce l'altezza della matrice
+     * @param width definisce la larghezza della matrice
+     */
+    private void setProperties(int height, int width){
+        this.height = height;
+        this.width = width;
+    }
+    
+    /**
+     * Metodo che setta le proprietà alla matrice
+     */
+    private void setMatrix(){
+        matrix = new byte[height][width];
+        for(int h = 0; h < height; h++){
+            for(int w = 0; w < width; w++){
+                matrix[h][w] = RESET;
+            }
+        }
+    }
+    
+    /**
+     * Metodo che setta la posizione coi punti x e y
+     * @param x definisce il punto orizzontale
+     * @param y  definisce il punto verticale
+     */
+    private void setPosition(Point p){
+        
+        if(p.x > height){
+            p.x = height-1;
+        }
+        if(p.x < height){
+            p.x = 0;
+        }
+        if(p.y > width){
+            p.y = width-1;
+        }
+        if(p.y < width){
+            p.y = 0;
+        }
+        
+        position = new Point(p);
+    }
+    
+    /**
+     * Metodo che setta la posizione coi punti x e y
+     * @param x definisce il punto orizzontale
+     * @param y  definisce il punto verticale
+     */
+    private void setPositions(Point[] point){
+        for(int i = 0; i < point.length; i++){
+            
+            if(point[i].x > height){
+                point[i].x = height-1;
+            }
+            if(point[i].x < height){
+                point[i].x = 0;
+            }
+            if(point[i].y > width){
+                point[i].y = width-1;
+            }
+            if(point[i].y < width){
+                point[i].y = 0;
+            }
+
+            positions[i] = new Point(point[i]);
+        }
+        
+    }
+    
+}
+
