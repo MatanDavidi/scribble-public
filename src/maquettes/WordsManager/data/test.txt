@@ -1,6 +1,1 @@
-﻿cosa
-anno
-uomo
-giorno
-volta
-casa
+cosa

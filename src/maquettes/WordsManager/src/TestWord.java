@@ -17,14 +17,11 @@ public class TestWord {
         try {
 
             //creo il WordManager
-            wManager = new WordManager(path, false);
+            wManager = new WordManager(path, true);
 
             //estraggo la parola
             wManager.getUniqueNewWord();
             wManager.isGuessedWord("cosa");
-            
-            //System.out.println(
-              //      (wManager.isGuessedWord("occhio"))?"Parola indovinata": "Parola sbagliaata");
 
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
