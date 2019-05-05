@@ -30,7 +30,7 @@ public class Commands {
     /**
      * Il numero totale di byte comando definiti.
      */
-    public final static short COMMANDS_NUMBER = 9;
+    public final static short COMMANDS_NUMBER = 10;
 
     /**
      * Un byte di comando che segnala che il messaggio inviato è di tipo
@@ -84,5 +84,11 @@ public class Commands {
      * Un byte di comando che segnala l'indirizzo del gruppo multicast.
      */
     public final static byte GROUP_ADDRESS_MESSAGE = 8;
+
+    /**
+     * Un byte di comando che segnala che il messaggio inviato contiene l'ordine
+     * di inizio del gioco.
+     */
+    public final static byte START = 9;
 
 }
