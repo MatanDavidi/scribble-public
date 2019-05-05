@@ -57,6 +57,6 @@ public class DefaultScribbleParameters {
      * Il livello di verbosità delle informazioni di debug durante l'esecuzione
      * del programma.
      */
-    public static final DebugVerbosity DEBUG_VERBOSITY = DebugVerbosity.Debug;
+    public static final DebugVerbosity DEBUG_VERBOSITY = DebugVerbosity.Errors;
 
 }
