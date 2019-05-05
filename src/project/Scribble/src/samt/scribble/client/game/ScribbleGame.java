@@ -27,9 +27,9 @@ package samt.scribble.client.game;
 import java.awt.Point;
 
 /**
- *
- * @author Thor
- * @author Nemanja
+ * Classe che setta pixel e ritorna il valore di una matrice in Byte.
+ * @author ThorDublin
+ * @author nemastojanovic
  * @version 1.0 2019-05-05
  */
 public class ScribbleGame {
