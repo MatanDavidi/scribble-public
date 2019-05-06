@@ -36,7 +36,8 @@ import samt.scribble.DefaultScribbleParameters;
 /**
  * Thread di ascolto
  * @author giuliobosco (giuliobva@gmail.com)
- * @version 1.0 (2019-04-19)
+ * @author MatanDavidi
+ * @version 1.1 (2019-04-19 - 2019-05-06)
  */
 public class ListeningThread extends Thread {
 
@@ -97,8 +98,9 @@ public class ListeningThread extends Thread {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 
                 datagramSocket.receive(packet);
-                for (DatagramListener datagramListener : this.datagramListeners) {
-                    datagramListener.messageReceived(packet);
+
+                for (int i = 0; i < datagramListeners.size(); ++i) {
+                    datagramListeners.get(i).messageReceived(packet);
                 }
             }
 
