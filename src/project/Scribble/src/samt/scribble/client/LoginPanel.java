@@ -139,8 +139,12 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
             this.username = username;
 
             try {
-
-                MessageSender.sendMessage(InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS), DefaultScribbleParameters.DEFAULT_SERVER_PORT, joinMessage);
+                
+                MessageSender.sendMessage(
+                        InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
+                        DefaultScribbleParameters.DEFAULT_SERVER_PORT,
+                        joinMessage
+                );
                 listeningThread = new ListeningThread(DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
                 listeningThread.addDatagramListener(this);
                 listeningThread.start();
