@@ -51,7 +51,7 @@ public class MessageSender {
     public static void sendMessage(InetAddress receiver, int port, Message message) throws IOException {
         byte[] bytes = message.getWholeMessage();
         DatagramPacket packet = new DatagramPacket(bytes, bytes.length, receiver, port);
-        new DatagramSocket(DefaultScribbleParameters.DEFAULT_CLIENT_PORT).send(packet);
+        new DatagramSocket().send(packet);
     }
     
 }
