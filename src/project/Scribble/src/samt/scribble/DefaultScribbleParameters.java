@@ -23,6 +23,9 @@
  */
 package samt.scribble;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 /**
  * Parametri di default di scribble.
  *
@@ -58,5 +61,11 @@ public class DefaultScribbleParameters {
      * del programma.
      */
     public static final DebugVerbosity DEBUG_VERBOSITY = DebugVerbosity.Errors;
+    
+    /**
+     * Attributo che rappresenta il percorso del file csv su cui verrà salvata 
+     * la lista rappresentante la classifica.
+     */
+    public static final Path RANKING_CSV_PATH = Paths.get("data","ranking.csv");
 
 }
