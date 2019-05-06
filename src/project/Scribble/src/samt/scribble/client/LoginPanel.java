@@ -64,7 +64,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
         this.listener = listener;
     }
 
-    public void unsetListener(LoginListener listener) {
+    public void unsetListener() {
         this.listener = null;
     }
 
