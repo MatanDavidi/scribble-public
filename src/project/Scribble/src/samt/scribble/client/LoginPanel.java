@@ -41,8 +41,8 @@ import samt.scribble.communication.messages.JoinMessage;
  *
  * TODO: Fare in modo che l'istanza riceva pacchetti tramite il ListeningThread.
  *
- * @author Matan Davidi
- * @version 1.0.1 (2019-05-04 - 2019-05-04)
+ * @author MatanDavidi
+ * @version 1.1 (2019-05-04 - 2019-05-06)
  */
 public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 

@@ -36,8 +36,8 @@ import samt.scribble.communication.MessageSender;
  * Scribble client.
  *
  * @author giuliobosco (giuliobva@gmail.com)
- * @author Matan Davidi
- * @version 1.1 (2019-05-04 - 2019-05-04)
+ * @author MatanDavidi
+ * @version 1.2 (2019-05-04 - 2019-05-06)
  */
 public class ScribbleClient extends JFrame implements LoginListener {
     // ---------------------------------------------------------------- Costants

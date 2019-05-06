@@ -29,8 +29,8 @@ import samt.scribble.communication.GroupConnection;
  * L'interfaccia LoginListener contiene gli eventi relativi all'accesso e la
  * registrazione al server.
  *
- * @author Matan Davidi
- * @version 2019-05-04
+ * @author MatanDavidi
+ * @version 1.1 (2019-05-04 - 2019-05-06)
  */
 public interface LoginListener {
 

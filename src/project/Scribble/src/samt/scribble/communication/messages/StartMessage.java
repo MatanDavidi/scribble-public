@@ -29,8 +29,8 @@ import samt.scribble.communication.Commands;
  * La classe StartMessage è una sottoclasse di Message dedicata a segnalare
  * l'inizio di una partita.
  *
- * @author Matan Davidi
- * @version 1.0 (2019-05-05 - 2019-05-05)
+ * @author MatanDavidi
+ * @version 1.0 (2019-05-05 - 2019-05-06)
  */
 public class StartMessage extends Message {
 

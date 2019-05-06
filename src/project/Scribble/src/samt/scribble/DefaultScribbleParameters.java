@@ -30,8 +30,8 @@ import java.nio.file.Paths;
  * Parametri di default di scribble.
  *
  * @author giuliobosco (giuliobva@gmail.com)
- * @author Matan Davidi
- * @version 1.0.2 (2019-04-19 - 2019-05-04)
+ * @author MatanDavidi
+ * @version 1.0.3 (2019-04-19 - 2019-05-06)
  */
 public class DefaultScribbleParameters {
 

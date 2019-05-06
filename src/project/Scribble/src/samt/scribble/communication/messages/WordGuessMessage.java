@@ -25,8 +25,8 @@ import samt.scribble.communication.Commands;
  *
  * Esempio di sottoclasse di Message.
  *
- * @author Matan Davidi
- * @version 2019-04-16s
+ * @author MatanDavidi
+ * @version 1.0 (2019-04-16 - 2019-05-06)
  */
 public class WordGuessMessage extends Message {
 

@@ -21,9 +21,9 @@ package samt.scribble.communication;
  * assieme a dei pacchetti per specificare il tipo di messaggio che si sta
  * inviando.
  *
- * @author Matan Davidi
+ * @author MatanDavidi
  * @author giuliobosco
- * @version 2019-04-29
+ * @version 1.0.2 (2019-04-29 - 2019-05-06)
  */
 public class Commands {
 

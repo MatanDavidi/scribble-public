@@ -22,8 +22,8 @@ import samt.scribble.communication.Commands;
  * La classe astratta Message permette di stabilire un byte di comando e un
  * messaggio fisso da inviare come pacchetto attraverso una connessione UDP.
  *
- * @author Matan Davidi
- * @version 1.0.1 (2019-04-16 - 2019-05-05)
+ * @author MatanDavidi
+ * @version 1.0.1 (2019-04-16 - 2019-05-06)
  */
 public abstract class Message {
 

@@ -25,8 +25,8 @@ package samt.scribble;
 
 /**
  *
- * @author Matan Davidi
- * @version 1.0 (2019-05-04 - 2019-05-04)
+ * @author MatanDavidi
+ * @version 1.0.1 (2019-05-04 - 2019-05-06)
  */
 public enum DebugVerbosity {
     
