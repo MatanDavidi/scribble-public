@@ -46,10 +46,21 @@ import samt.scribble.communication.messages.JoinMessage;
  */
 public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
+    /**
+     * Il LoginListener che deve ricevere gli eventi relativi al login sollevati
+     * da quest'istanza di LoginPanel (vedi
+     * {@link samt.scribble.client.LoginListener# LoginListener}).
+     */
     private LoginListener listener;
 
+    /**
+     * Il nome utente del giocatore con cui si vuole accedere al server.
+     */
     private String username;
 
+    /**
+     * Il thread di ascolto che permette di ricevere dei pacchetti UDP.
+     */
     private ListeningThread listeningThread;
 
     /**
@@ -60,10 +71,27 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
         listener = null;
     }
 
+    /**
+     * Imposta un valore al campo LoginListener. Da adesso fino a quando questo
+     * oggetto non venga distrutto o si disassoci quel LoginListener riceverà
+     * gli eventi descritti all'interno dell'interfaccia
+     * {@link samt.scribble.client.LoginListener# LoginListener}.
+     *
+     * @param listener Il LoginListener da assegnare a ques'istanza di
+     * LoginPanel. Esso deve ricevere gli eventi relativi al login sollevati da
+     * quest'istanza di LoginPanel.
+     */
     public void setListener(LoginListener listener) {
         this.listener = listener;
     }
 
+    /**
+     * Annulla l'associazione al LoginListener. Da adesso fino alla prossima
+     * chiamata del metodo
+     * {@link samt.scribble.client.LoginPanel#setListener setListener} nessuna
+     * LoginListener riceverà gli eventi sollevati da quest'istanza di
+     * LoginPanel.
+     */
     public void unsetListener() {
         this.listener = null;
     }
