@@ -81,7 +81,19 @@ public class Connection {
     // -------------------------------------------------------------------------------- Constructors
 
     /**
-     * Costruttore.
+     * 
+     * @param listeningThread
+     * @param messageSender 
+     */
+    public Connection(ListeningThread listeningThread, MessageSender messageSender) {
+        this(null, listeningThread, messageSender);
+    }
+    
+    /**
+     * 
+     * @param groupConnection
+     * @param listeningThread
+     * @param messageSender 
      */
     public Connection(GroupConnection groupConnection, ListeningThread listeningThread, MessageSender messageSender) {
         this.groupConnection = groupConnection;
