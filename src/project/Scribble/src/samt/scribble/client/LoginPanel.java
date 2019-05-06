@@ -29,6 +29,7 @@ import java.net.InetAddress;
 import javax.swing.JOptionPane;
 import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.communication.Commands;
+import samt.scribble.communication.Connection;
 import samt.scribble.communication.DatagramListener;
 import samt.scribble.communication.GroupConnection;
 import samt.scribble.communication.ListeningThread;
@@ -188,14 +189,15 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
             if (packetData[0] == Commands.GROUP_ADDRESS_MESSAGE) {
 
                 try {
-
-                    GroupConnection groupConnection = new GroupConnection(InetAddress.getByAddress(messageBytes), DefaultScribbleParameters.DEFAULT_GROUP_PORT);
-
+                    
                     if (username != null && listener != null) {
-
-                        listener.loggedIn(username, groupConnection);
+                        
+                        GroupConnection groupConnection = new GroupConnection(InetAddress.getByAddress(messageBytes), DefaultScribbleParameters.DEFAULT_GROUP_PORT);
+                        MessageSender sender = new MessageSender();
                         listeningThread.interrupt();
-
+                        
+                        listener.loggedIn(username, new Connection(groupConnection, listeningThread, sender));
+                        
                     }
 
                 } catch (IOException ex) {

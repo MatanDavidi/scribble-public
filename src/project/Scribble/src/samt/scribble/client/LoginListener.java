@@ -23,7 +23,7 @@
  */
 package samt.scribble.client;
 
-import samt.scribble.communication.GroupConnection;
+import samt.scribble.communication.Connection;
 
 /**
  * L'interfaccia LoginListener contiene gli eventi relativi all'accesso e la
@@ -38,9 +38,9 @@ public interface LoginListener {
      * Evento che segnala che un utente ha eseguito l'accesso al server.
      *
      * @param username Il nome dell'utente che ha eseguito l'accesso.
-     * @param groupConnectionResponse La risposta del server sotto forma di un
-     * oggetto di tipo GroupConnection.
+     * @param serverConnection La connessione al server, composta da connessione
+     * al gruppo, thread di ascolto e classe di invio dei pacchetti.
      */
-    public void loggedIn(String username, GroupConnection groupConnectionResponse);
+    public void loggedIn(String username, Connection serverConnection);
 
 }

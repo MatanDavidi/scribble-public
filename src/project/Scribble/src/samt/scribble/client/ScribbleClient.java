@@ -28,9 +28,6 @@ import java.awt.*;
 import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.communication.Connection;
-import samt.scribble.communication.GroupConnection;
-import samt.scribble.communication.ListeningThread;
-import samt.scribble.communication.MessageSender;
 
 /**
  * Scribble client.
@@ -73,8 +70,6 @@ public class ScribbleClient extends JFrame implements LoginListener {
 
         // Set Frame Layout.
         this.getContentPane().setLayout(new BorderLayout());
-        
-        //serverConnection = new Connection(listeningThread, messageSender);
 
         loginPanel = new LoginPanel();
         loginPanel.setListener(this);
@@ -100,14 +95,14 @@ public class ScribbleClient extends JFrame implements LoginListener {
     }
 
     @Override
-    public void loggedIn(String username, GroupConnection groupConnectionResponse) {
+    public void loggedIn(String username, Connection serverConnection) {
 
         if (DefaultScribbleParameters.DEBUG_VERBOSITY.equals(DebugVerbosity.Information)) {
 
-            System.out.println(username + ": logged into group " + groupConnectionResponse.getGroupIp().getHostAddress());
+            System.out.println(username + ": logged into group " + serverConnection.getGroupConnection().getGroupIp().getHostAddress());
         }
 
-        serverConnection = new Connection(groupConnectionResponse, new ListeningThread(DefaultScribbleParameters.DEFAULT_CLIENT_PORT), new MessageSender());
+        this.serverConnection = serverConnection;
         scribblePanel = new ScribblePanel(serverConnection);
         getContentPane().remove(loginPanel);
         getContentPane().add(scribblePanel);
