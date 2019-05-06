@@ -38,28 +38,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author giuliobosco (giuliobva@gmail.com)
- * @version 1.0 (2019-05-04 - 2019-05-04)
+ * Classe ScribblePanel che si occupa di fornire un pannello funzionante sia
+ * per il disegnatore che per il client che lo usa solamente in modalità di 
+ * visualizzazione.
+ * Inoltre allo stesso tempo se in modalità disegnatore la classe manda ogni 
+ * pixel al server che poi a sua volta verrà inoltrato al gruppo.
+ * 
+ * @author giuliobosco
+ * @author jarinaeser
+ * @version 1.0 2019-5-6
  */
 public class ScribblePanel extends JPanel implements DatagramListener, MouseMotionListener, MouseListener {
-
-    // ------------------------------------------------------------------------------------ Costants
-    // ---------------------------------------------------------------------------------- Attributes
-
+    
+    /**
+     * Attributo drawedPoints che contiene i pixel temporanei colorati da 
+     * mandare al server. 
+     */
     private List<Point> drawedPoints;
 
+    /**
+     * Attributo receivedPoints che contiene i pixel colorati ricevuti dal server. 
+     */
     private List<Point> receivedPoints;
 
+    /**
+     * Attributo drawer che definisce se il client è disegnatore oppure no.
+     */
     private boolean drawer;
-
+    
+    /**
+     * Attributo clear che definisce se pulire l'area di disegno oppure no.
+     */
     private boolean clear;
 
-    // --------------------------------------------------------------------------- Getters & Setters
-
+    /**
+     * Metodo getter per l'attributo drawer.
+     * @return Valore dell'attributo drawer.
+     */
     public boolean isDrawer() {
         return this.drawer;
     }
 
+    /**
+     * Metodo setter per l'attributo drawer.
+     * @param drawer Nuovo valore da assegnare all'attributo drawer.
+     */
     public void setDrawer(boolean drawer) {
         this.drawer = drawer;
 
@@ -71,9 +94,11 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
             this.removeMouseMotionListener(this);
         }
     }
-
-    // -------------------------------------------------------------------------------- Constructors
-
+    
+    /**
+     * Costruttore della classe ScribblePanel.
+     * @param connection Connessione con il server.
+     */
     public ScribblePanel(Connection connection) {
         connection.addDatagramListener(this);
         setDrawer(false);
@@ -82,9 +107,7 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
         this.receivedPoints = new ArrayList<>();
         this.clear = true;
     }
-
-    // -------------------------------------------------------------------------------- Help Methods
-
+    
     @Override
     public void mouseClicked(MouseEvent e) {
         this.drawedPoints.add(e.getPoint());
@@ -134,8 +157,6 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
         }
     }
 
-    // ----------------------------------------------------------------------------- General Methods
-
     @Override
     protected void paintComponent(Graphics g) {
 
@@ -156,8 +177,4 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
             this.receivedPoints.remove(point);
         }
     }
-
-
-    // --------------------------------------------------------------------------- Static Components
-
 }
