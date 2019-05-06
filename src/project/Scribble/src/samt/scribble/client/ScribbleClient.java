@@ -73,6 +73,8 @@ public class ScribbleClient extends JFrame implements LoginListener {
 
         // Set Frame Layout.
         this.getContentPane().setLayout(new BorderLayout());
+        
+        //serverConnection = new Connection(listeningThread, messageSender);
 
         loginPanel = new LoginPanel();
         loginPanel.setListener(this);
