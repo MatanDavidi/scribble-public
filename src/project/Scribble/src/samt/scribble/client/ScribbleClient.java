@@ -96,8 +96,8 @@ public class ScribbleClient extends JFrame implements LoginListener {
 
     @Override
     public void loggedIn(String username, Connection serverConnection) {
-
-        if (DefaultScribbleParameters.DEBUG_VERBOSITY.equals(DebugVerbosity.Information)) {
+        
+        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
 
             System.out.println(username + ": logged into group " + serverConnection.getGroupConnection().getGroupIp().getHostAddress());
         }

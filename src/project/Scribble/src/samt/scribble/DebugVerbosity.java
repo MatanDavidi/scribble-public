@@ -28,11 +28,11 @@ package samt.scribble;
  * @author MatanDavidi
  * @version 1.0.1 (2019-05-04 - 2019-05-06)
  */
-public enum DebugVerbosity {
+public class DebugVerbosity {
     
-    Errors,
-    Information,
-    Release,
-    Warnings
+    public static final byte RELEASE = 0;
+    public static final byte INFORMATION = 1;
+    public static final byte WARNINGS = 2;
+    public static final byte ERRORS = 3;
     
 }

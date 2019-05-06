@@ -106,7 +106,7 @@ public class ScribbleServer implements DatagramListener {
                         break;
                 }
             } catch (IOException ex) {
-                if (DefaultScribbleParameters.DEBUG_VERBOSITY.equals(DebugVerbosity.Errors)) {
+                if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.ERRORS) {
                     System.out.println("ScribbleServer: " + ex.getMessage());
                 }
             }

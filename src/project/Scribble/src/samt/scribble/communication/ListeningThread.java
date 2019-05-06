@@ -104,7 +104,7 @@ public class ListeningThread extends Thread {
 
             datagramSocket.close();
             
-            if (DefaultScribbleParameters.DEBUG_VERBOSITY.equals(DebugVerbosity.Information)) {
+            if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
                 
                 System.out.println("ListeningThread " + getId() + " interrotta con successo.");
                 

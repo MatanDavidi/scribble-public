@@ -75,7 +75,7 @@ public class JoinModule {
             message = new ErrorMessage(pare.getMessage());
         }
 
-        if (DefaultScribbleParameters.DEBUG_VERBOSITY.equals(DebugVerbosity.Information)) {
+        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
 
             System.out.println(new String(message.getWholeMessage()));
 

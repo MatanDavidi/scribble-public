@@ -119,13 +119,13 @@ public class PlayerManager {
         }
 
         this.players.add(player);
-        
-        if (DefaultScribbleParameters.DEBUG_VERBOSITY.equals(DebugVerbosity.Information)) {
-            
+
+        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+
             System.out.println("Il giocatore " + player.getUsername() + " è stato registrato con successo.");
-            
+
         }
-        
+
     }
 
     /**
