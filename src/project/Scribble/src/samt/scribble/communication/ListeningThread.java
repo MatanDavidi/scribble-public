@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package samt.scribble.communication;
 
 import java.io.IOException;
@@ -35,6 +34,7 @@ import samt.scribble.DefaultScribbleParameters;
 
 /**
  * Thread di ascolto
+ *
  * @author giuliobosco (giuliobva@gmail.com)
  * @author MatanDavidi
  * @version 1.1 (2019-04-19 - 2019-05-06)
@@ -60,9 +60,11 @@ public class ListeningThread extends Thread {
         return this.port;
     }
 
+    private DatagramSocket datagramSocket;
+
     /**
-     * Aggiunge un datagram listener, alla lista dei datagram listeners, a cui viene inviato il
-     * pacchetto ricevuto.
+     * Aggiunge un datagram listener, alla lista dei datagram listeners, a cui
+     * viene inviato il pacchetto ricevuto.
      *
      * @param datagramListener Datagram listener da aggiungere alla lista.
      */
@@ -86,12 +88,13 @@ public class ListeningThread extends Thread {
     }
 
     /**
-     * Crea il socket di ascolto ed invia ogni pacchetto ricevuto a tutta la lista dei listeners.
+     * Crea il socket di ascolto ed invia ogni pacchetto ricevuto a tutta la
+     * lista dei listeners.
      */
     @Override
     public void run() {
         try {
-            DatagramSocket datagramSocket = new DatagramSocket(this.getPort());
+            datagramSocket = new DatagramSocket(this.getPort());
 
             while (!isInterrupted()) {
                 byte[] buffer = new byte[256];
@@ -104,18 +107,22 @@ public class ListeningThread extends Thread {
                 }
             }
 
-            datagramSocket.close();
-            
             if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
-                
+
                 System.out.println("ListeningThread " + getId() + " interrotta con successo.");
-                
+
             }
-            
+
         } catch (SocketException se) {
 
         } catch (IOException ioe) {
 
         }
+    }
+
+    @Override
+    public void interrupt() {
+        super.interrupt();
+        datagramSocket.close();
     }
 }
