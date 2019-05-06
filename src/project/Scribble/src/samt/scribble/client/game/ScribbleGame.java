@@ -30,14 +30,15 @@ import java.awt.Point;
  * Classe che setta pixel e ritorna il valore di una matrice in Byte.
  * @author ThorDublin
  * @author nemastojanovic
- * @version 1.0 (2019-05-05 - 2019-05-05)
+ * @author MattiaRuberto
+ * @version 1.0.1 (2019-05-05 - 2019-05-05)
  */
 public class ScribbleGame {
     
     /**
      * Array multidimensionale che definisce la matrice.
      */
-    private byte[][] matrix;
+    private boolean[][] matrix;
     
     /**
      * Definisce l'altezza della matrice.
@@ -48,16 +49,6 @@ public class ScribbleGame {
      * Definisce la larghezza della matrice.
      */
     private int width;
-    
-    /**
-     * Costante che definisce il valore da settare.
-     */
-    public static final byte SET = 1;
-    
-    /**
-     * Costante che definisce il valore del reset.
-     */
-    public static final byte RESET = 0;
     
     /**
      * Metodo costruttore con i parametri che definiscono la grandezza della matrice.
@@ -72,37 +63,17 @@ public class ScribbleGame {
     /**
      * Metodo che setta un pixel della matrice.
      */
-    private void setPixel(byte value, Point position){
-        matrix[position.x][position.y] = value;
+    private void setPixel(Point position){
+        matrix[position.x][position.y] = true;
     }
     
     /**
      * Metodo che setta più punti della matrice.
      */
-    private void setPixels(byte[] value, Point[] positions){
+    private void setPixels(Point[] positions){
         for(int i = 0; i < positions.length; i++){
-            matrix[positions[i].x][positions[i].y] = value[i];
+            matrix[positions[i].x][positions[i].y] = true;
         }
-    }
-    
-    /**
-     * Metodo che ritorna un array di Byte.
-     * @return array di byte.
-     */
-    private Byte[] BitsToByte(byte[][] matrix){
-        Byte[] bytes = new Byte[height];
-        
-        String b = "";
-        for(int h = 0; h < height; h++){
-            for(int w = 0; w < width; w++){
-                b += matrix[height][width];
-            }
-            bytes[h] = Byte.valueOf(b);
-            b = "";
-        }
-                
-                
-        return bytes;
     }
     
     /**
@@ -126,10 +97,10 @@ public class ScribbleGame {
      * Metodo che setta le proprietà alla matrice.
      */
     private void resetMatrix(){
-        matrix = new byte[height][width];
+        matrix = new boolean[height][width];
         for(int h = 0; h < height; h++){
             for(int w = 0; w < width; w++){
-                matrix[h][w] = RESET;
+                matrix[h][w] = false;
             }
         }
     }
