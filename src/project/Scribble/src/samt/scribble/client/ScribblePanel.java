@@ -45,7 +45,8 @@ import java.util.List;
  *
  * @author giuliobosco
  * @author jarinaeser
- * @version 1.0 2019-5-6
+ * @author MatanDavidi
+ * @version 1.1 (2019-05-06 - 2019-05-07)
  */
 public class ScribblePanel extends JPanel implements DatagramListener, MouseMotionListener, MouseListener {
 
@@ -156,7 +157,7 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
         switch (bytes[0]) {
 
             case Commands.START:
-                
+                break;
             
             case Commands.DRAWING:
                 if (bytes.length > 1) {

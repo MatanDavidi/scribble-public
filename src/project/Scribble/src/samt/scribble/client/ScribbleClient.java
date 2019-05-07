@@ -23,6 +23,9 @@
  */
 package samt.scribble.client;
 
+import samt.scribble.client.lobby.LobbyPanel;
+import samt.scribble.client.login.LoginPanel;
+import samt.scribble.client.login.LoginListener;
 import javax.swing.*;
 import java.awt.*;
 import samt.scribble.DebugVerbosity;
@@ -50,6 +53,8 @@ public class ScribbleClient extends JFrame implements LoginListener {
      * effettuare l'accesso presso il server.
      */
     private LoginPanel loginPanel;
+
+    private LobbyPanel lobbyPanel;
 
     /**
      * L'istanza di Connection che contiene i membri per gestire la connessione
@@ -105,13 +110,19 @@ public class ScribbleClient extends JFrame implements LoginListener {
         loginPanel.unsetListener();
 //        loginPanel = null;
 
+        lobbyPanel = new LobbyPanel();
+
         this.serverConnection = serverConnection;
-        scribblePanel = new ScribblePanel(serverConnection);
         getContentPane().remove(loginPanel);
-        getContentPane().add(scribblePanel);
+        getContentPane().add(lobbyPanel);
         getContentPane().validate();
         getContentPane().repaint();
         pack();
+
+//        scribblePanel = new ScribblePanel(serverConnection);
+//        getContentPane().add(scribblePanel);
+//        getContentPane().validate();
+//        getContentPane().repaint();
 
     }
 

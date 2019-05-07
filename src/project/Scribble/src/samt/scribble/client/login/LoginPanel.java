@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package samt.scribble.client;
+package samt.scribble.client.login;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -111,7 +111,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
         setLayout(new java.awt.GridLayout(2, 1));
 
-        usernamePanel.setLayout(new java.awt.GridLayout());
+        usernamePanel.setLayout(new java.awt.GridLayout(1, 0));
 
         usernameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         usernameLabel.setText("Inserisci il tuo nome utente:");
@@ -130,7 +130,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
-        String username = usernameTextField.getText();
+        String username = usernameTextField.getText().trim();
 
         if (!username.isEmpty()) {
 
