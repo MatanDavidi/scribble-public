@@ -30,6 +30,8 @@ import javax.swing.*;
 import java.awt.*;
 import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
+import samt.scribble.client.game.PlayerRole;
+import samt.scribble.client.lobby.LobbyListener;
 import samt.scribble.communication.Connection;
 
 /**
@@ -39,7 +41,7 @@ import samt.scribble.communication.Connection;
  * @author MatanDavidi
  * @version 1.2 (2019-05-04 - 2019-05-07)
  */
-public class ScribbleClient extends JFrame implements LoginListener {
+public class ScribbleClient extends JFrame implements LoginListener, LobbyListener {
     // ---------------------------------------------------------------- Costants
     // -------------------------------------------------------------- Attributes
 
@@ -129,6 +131,18 @@ public class ScribbleClient extends JFrame implements LoginListener {
 //        getContentPane().add(scribblePanel);
 //        getContentPane().validate();
 //        getContentPane().repaint();
+    }
+
+    @Override
+    public void gameStarting(PlayerRole playerRole) {
+
+        scribblePanel = new ScribblePanel(serverConnection, playerRole);
+
+        cardsPanel.add(SCRIBBLE_PANEL_NAME, scribblePanel);
+        CardLayout cl = (CardLayout) cardsPanel.getLayout();
+        cl.show(cardsPanel, SCRIBBLE_PANEL_NAME);
+        pack();
+        
     }
 
 }
