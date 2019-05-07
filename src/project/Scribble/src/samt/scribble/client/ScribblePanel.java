@@ -106,13 +106,14 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
      * @param playerRole Il ruolo di questo giocatore nella prossima partita.
      */
     public ScribblePanel(Connection connection, PlayerRole playerRole) {
+        super();
         connection.addDatagramListener(this);
-        setDrawer(false);
         setDrawer(playerRole.equals(PlayerRole.Drawer));
 
         this.drawedPoints = new ArrayList<>();
         this.receivedPoints = new ArrayList<>();
         this.clear = true;
+        repaint();
     }
 
     @Override
@@ -161,7 +162,7 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
 
             case Commands.START:
                 break;
-            
+
             case Commands.DRAWING:
                 if (bytes.length > 1) {
                     int x = bytes[1] & 0x000000FF;
