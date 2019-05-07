@@ -79,4 +79,11 @@ public class DefaultScribbleParameters {
      */
     public static final String GROUP_ADDRESS = "230.0.0.0";
 
+    /**
+     * Il separatore tra un nome utente e l'altro all'interno del messaggio che
+     * contiene la lista di utenti (vedi
+     * {@link samt.scribble.communication.messages.UsersListMessage# UsersListMessage})
+     */
+    public static final byte USERS_LIST_SEPARATOR = (byte) 255;
+
 }
