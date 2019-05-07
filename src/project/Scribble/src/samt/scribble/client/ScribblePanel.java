@@ -35,6 +35,7 @@ import java.awt.event.MouseMotionListener;
 import java.net.DatagramPacket;
 import java.util.ArrayList;
 import java.util.List;
+import samt.scribble.client.game.PlayerRole;
 
 /**
  * Classe ScribblePanel che si occupa di fornire un pannello funzionante sia per
@@ -102,10 +103,12 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
      * Costruttore della classe ScribblePanel.
      *
      * @param connection Connessione con il server.
+     * @param playerRole Il ruolo di questo giocatore nella prossima partita.
      */
-    public ScribblePanel(Connection connection) {
+    public ScribblePanel(Connection connection, PlayerRole playerRole) {
         connection.addDatagramListener(this);
         setDrawer(false);
+        setDrawer(playerRole.equals(PlayerRole.Drawer));
 
         this.drawedPoints = new ArrayList<>();
         this.receivedPoints = new ArrayList<>();
