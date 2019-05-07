@@ -72,9 +72,9 @@ public class ScribbleServer implements DatagramListener {
     public ScribbleServer(InetAddress groupIp) throws IOException {
         this.listeningThread = new ListeningThread(DefaultScribbleParameters.DEFAULT_SERVER_PORT);
         this.listeningThread.addDatagramListener(this);
-        
+
         this.playerManager = new PlayerManager();
-        
+
         this.groupConnection = new GroupConnection(groupIp, DefaultScribbleParameters.DEFAULT_GROUP_PORT);
         this.groupConnection.addDatagramListener(this);
     }
@@ -101,7 +101,7 @@ public class ScribbleServer implements DatagramListener {
                     case Commands.ECHO:
                         sendMessage(EchoModule.echo(datagramPacket));
                         break;
-                    
+
                     case Commands.JOIN:
                         sendMessage(JoinModule.join(
                                 datagramPacket,
@@ -113,26 +113,24 @@ public class ScribbleServer implements DatagramListener {
                             int drawerIndex = (int) (Math.random() * playersNumber);
 
                             for (int i = 0; i < playersNumber; ++i) {
-                                
+
                                 Player player = playerManager.getPlayers().get(i);
-                                
+
                                 PlayerRole currentPlayerRole = PlayerRole.Guesser;
-                                
+
                                 if (i == drawerIndex) {
-                                    
+
                                     currentPlayerRole = PlayerRole.Drawer;
-                                    
+
                                 }
-                                
+
                                 MessageSender.sendMessage(player.getIp(), player.getPort(), new StartMessage(currentPlayerRole));
-                                
+
                             }
-                            
 
                         } else if (playersNumber > DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
-
-                            //NON USARE! NON FUNZIONA ANCORA!
-                            //MessageSender.sendMessage(datagramPacket.getAddress(), datagramPacket.getPort(), new UsersListMessage(playerManager.getPlayers()));
+                            
+                            MessageSender.sendMessage(datagramPacket.getAddress(), datagramPacket.getPort(), new UsersListMessage(playerManager.getPlayers()));
 
                         }
                         break;
