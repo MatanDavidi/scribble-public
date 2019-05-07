@@ -21,7 +21,7 @@ public class TestWord {
 
             //estraggo la parola
             wManager.getUniqueNewWord();
-            wManager.isGuessedWord("cosa");
+            wManager.isGuessedWord("albero");
 
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
