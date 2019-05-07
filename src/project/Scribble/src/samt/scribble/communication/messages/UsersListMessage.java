@@ -24,6 +24,7 @@
 package samt.scribble.communication.messages;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.communication.Commands;
@@ -66,7 +67,46 @@ public class UsersListMessage extends Message {
         }
 
         return playersArray;
-        
+
+    }
+
+    public static void main(String[] args) {
+
+        List<Player> players = new ArrayList<>();
+        players.add(new Player("paolo", null, 0));
+        players.add(new Player("gabriele", null, 0));
+        players.add(new Player("giulio", null, 0));
+        players.add(new Player("franco", null, 0));
+
+        byte[] playersArray = playersListToByteArray(players);
+
+        List<String> usernames = rebuildUsernames(playersArray);
+
+    }
+
+    private static List<String> rebuildUsernames(byte[] packetData) {
+
+        List<String> usernames = new ArrayList<>();
+
+        StringBuilder username = new StringBuilder();
+
+        for (int i = 0; i < packetData.length; ++i) {
+
+            if (packetData[i] == DefaultScribbleParameters.USERS_LIST_SEPARATOR) {
+
+                usernames.add(username.toString());
+                username.setLength(0);
+
+            } else {
+
+                username.append((char) packetData[i]);
+
+            }
+
+        }
+
+        return usernames;
+
     }
 
 }
