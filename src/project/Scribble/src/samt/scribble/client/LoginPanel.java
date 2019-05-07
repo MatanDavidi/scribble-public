@@ -188,15 +188,14 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
             if (packetData[0] == Commands.GROUP_ADDRESS_MESSAGE) {
 
                 try {
-                    
+
                     if (username != null && listener != null) {
-                        
+
                         GroupConnection groupConnection = new GroupConnection(InetAddress.getByAddress(messageBytes), DefaultScribbleParameters.DEFAULT_GROUP_PORT);
                         MessageSender sender = new MessageSender();
-                        listeningThread.interrupt();
-                        
+
                         listener.loggedIn(username, new Connection(groupConnection, listeningThread, sender));
-                        
+
                     }
 
                 } catch (IOException ex) {
