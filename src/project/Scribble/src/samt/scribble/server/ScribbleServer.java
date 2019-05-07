@@ -107,17 +107,14 @@ public class ScribbleServer implements DatagramListener {
                                 datagramPacket,
                                 this.playerManager,
                                 groupConnection));
-                        
+
                         int playersNumber = playerManager.getPlayersNumber();
                         if (playersNumber == DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
-                            
-                            startGame();
-                            
-                        } else if (playersNumber > DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
 
-                            groupConnection.send(new UsersListMessage(playerManager.getPlayers()));
+                            startGame();
 
                         }
+                        groupConnection.send(new UsersListMessage(playerManager.getPlayers()));
                         break;
                 }
             } catch (IOException ex) {
