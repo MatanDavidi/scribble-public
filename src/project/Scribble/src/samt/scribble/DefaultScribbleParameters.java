@@ -73,4 +73,10 @@ public class DefaultScribbleParameters {
      */
     public static final String SERVER_ADDRESS = "127.0.0.1";
 
+    /**
+     * L'indirizzo IP del gruppo multicast al quale sono connessi tutti gli
+     * utenti.
+     */
+    public static final String GROUP_ADDRESS = "230.0.0.0";
+
 }

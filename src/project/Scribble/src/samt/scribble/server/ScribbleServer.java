@@ -156,7 +156,7 @@ public class ScribbleServer implements DatagramListener {
      * @throws IOException Errore nel server.
      */
     public static void main(String[] args) throws IOException {
-        InetAddress ip = InetAddress.getByName("230.0.0.0");
+        InetAddress ip = InetAddress.getByName(DefaultScribbleParameters.GROUP_ADDRESS);
         ScribbleServer server = new ScribbleServer(ip);
         server.start();
     }
