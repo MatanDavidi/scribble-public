@@ -32,11 +32,11 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.Random;
 import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.client.game.PlayerRole;
 import samt.scribble.communication.messages.StartMessage;
+import samt.scribble.communication.messages.UsersListMessage;
 import samt.scribble.server.player.Player;
 
 /**
@@ -108,9 +108,9 @@ public class ScribbleServer implements DatagramListener {
                                 this.playerManager,
                                 groupConnection));
                         int playersNumber = playerManager.getPlayersNumber();
-                            int drawerIndex = (new Random(System.nanoTime()).nextInt(playersNumber));
-                            
                         if (playersNumber == DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
+
+                            int drawerIndex = (int) (Math.random() * playersNumber);
 
                             for (int i = 0; i < playersNumber; ++i) {
                                 
