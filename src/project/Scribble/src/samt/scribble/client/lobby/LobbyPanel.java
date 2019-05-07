@@ -71,6 +71,7 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
 
         setLayout(new java.awt.BorderLayout());
 
+        usersListTextArea.setEditable(false);
         usersListTextArea.setColumns(20);
         usersListTextArea.setRows(5);
         usersListScrollPane.setViewportView(usersListTextArea);
