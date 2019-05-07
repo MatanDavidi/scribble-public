@@ -108,10 +108,10 @@ public class ScribbleServer implements DatagramListener {
                                 this.playerManager,
                                 groupConnection));
                         int playersNumber = playerManager.getPlayersNumber();
-                        if (playersNumber >= DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
-                            
                             int drawerIndex = (new Random(System.nanoTime()).nextInt(playersNumber));
                             
+                        if (playersNumber == DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
+
                             for (int i = 0; i < playersNumber; ++i) {
                                 
                                 Player player = playerManager.getPlayers().get(i);
@@ -128,6 +128,12 @@ public class ScribbleServer implements DatagramListener {
                                 
                             }
                             
+
+                        } else if (playersNumber > DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
+
+                            //NON USARE! NON FUNZIONA ANCORA!
+                            //MessageSender.sendMessage(datagramPacket.getAddress(), datagramPacket.getPort(), new UsersListMessage(playerManager.getPlayers()));
+
                         }
                         break;
                 }
