@@ -52,8 +52,7 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
     public LobbyPanel(Connection serverConnection) {
         initComponents();
         this.serverConnection = serverConnection;
-        serverConnection.getGroupConnection().addDatagramListener(this);
-        serverConnection.getListeningThread().addDatagramListener(this);
+        serverConnection.addDatagramListener(this);
     }
 
     /**
