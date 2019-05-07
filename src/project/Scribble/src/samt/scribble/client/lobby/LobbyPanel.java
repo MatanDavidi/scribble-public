@@ -147,7 +147,7 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
         usersListTextArea.setText("");
         for (String username : usernames) {
 
-            usersListTextArea.append(username);
+            usersListTextArea.append(username + "\n");
 
         }
         repaint();
