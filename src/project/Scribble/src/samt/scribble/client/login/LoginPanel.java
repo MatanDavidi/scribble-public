@@ -179,9 +179,9 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
             byte[] messageBytes = new byte[4];
 
-            for (int i = 1; i < messageBytes.length + 1; ++i) {
+            for (int i = 0; i < messageBytes.length; ++i) {
 
-                messageBytes[i - 1] = packetData[i];
+                messageBytes[i] = packetData[i + 1];
 
             }
 
