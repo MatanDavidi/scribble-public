@@ -24,15 +24,18 @@
 package samt.scribble;
 
 /**
+ * La classe DebugVerbosity contiene le costanti utili a definire il livello di
+ * verbosità delle informazioni di debug in modo da poter scegliere che tipo di
+ * informazioni stampare attraverso l'esecuzione del programma.
  *
  * @author MatanDavidi
  * @version 1.0.1 (2019-05-04 - 2019-05-06)
  */
 public class DebugVerbosity {
-    
+
     public static final byte RELEASE = 0;
-    public static final byte INFORMATION = 1;
+    public static final byte ERRORS = 1;
     public static final byte WARNINGS = 2;
-    public static final byte ERRORS = 3;
-    
+    public static final byte INFORMATION = 3;
+
 }
