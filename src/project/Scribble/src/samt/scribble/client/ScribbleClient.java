@@ -111,12 +111,19 @@ public class ScribbleClient extends JFrame implements LoginListener {
 //        loginPanel = null;
 
         lobbyPanel = new LobbyPanel();
+        
+        scribblePanel = new ScribblePanel(serverConnection);
 
         this.serverConnection = serverConnection;
+        
         getContentPane().remove(loginPanel);
+        
         getContentPane().add(lobbyPanel);
+        
         getContentPane().validate();
         getContentPane().repaint();
+        
+        
         pack();
 
 //        scribblePanel = new ScribblePanel(serverConnection);
