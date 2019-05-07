@@ -107,30 +107,15 @@ public class ScribbleServer implements DatagramListener {
                                 datagramPacket,
                                 this.playerManager,
                                 groupConnection));
+                        
                         int playersNumber = playerManager.getPlayersNumber();
                         if (playersNumber == DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
-
-                            int drawerIndex = (int) (Math.random() * playersNumber);
-
-                            for (int i = 0; i < playersNumber; ++i) {
-
-                                Player player = playerManager.getPlayers().get(i);
-
-                                PlayerRole currentPlayerRole = PlayerRole.Guesser;
-
-                                if (i == drawerIndex) {
-
-                                    currentPlayerRole = PlayerRole.Drawer;
-
-                                }
-
-                                MessageSender.sendMessage(player.getIp(), player.getPort(), new StartMessage(currentPlayerRole));
-
-                            }
-
-                        } else if (playersNumber > DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
                             
-                            MessageSender.sendMessage(datagramPacket.getAddress(), datagramPacket.getPort(), new UsersListMessage(playerManager.getPlayers()));
+                            startGame();
+                            
+                        } else if (playersNumber > DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
+
+                            groupConnection.send(new UsersListMessage(playerManager.getPlayers()));
 
                         }
                         break;
@@ -141,6 +126,29 @@ public class ScribbleServer implements DatagramListener {
                 }
             }
         }
+    }
+
+    private void startGame() throws IOException {
+
+        int playersNumber = playerManager.getPlayersNumber();
+        int drawerIndex = (int) (Math.random() * playersNumber);
+
+        for (int i = 0; i < playersNumber; ++i) {
+
+            Player player = playerManager.getPlayers().get(i);
+
+            PlayerRole currentPlayerRole = PlayerRole.Guesser;
+
+            if (i == drawerIndex) {
+
+                currentPlayerRole = PlayerRole.Drawer;
+
+            }
+
+            MessageSender.sendMessage(player.getIp(), player.getPort(), new StartMessage(currentPlayerRole));
+
+        }
+
     }
 
     /**

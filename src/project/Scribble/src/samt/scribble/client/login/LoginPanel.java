@@ -48,7 +48,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
     /**
      * Il LoginListener che deve ricevere gli eventi relativi al login sollevati
      * da quest'istanza di LoginPanel (vedi
-     * {@link samt.scribble.client.LoginListener# LoginListener}).
+     * {@link samt.scribble.client.LoginListener LoginListener}).
      */
     private LoginListener listener;
 
@@ -74,7 +74,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
      * Imposta un valore al campo LoginListener. Da adesso fino a quando questo
      * oggetto non venga distrutto o si disassoci quel LoginListener riceverà
      * gli eventi descritti all'interno dell'interfaccia
-     * {@link samt.scribble.client.LoginListener# LoginListener}.
+     * {@link samt.scribble.client.LoginListener LoginListener}.
      *
      * @param listener Il LoginListener da assegnare a ques'istanza di
      * LoginPanel. Esso deve ricevere gli eventi relativi al login sollevati da
@@ -130,35 +130,43 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
+
         String username = usernameTextField.getText().trim();
-
         if (!username.isEmpty()) {
-
-            JoinMessage joinMessage = new JoinMessage(username);
-            this.username = username;
-
-            try {
-
-                listeningThread = new ListeningThread(DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
-                listeningThread.addDatagramListener(this);
-                listeningThread.start();
-
-                MessageSender.sendMessage(
-                        InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
-                        DefaultScribbleParameters.DEFAULT_SERVER_PORT,
-                        joinMessage
-                );
-
-            } catch (IOException ex) {
-
-                JOptionPane.showMessageDialog(this, ex.getMessage());
-
+            
+            if (username.matches(DefaultScribbleParameters.USERNAME_REGEX)) {
+                
+                JoinMessage joinMessage = new JoinMessage(username);
+                this.username = username;
+                
+                try {
+                    
+                    listeningThread = new ListeningThread(DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
+                    listeningThread.addDatagramListener(this);
+                    listeningThread.start();
+                    
+                    MessageSender.sendMessage(
+                            InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
+                            DefaultScribbleParameters.DEFAULT_SERVER_PORT,
+                            joinMessage
+                    );
+                    
+                } catch (IOException ex) {
+                    
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
+                    
+                }
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(usernamePanel, "Il nome utente specificato contiene caratteri non validi.");
+                
             }
-
+            
         } else {
-
+            
             JOptionPane.showMessageDialog(this, "Inserire un nome utente all'interno del relativo campo.");
-
+            
         }
     }//GEN-LAST:event_loginButtonMouseClicked
 
@@ -172,45 +180,45 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
     @Override
     public void messageReceived(DatagramPacket datagramPacket) {
-
+        
         byte[] packetData = datagramPacket.getData();
-
+        
         if (packetData.length > 0) {
-
+            
             byte[] messageBytes = new byte[4];
-
-            for (int i = 1; i < messageBytes.length + 1; ++i) {
-
-                messageBytes[i - 1] = packetData[i];
-
+            
+            for (int i = 0; i < messageBytes.length; ++i) {
+                
+                messageBytes[i] = packetData[i + 1];
+                
             }
-
+            
             if (packetData[0] == Commands.GROUP_ADDRESS_MESSAGE) {
-
+                
                 try {
-
+                    
                     if (username != null && listener != null) {
-
+                        
                         GroupConnection groupConnection = new GroupConnection(InetAddress.getByAddress(messageBytes), DefaultScribbleParameters.DEFAULT_GROUP_PORT);
                         MessageSender sender = new MessageSender();
-
+                        
                         listener.loggedIn(username, new Connection(groupConnection, listeningThread, sender));
-
+                        
                     }
-
+                    
                 } catch (IOException ex) {
-
+                    
                     JOptionPane.showMessageDialog(this, ex.getMessage());
-
+                    
                 }
-
+                
             } else {
-
+                
                 JOptionPane.showMessageDialog(this, new String(messageBytes));
-
+                
             }
-
+            
         }
-
+        
     }
 }

@@ -37,7 +37,7 @@ import samt.scribble.communication.Connection;
  *
  * @author giuliobosco (giuliobva@gmail.com)
  * @author MatanDavidi
- * @version 1.2 (2019-05-04 - 2019-05-06)
+ * @version 1.2 (2019-05-04 - 2019-05-07)
  */
 public class ScribbleClient extends JFrame implements LoginListener {
     // ---------------------------------------------------------------- Costants
@@ -107,23 +107,19 @@ public class ScribbleClient extends JFrame implements LoginListener {
             System.out.println(username + ": accesso al gruppo multicast " + serverConnection.getGroupConnection().getGroupIp().getHostAddress());
         }
 
-        loginPanel.unsetListener();
-//        loginPanel = null;
-
-        lobbyPanel = new LobbyPanel();
+        lobbyPanel = new LobbyPanel(serverConnection);
 
         this.serverConnection = serverConnection;
-        getContentPane().remove(loginPanel);
-        getContentPane().add(lobbyPanel);
-        getContentPane().validate();
-        getContentPane().repaint();
+        remove(loginPanel);
+        add(lobbyPanel);
+        validate();
+        repaint();
         pack();
 
 //        scribblePanel = new ScribblePanel(serverConnection);
 //        getContentPane().add(scribblePanel);
 //        getContentPane().validate();
 //        getContentPane().repaint();
-
     }
 
 }

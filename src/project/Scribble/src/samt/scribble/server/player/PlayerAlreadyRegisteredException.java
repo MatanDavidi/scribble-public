@@ -33,7 +33,7 @@ package samt.scribble.server.player;
 public class PlayerAlreadyRegisteredException extends Exception {
 
     /**
-     * Crea eccezzione giocatore gi&agrave; registrato.
+     * Crea eccezione giocatore già registrato.
      *
      * @param message Messaggio dell'eccezione.
      */

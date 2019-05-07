@@ -24,7 +24,11 @@
 package samt.scribble.client.lobby;
 
 import java.net.DatagramPacket;
+import java.util.ArrayList;
+import java.util.List;
+import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.communication.Commands;
+import samt.scribble.communication.Connection;
 import samt.scribble.communication.DatagramListener;
 
 /**
@@ -33,13 +37,23 @@ import samt.scribble.communication.DatagramListener;
  */
 public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
 
+    private Connection serverConnection;
+
+    private List<String> usernames;
+
     private final String idleText = "In attesa di altri giocatori";
-    
+
     /**
      * Creates new form LobbyPanel
+     *
+     * @param serverConnection La connessione al server sotto forma di istanza
+     * di {@link samt.scribble.communication.Connection Connection}.
      */
-    public LobbyPanel() {
+    public LobbyPanel(Connection serverConnection) {
         initComponents();
+        this.serverConnection = serverConnection;
+        serverConnection.getGroupConnection().addDatagramListener(this);
+        serverConnection.getListeningThread().addDatagramListener(this);
     }
 
     /**
@@ -78,12 +92,66 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
 
     @Override
     public void messageReceived(DatagramPacket datagramPacket) {
-        
+
         byte[] packetData = datagramPacket.getData();
-        
-//        if (packetData[0] == Commands.) {
-//            
-//        }
-        
+
+        byte[] message = new byte[packetData.length - 1];
+
+        for (int i = 0; i < message.length; ++i) {
+
+            message[i] = packetData[i + 1];
+
+        }
+
+        switch (packetData[0]) {
+
+            case Commands.USERS_LIST:
+                usernames = rebuildUsernames(message);
+                updateUsersListTextArea();
+                break;
+
+            case Commands.START:
+                break;
+
+        }
+
     }
+
+    private List<String> rebuildUsernames(byte[] packetData) {
+
+        List<String> usernames = new ArrayList<>();
+
+        StringBuilder username = new StringBuilder();
+
+        for (int i = 0; i < packetData.length; ++i) {
+
+            if (packetData[i] == DefaultScribbleParameters.USERS_LIST_SEPARATOR) {
+
+                usernames.add(username.toString());
+                username.setLength(0);
+
+            } else {
+
+                username.append((char) packetData[i]);
+
+            }
+
+        }
+
+        return usernames;
+
+    }
+
+    private void updateUsersListTextArea() {
+
+        usersListTextArea.setText("");
+        for (String username : usernames) {
+
+            usersListTextArea.append(username);
+
+        }
+        repaint();
+
+    }
+
 }
