@@ -40,8 +40,6 @@ import samt.scribble.communication.messages.JoinMessage;
  * La classe LoginPanel è una sottoclasse di JPanel e contiene i componenti
  * utili per accedere al server.
  *
- * TODO: Fare in modo che l'istanza riceva pacchetti tramite il ListeningThread.
- *
  * @author MatanDavidi
  * @version 1.1 (2019-05-04 - 2019-05-06)
  */
