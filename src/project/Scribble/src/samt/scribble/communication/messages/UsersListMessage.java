@@ -60,6 +60,7 @@ public class UsersListMessage extends Message {
             }
 
             playersArray[playersArrayIndex] = DefaultScribbleParameters.USERS_LIST_SEPARATOR;
+            ++playersArrayIndex;
             ++currentPlayerIndex;
 
         }
