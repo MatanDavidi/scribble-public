@@ -130,7 +130,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
-        String username = usernameTextField.getText();
+        String username = usernameTextField.getText().trim();
 
         if (!username.isEmpty()) {
 
