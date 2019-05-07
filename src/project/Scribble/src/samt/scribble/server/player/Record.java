@@ -23,6 +23,8 @@
  */
 package samt.scribble.server.player;
 
+import samt.scribble.DefaultScribbleParameters;
+
 /**
  * Classe che rappresenta il nome utente e il punteggio di un giocatore.
  *
@@ -96,7 +98,7 @@ public class Record {
      * @param username Username del giocatore.
      */
     protected void setUsername(String username) {
-        String regex = "^(?=.{1,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
+        String regex = DefaultScribbleParameters.USERNAME_REGEX;
         if (username.matches(regex)) {
             this.username = username;
         }
