@@ -75,12 +75,6 @@ public class JoinModule {
             message = new ErrorMessage(pare.getMessage());
         }
 
-        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
-
-            System.out.println(new String(message.getWholeMessage()));
-
-        }
-
         return new DatagramPacket(
                 message.getWholeMessage(),
                 message.getWholeMessage().length,
