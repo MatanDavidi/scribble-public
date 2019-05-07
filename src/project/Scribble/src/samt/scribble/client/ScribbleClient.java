@@ -43,6 +43,8 @@ public class ScribbleClient extends JFrame implements LoginListener {
     // ---------------------------------------------------------------- Costants
     // -------------------------------------------------------------- Attributes
 
+    private JPanel cardsPanel;
+
     /**
      * Pannello scribble, dove verrà disegnato il disegno.
      */
@@ -80,9 +82,12 @@ public class ScribbleClient extends JFrame implements LoginListener {
         // Set Frame Layout.
         this.getContentPane().setLayout(new BorderLayout());
 
+        cardsPanel = new JPanel(new CardLayout());
+
         loginPanel = new LoginPanel();
         loginPanel.setListener(this);
-        add(loginPanel);
+        cardsPanel.add("loginPanel", loginPanel);
+        add(cardsPanel);
 
         pack();
     }
@@ -114,10 +119,10 @@ public class ScribbleClient extends JFrame implements LoginListener {
         lobbyPanel = new LobbyPanel(serverConnection);
 
         this.serverConnection = serverConnection;
-        remove(loginPanel);
-        add(lobbyPanel);
-        validate();
-        repaint();
+
+        cardsPanel.add("lobbyPanel", lobbyPanel);
+        CardLayout cl = (CardLayout) cardsPanel.getLayout();
+        cl.show(cardsPanel, "lobbyPanel");
         pack();
 
 //        scribblePanel = new ScribblePanel(serverConnection);
