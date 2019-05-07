@@ -26,7 +26,6 @@ package samt.scribble.communication;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import samt.scribble.DebugVerbosity;
@@ -113,9 +112,13 @@ public class ListeningThread extends Thread {
 
             }
 
-        } catch (SocketException se) {
-
         } catch (IOException ioe) {
+
+            if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.ERRORS) {
+
+                System.out.println("ListeningThread " + getId() + ": " + ioe.getMessage());
+
+            }
 
         }
     }
