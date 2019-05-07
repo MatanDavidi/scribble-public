@@ -44,7 +44,7 @@ public class StartMessage extends Message {
      * questo messaggio.
      */
     public StartMessage(PlayerRole role) {
-        super(Commands.START, role.toString().getBytes());
+        super(Commands.START, role.name().getBytes());
     }
 
 }
