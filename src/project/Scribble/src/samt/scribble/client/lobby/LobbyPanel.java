@@ -53,7 +53,7 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
      * @param serverConnection La connessione al server sotto forma di istanza
      * di {@link samt.scribble.communication.Connection Connection}.
      */
-    public LobbyPanel(Connection serverConnection) {
+    public LobbyPanel(Connection serverConnection, String username) {
         initComponents();
         this.serverConnection = serverConnection;
         serverConnection.addDatagramListener(this);
@@ -70,6 +70,9 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
 
         }
 
+        usernames = new ArrayList<>();
+        usernames.add(username);
+        updateUsersListTextArea();
     }
 
     /**
