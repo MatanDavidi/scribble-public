@@ -48,7 +48,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
     /**
      * Il LoginListener che deve ricevere gli eventi relativi al login sollevati
      * da quest'istanza di LoginPanel (vedi
-     * {@link samt.scribble.client.LoginListener# LoginListener}).
+     * {@link samt.scribble.client.LoginListener LoginListener}).
      */
     private LoginListener listener;
 
@@ -74,7 +74,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
      * Imposta un valore al campo LoginListener. Da adesso fino a quando questo
      * oggetto non venga distrutto o si disassoci quel LoginListener riceverà
      * gli eventi descritti all'interno dell'interfaccia
-     * {@link samt.scribble.client.LoginListener# LoginListener}.
+     * {@link samt.scribble.client.LoginListener LoginListener}.
      *
      * @param listener Il LoginListener da assegnare a ques'istanza di
      * LoginPanel. Esso deve ricevere gli eventi relativi al login sollevati da
