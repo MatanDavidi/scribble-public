@@ -81,9 +81,9 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
         
         byte[] packetData = datagramPacket.getData();
         
-        if (packetData[0] == Commands.) {
-            
-        }
+//        if (packetData[0] == Commands.) {
+//            
+//        }
         
     }
 }

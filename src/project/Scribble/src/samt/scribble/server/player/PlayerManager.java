@@ -80,7 +80,7 @@ public class PlayerManager {
      */
     public boolean isRegisteredPlayer(String username) {
         for (Player player : this.players) {
-            if (player.getUsername().equals(username)) {
+            if (player.getUsername().equalsIgnoreCase(username)) {
                 return true;
             }
         }
@@ -116,7 +116,7 @@ public class PlayerManager {
      */
     public boolean isRegisteredPlayer(String username, InetAddress ip) {
         for (Player player : this.players) {
-            if (player.getUsername().equals(username) && player.getIp().equals(ip)) {
+            if (player.getUsername().equalsIgnoreCase(username) && player.getIp().equals(ip)) {
                 return true;
             }
         }
@@ -133,7 +133,7 @@ public class PlayerManager {
      */
     public void registerPlayer(Player player) throws PlayerAlreadyRegisteredException {
         for (Player playerInList : this.players) {
-            if (playerInList.getUsername().equals(player.getUsername())) {
+            if (playerInList.getUsername().equalsIgnoreCase(player.getUsername())) {
                 String message = "Il username \"" + player.getUsername() + "\" è già in uso!";
                 throw new PlayerAlreadyRegisteredException(message);
             }
