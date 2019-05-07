@@ -51,6 +51,16 @@ public class PlayerManager {
     }
 
     /**
+     * Ritorna la lista di giocatori registrati.
+     *
+     * @return Una lista contenente un'istanza di Player per ogni giocatore
+     * registrato.
+     */
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    /**
      * Ritorna il numero totale di giocatori registrati.
      *
      * @return Il numero totale di giocatori registrati.
