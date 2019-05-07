@@ -51,6 +51,17 @@ public class PlayerManager {
     }
 
     /**
+     * Ritorna il numero totale di giocatori registrati.
+     *
+     * @return Il numero totale di giocatori registrati.
+     */
+    public int getPlayersNumber() {
+
+        return players.size();
+
+    }
+
+    /**
      * Controlla se il username &egrave; registrato nella lista dei giocatori di
      * scribble.
      *
