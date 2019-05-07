@@ -23,6 +23,8 @@
  */
 package samt.scribble.client.lobby;
 
+import samt.scribble.client.game.PlayerRole;
+
 /**
  * L'interfaccia LobbyListener contiene gli eventi relativi alla lobby.
  *
@@ -34,6 +36,6 @@ public interface LobbyListener {
     /**
      * Evento che segnala che la partita di Scribble sta per cominciare.
      */
-    public void gameStarting();
+    public void gameStarting(PlayerRole playerRole);
 
 }
