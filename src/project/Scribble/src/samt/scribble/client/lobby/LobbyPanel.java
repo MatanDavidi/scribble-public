@@ -27,6 +27,7 @@ import java.net.DatagramPacket;
 import java.util.ArrayList;
 import java.util.List;
 import samt.scribble.DefaultScribbleParameters;
+import samt.scribble.client.game.PlayerRole;
 import samt.scribble.communication.Commands;
 import samt.scribble.communication.Connection;
 import samt.scribble.communication.DatagramListener;
@@ -131,6 +132,7 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
                 break;
 
             case Commands.START:
+                listener.gameStarting(new String(message).equals("Drawer") ? PlayerRole.Drawer : PlayerRole.Guesser);
                 break;
 
         }
