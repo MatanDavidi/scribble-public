@@ -69,6 +69,10 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
      * con il server.
      */
     private Connection serverConnection;
+    
+    private final String LOBBY_PANEL_NAME = "lobbyPanel";
+    
+    private final String SCRIBBLE_PANEL_NAME = "scribblePanel";
 
     // ------------------------------------------------------- Getters & Setters
     // ------------------------------------------------------------ Constructors
@@ -118,13 +122,14 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
             System.out.println(username + ": accesso al gruppo multicast " + serverConnection.getGroupConnection().getGroupIp().getHostAddress());
         }
 
-        lobbyPanel = new LobbyPanel(serverConnection);
+        lobbyPanel = new LobbyPanel(serverConnection, username);
+        lobbyPanel.setListener(this);
 
         this.serverConnection = serverConnection;
 
-        cardsPanel.add("lobbyPanel", lobbyPanel);
+        cardsPanel.add(LOBBY_PANEL_NAME, lobbyPanel);
         CardLayout cl = (CardLayout) cardsPanel.getLayout();
-        cl.show(cardsPanel, "lobbyPanel");
+        cl.show(cardsPanel, LOBBY_PANEL_NAME);
         pack();
 
 //        scribblePanel = new ScribblePanel(serverConnection);
