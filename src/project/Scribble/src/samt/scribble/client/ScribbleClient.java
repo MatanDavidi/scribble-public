@@ -107,9 +107,6 @@ public class ScribbleClient extends JFrame implements LoginListener {
             System.out.println(username + ": accesso al gruppo multicast " + serverConnection.getGroupConnection().getGroupIp().getHostAddress());
         }
 
-        loginPanel.unsetListener();
-//        loginPanel = null;
-
         lobbyPanel = new LobbyPanel();
 
         this.serverConnection = serverConnection;
