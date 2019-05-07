@@ -311,7 +311,7 @@
 											"top": 278,
 											"width": 228.72509765625,
 											"height": 13,
-											"text": "+drawedPoints: List<Points>",
+											"text": "-drawedPoints: List<Points>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -328,7 +328,7 @@
 											"top": 293,
 											"width": 228.72509765625,
 											"height": 13,
-											"text": "+receivedPoints: List<Point>",
+											"text": "-receivedPoints: List<Point>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -345,7 +345,7 @@
 											"top": 308,
 											"width": 228.72509765625,
 											"height": 13,
-											"text": "+drawer: boolean",
+											"text": "-drawer: boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -362,7 +362,7 @@
 											"top": 323,
 											"width": 228.72509765625,
 											"height": 13,
-											"text": "+clear: boolean",
+											"text": "-clear: boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -5017,6 +5017,7 @@
 								"$ref": "AAAAAAFqkvOuKJY+p5M="
 							},
 							"name": "drawedPoints",
+							"visibility": "private",
 							"type": "List<Points>"
 						},
 						{
@@ -5026,6 +5027,7 @@
 								"$ref": "AAAAAAFqkvOuKJY+p5M="
 							},
 							"name": "receivedPoints",
+							"visibility": "private",
 							"type": "List<Point>"
 						},
 						{
@@ -5035,6 +5037,7 @@
 								"$ref": "AAAAAAFqkvOuKJY+p5M="
 							},
 							"name": "drawer",
+							"visibility": "private",
 							"type": "boolean"
 						},
 						{
@@ -5044,6 +5047,7 @@
 								"$ref": "AAAAAAFqkvOuKJY+p5M="
 							},
 							"name": "clear",
+							"visibility": "private",
 							"type": "boolean"
 						}
 					],
