@@ -133,40 +133,40 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
         String username = usernameTextField.getText().trim();
         if (!username.isEmpty()) {
-            
+
             if (username.matches(DefaultScribbleParameters.USERNAME_REGEX)) {
-                
+
                 JoinMessage joinMessage = new JoinMessage(username);
                 this.username = username;
-                
+
                 try {
-                    
+
                     listeningThread = new ListeningThread(DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
                     listeningThread.addDatagramListener(this);
                     listeningThread.start();
-                    
+
                     MessageSender.sendMessage(
                             InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
                             DefaultScribbleParameters.DEFAULT_SERVER_PORT,
                             joinMessage
                     );
-                    
+
                 } catch (IOException ex) {
-                    
+
                     JOptionPane.showMessageDialog(this, ex.getMessage());
-                    
+
                 }
-                
+
             } else {
-                
+
                 JOptionPane.showMessageDialog(usernamePanel, "Il nome utente specificato contiene caratteri non validi.");
-                
+
             }
-            
+
         } else {
-            
+
             JOptionPane.showMessageDialog(this, "Inserire un nome utente all'interno del relativo campo.");
-            
+
         }
     }//GEN-LAST:event_loginButtonMouseClicked
 
@@ -180,45 +180,55 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
     @Override
     public void messageReceived(DatagramPacket datagramPacket) {
-        
+
         byte[] packetData = datagramPacket.getData();
-        
+
         if (packetData.length > 0) {
-            
-            byte[] messageBytes = new byte[4];
-            
-            for (int i = 0; i < messageBytes.length; ++i) {
-                
-                messageBytes[i] = packetData[i + 1];
-                
-            }
-            
+
+            byte[] messageBytes;
+
             if (packetData[0] == Commands.GROUP_ADDRESS_MESSAGE) {
-                
+
+                messageBytes = new byte[4];
+
+            } else {
+
+                messageBytes = new byte[packetData.length - 1];
+
+            }
+
+            for (int i = 0; i < messageBytes.length; ++i) {
+
+                messageBytes[i] = packetData[i + 1];
+
+            }
+
+            if (packetData[0] == Commands.GROUP_ADDRESS_MESSAGE) {
+
                 try {
-                    
+
                     if (username != null && listener != null) {
-                        
+
                         GroupConnection groupConnection = new GroupConnection(InetAddress.getByAddress(messageBytes), DefaultScribbleParameters.DEFAULT_GROUP_PORT);
                         MessageSender sender = new MessageSender();
-                        
+
                         listener.loggedIn(username, new Connection(groupConnection, listeningThread, sender));
-                        
+
                     }
-                    
+
                 } catch (IOException ex) {
-                    
+
                     JOptionPane.showMessageDialog(this, ex.getMessage());
-                    
+
                 }
-                
+
             } else {
-                
+
                 JOptionPane.showMessageDialog(this, new String(messageBytes));
-                
+
             }
-            
+
         }
-        
+
     }
 }
