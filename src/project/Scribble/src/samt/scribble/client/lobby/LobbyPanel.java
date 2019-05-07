@@ -107,6 +107,7 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
 
             case Commands.USERS_LIST:
                 usernames = rebuildUsernames(message);
+                updateUsersListTextArea();
                 break;
 
             case Commands.START:
