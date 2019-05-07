@@ -41,7 +41,11 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
 
     private List<String> usernames;
 
-    private final String idleText = "In attesa di altri giocatori";
+    private LobbyListener listener;
+
+    public void setListener(LobbyListener listener) {
+        this.listener = listener;
+    }
 
     /**
      * Creates new form LobbyPanel
