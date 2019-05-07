@@ -23,6 +23,7 @@
  */
 package samt.scribble.communication.messages;
 
+import samt.scribble.client.game.PlayerRole;
 import samt.scribble.communication.Commands;
 
 /**
@@ -30,19 +31,20 @@ import samt.scribble.communication.Commands;
  * l'inizio di una partita.
  *
  * @author MatanDavidi
- * @version 1.0 (2019-05-05 - 2019-05-06)
+ * @version 1.1 (2019-05-05 - 2019-05-07)
  */
 public class StartMessage extends Message {
 
     /**
      * Istanzia un nuovo oggetto di tipo StartMessage utilizzando come byte di
-     * comando {@link samt.scribble.communication.Commands#START START}.
+     * comando {@link samt.scribble.communication.Commands#START START} e
+     * permettendo di specificare il ruolo di un giocatore.
      *
-     * @param message Il messaggio da inviare all'interno di quest'istanza di
-     * StartMessage.
+     * @param role Il ruolo che deve assumere il giocatore a cui si sta mandando
+     * questo messaggio.
      */
-    public StartMessage(byte[] message) {
-        super(Commands.START, message);
+    public StartMessage(PlayerRole role) {
+        super(Commands.START, role.toString().getBytes());
     }
 
 }
