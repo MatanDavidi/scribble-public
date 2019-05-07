@@ -32,7 +32,6 @@ import samt.scribble.server.player.PlayerAlreadyRegisteredException;
 import samt.scribble.server.player.PlayerManager;
 
 import java.net.DatagramPacket;
-import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
 
 /**
