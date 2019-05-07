@@ -53,7 +53,11 @@ public class ScribbleClient extends JFrame implements LoginListener {
      * effettuare l'accesso presso il server.
      */
     private LoginPanel loginPanel;
-
+    
+    /**
+     * Istanza di LobbyPanel che contiene i componenti e la logica per
+     * l'attesa di giocatori nel server.
+     */
     private LobbyPanel lobbyPanel;
 
     /**
