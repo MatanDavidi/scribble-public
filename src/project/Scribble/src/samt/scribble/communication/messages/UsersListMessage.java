@@ -31,9 +31,11 @@ import samt.scribble.communication.Commands;
 import samt.scribble.server.player.Player;
 
 /**
+ * La classe UsersListMessage è una sottoclasse di Message che contiene la lista
+ * di utenti connessi attualmente al server.
  *
- * @author Matan Davidi
- * @version 1.0 (2019-05-07 - 2019-05-07)
+ * @author MatanDavidi
+ * @version 1.0.1 (2019-05-07 - 2019-05-08)
  */
 public class UsersListMessage extends Message {
 
