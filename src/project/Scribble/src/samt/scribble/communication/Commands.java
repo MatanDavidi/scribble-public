@@ -1,4 +1,3 @@
-
 package samt.scribble.communication;
 
 /**
@@ -8,14 +7,15 @@ package samt.scribble.communication;
  *
  * @author MatanDavidi
  * @author giuliobosco
- * @version 1.0.2 (2019-04-29 - 2019-05-06)
+ * @author bryanbeffa
+ * @version 1.0.3 (2019-04-29 - 2019-05-08)
  */
 public class Commands {
 
     /**
      * Il numero totale di byte comando definiti.
      */
-    public final static short COMMANDS_NUMBER = 12;
+    public final static short COMMANDS_NUMBER = 14;
 
     /**
      * Un byte di comando che segnala che il messaggio inviato è di tipo
@@ -72,19 +72,32 @@ public class Commands {
 
     /**
      * Un byte di comando che segnala che il messaggio inviato contiene l'ordine
-     * di inizio del gioco.
+     * di inizio del gioco e che il giocatore che riceve questo messaggio sarà
+     * uno degli indovinatori.
      */
-    public final static byte START = 9;
+    public final static byte START_GUESSER = 9;
 
-     /**
+    /**
+     * Un byte di comando che segnala che il messaggio inviato contiene l'ordine
+     * di inizio del gioco e che il giocatore che riceve questo messaggio sarà
+     * uno dei disegnatori.
+     */
+    public final static byte START_DRAWER = 10;
+
+    /**
      * Un byte di comando che segnala che il messaggio inviato contiene l'ordine
      * di fine del gioco.
      */
-    public final static byte END = 10;
-    
+    public final static byte END = 11;
+
+    /**
+     * Un byte di comando che segnala che il messaggio inviato contiene che la
+     * parola è stata indovinata.
+     */
+    public final static byte GUESSED_WORD = 12;
+
     /**
      * Un byte di comando che segnala che il messagio e una parola indovinata.
      */
-    public final static byte WORD_GUESSED = 11;
-
+    public final static byte WORD_GUESSED = 13;
 }

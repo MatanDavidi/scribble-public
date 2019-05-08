@@ -69,6 +69,12 @@ public class DefaultScribbleParameters {
     public static final Path RANKING_CSV_PATH = Paths.get("data", "ranking.csv");
 
     /**
+     * Attributo che rappresenta il percorso del file di testo in cui sono
+     * salvate le parole che vengono estratte per il disegnatore.
+     */
+    public static final Path WORDS_DICTIONARY_PATH = Paths.get("data", "words.txt");
+
+    /**
      * L'indirizzo IP del server che gestisce il gioco.
      */
     public static final String SERVER_ADDRESS = "127.0.0.1";
@@ -91,7 +97,13 @@ public class DefaultScribbleParameters {
      * valido o meno.
      */
     public static final String USERNAME_REGEX = "^(?=.{1,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
-    
+
+    /**
+     * Messaggio di errore che segnala che non è stato trovato nessun player
+     * in base all'indirizzo ip e alla porta.
+     */
+    public static final String NO_FOUND_USERNAME_BY_ADDRESS = "Non è stato trovato nessuno player";
+
     public static final Path WORDS_CSV_PATH = Paths.get("data", "words.csv");
 
 }

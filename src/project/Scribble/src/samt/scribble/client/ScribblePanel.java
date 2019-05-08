@@ -160,9 +160,6 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
 
         switch (bytes[0]) {
 
-            case Commands.START:
-                break;
-
             case Commands.DRAWING:
                 if (bytes.length > 1) {
                     int x = bytes[1] & 0x000000FF;
@@ -171,7 +168,9 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
                     this.receivedPoints.add(new Point(x, y));
                 }
                 break;
-
+            case Commands.WORD_GUESS:
+                JOptionPane.showMessageDialog(this, "Hai indovinato la parola!!!");
+                break;
         }
     }
 
