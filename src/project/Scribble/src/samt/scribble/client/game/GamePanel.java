@@ -24,11 +24,13 @@
 package samt.scribble.client.game;
 
 import java.io.IOException;
+import java.net.DatagramPacket;
 import java.net.InetAddress;
 import javax.swing.JOptionPane;
 import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.client.login.LoginListener;
 import samt.scribble.communication.Connection;
+import samt.scribble.communication.DatagramListener;
 import samt.scribble.communication.ListeningThread;
 import samt.scribble.communication.MessageSender;
 import samt.scribble.communication.messages.JoinMessage;
@@ -39,7 +41,7 @@ import samt.scribble.communication.messages.WordGuessMessage;
  * @author MattiaRuberto
  * @version 1.0 (2019-05-08 - 2019-05-08)
  */
-public class GamePanel extends javax.swing.JPanel {
+public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     private Connection serverConnection;
     /**
      * Creates new form GamePanel
@@ -47,6 +49,7 @@ public class GamePanel extends javax.swing.JPanel {
     public GamePanel(Connection serverConnection) {
         initComponents();
         this.serverConnection = serverConnection;
+        
         serverConnection.addDatagramListener(this);
         
         if (!serverConnection.getGroupConnection().isAlive()) {
@@ -97,11 +100,6 @@ public class GamePanel extends javax.swing.JPanel {
                 WordGuessMessage wordGuessMessage = new WordGuessMessage(wordToGuess);
                 
                 try {
-
-                    listeningThread = new ListeningThread(DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
-                    listeningThread.addDatagramListener(this);
-                    listeningThread.start();
-
                     MessageSender.sendMessage(
                             InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
                             DefaultScribbleParameters.DEFAULT_SERVER_PORT,
@@ -125,4 +123,9 @@ public class GamePanel extends javax.swing.JPanel {
     private javax.swing.JButton jButtonSendWord;
     private javax.swing.JTextField jTextFieldWord;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void messageReceived(DatagramPacket datagramPacket) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
