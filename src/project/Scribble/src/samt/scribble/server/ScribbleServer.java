@@ -189,9 +189,13 @@ public class ScribbleServer implements DatagramListener {
      * @param args Argomenti da line di comando.
      * @throws IOException Errore nel server.
      */
-    public static void main(String[] args) throws IOException {
-        InetAddress ip = InetAddress.getByName(DefaultScribbleParameters.GROUP_ADDRESS);
-        ScribbleServer server = new ScribbleServer(ip);
-        server.start();
+    public static void main(String[] args){
+        try{
+            InetAddress ip = InetAddress.getByName(DefaultScribbleParameters.GROUP_ADDRESS);
+            ScribbleServer server = new ScribbleServer(ip);
+            server.start();
+        }catch(IOException ex){
+            System.out.println("ERROR: " + ex.getMessage());
+        }
     }
 }
