@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package samt.scribble.client;
+package samt.scribble.client.game;
 
 import java.awt.BorderLayout;
 import java.io.IOException;
@@ -29,7 +29,9 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import javax.swing.JOptionPane;
 import samt.scribble.DefaultScribbleParameters;
+import samt.scribble.client.ScribblePanel;
 import samt.scribble.client.game.PlayerRole;
+import samt.scribble.communication.Commands;
 import samt.scribble.communication.Connection;
 import samt.scribble.communication.DatagramListener;
 import samt.scribble.communication.MessageSender;
@@ -37,10 +39,13 @@ import samt.scribble.communication.messages.WordGuessMessage;
 
 /**
  * Classe che gestisce le parole indoviate e le invia.
+ *
  * @author MattiaRuberto
- * @version 1.0 (2019-05-08 - 2019-05-08)
+ * @author MatanDavidi
+ * @version 1.0.1 (2019-05-08 - 2019-05-08)
  */
 public class GamePanel extends javax.swing.JPanel implements DatagramListener {
+
     /**
      * Attributo che rappresenta la connessione al server.
      */
@@ -52,7 +57,8 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
 
     public GamePanel(Connection connection, PlayerRole playerRole) {
         initComponents();
-        this.serverConnection = serverConnection;
+        this.serverConnection = connection;
+        serverConnection.addDatagramListener(this);
         scribblePanel = new ScribblePanel(connection, playerRole);
         add(scribblePanel, BorderLayout.WEST);
     }
@@ -81,28 +87,34 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         add(jButtonSendWord);
     }// </editor-fold>//GEN-END:initComponents
     /**
-     * Metodo che parte quando l'utente schiaccia il bottone per inviare al server
-     * la parola da indovinare.
+     * Metodo che parte quando l'utente schiaccia il bottone per inviare al
+     * server la parola da indovinare.
+     *
      * @param evt Attributo che rappresenta le informazioni del bottone.
      */
     private void jButtonSendWordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSendWordMouseClicked
         String wordToGuess = jTextFieldWord.getText().trim();
         if (!wordToGuess.isEmpty()) {
 
-                WordGuessMessage wordGuessMessage = new WordGuessMessage(wordToGuess);
-                
-                try {
-                    MessageSender.sendMessage(
-                            InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
-                            DefaultScribbleParameters.DEFAULT_SERVER_PORT,
-                            wordGuessMessage
-                    );
+            WordGuessMessage wordGuessMessage = new WordGuessMessage(wordToGuess);
 
-                } catch (IOException ex) {
+            try {
+                MessageSender.sendMessage(
+                        InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
+                        DefaultScribbleParameters.DEFAULT_SERVER_PORT,
+                        wordGuessMessage
+                );
 
-                    JOptionPane.showMessageDialog(this, ex.getMessage());
+            } catch (IOException ex) {
 
-                }
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+
+            }
+
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Inserire la parola");
+
         }
     }//GEN-LAST:event_jButtonSendWordMouseClicked
 
@@ -114,6 +126,16 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
 
     @Override
     public void messageReceived(DatagramPacket datagramPacket) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        byte[] bytes = datagramPacket.getData();
+
+        switch (bytes[0]) {
+
+            case Commands.WORD_GUESS:
+                JOptionPane.showMessageDialog(this, "Hai indovinato la parola!!!");
+                break;
+
+        }
+
     }
 }
