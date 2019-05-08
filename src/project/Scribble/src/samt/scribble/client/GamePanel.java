@@ -34,6 +34,7 @@ import samt.scribble.client.game.PlayerRole;
 import samt.scribble.client.login.LoginListener;
 import samt.scribble.communication.Connection;
 import samt.scribble.communication.DatagramListener;
+import samt.scribble.communication.GroupConnection;
 import samt.scribble.communication.ListeningThread;
 import samt.scribble.communication.MessageSender;
 import samt.scribble.communication.messages.JoinMessage;
@@ -50,6 +51,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     private ScribblePanel scribblePanel;
     /**
      * Creates new form GamePanel
+     * @param serverConnection
      */
     public GamePanel(Connection connection) {
         initComponents();
