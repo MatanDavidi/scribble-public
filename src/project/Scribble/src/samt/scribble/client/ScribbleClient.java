@@ -24,7 +24,6 @@
 package samt.scribble.client;
 
 import samt.scribble.client.game.GamePanel;
-import samt.scribble.client.game.WordGuessListener;
 import samt.scribble.client.lobby.LobbyPanel;
 import samt.scribble.client.login.LoginPanel;
 import samt.scribble.client.login.LoginListener;
@@ -35,22 +34,51 @@ import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.client.game.PlayerRole;
 import samt.scribble.client.game.WordGuessListener;
 import samt.scribble.client.lobby.LobbyListener;
-import samt.scribble.client.login.WelcomePanel;
+import samt.scribble.client.welcome.WelcomeListener;
+import samt.scribble.client.welcome.WelcomePanel;
 import samt.scribble.communication.Connection;
 
 /**
- * Scribble client.
+ * Finestra contenente tutti i pannelli.
  *
  * @author giuliobosco (giuliobva@gmail.com)
  * @author MatanDavidi
- * @version 1.2.1 (2019-05-04 - 2019-05-07)
+ * @author JariNaeser
+ * @version 1.2.2 (2019-05-04 - 2019-05-09)
  */
-public class ScribbleClient extends JFrame implements LoginListener, LobbyListener, WordGuessListener {
-    
+public class ScribbleClient extends JFrame implements WelcomeListener, LoginListener, LobbyListener, WordGuessListener {
+
+    // ---------------------------------------------------------------- Costants
     /**
-     * Pannello contenente tutti i pannelli.
+     * Attributo che rappresenta il titolo della pannello di benvenuto.
+     */
+    private final String WELCOME_PANEL_NAME = "welcomePanel";
+    /**
+     * Attributo che rappresenta il titolo della pannello di login.
+     */
+    private final String LOGIN_PANEL_NAME = "loginPanel";
+    /**
+     * Attributo che rappresenta il titolo della pannello della lobby.
+     */
+    private final String LOBBY_PANEL_NAME = "lobbyPanel";
+
+    /**
+     * Attributo che rappresenta il titolo del pannello di gioco.
+     */
+    private final String GAME_PANEL_NAME = "gamePanel";
+
+    // -------------------------------------------------------------- Attributes
+    /**
+     * Istanza di JPanel usata per la gestione della visualizzazione o del
+     * nascondimento di un pannello quando esso entra o esce di scena.
      */
     private JPanel cardsPanel;
+
+    /**
+     * Il pannello di benvenuto mostrato all'inizio, prima di mostrare il
+     * pannello di login.
+     */
+    private WelcomePanel welcomePanel;
 
     /**
      * Istanza di GamePanel che contiene la GUI relativa alla partita.
@@ -70,35 +98,15 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
     private LobbyPanel lobbyPanel;
 
     /**
-     * Pannello di benvenuto.
-     */
-    private WelcomePanel welcomePanel;
-
-    /**
      * L'istanza di Connection che contiene i membri per gestire la connessione
      * con il server.
      */
     private Connection serverConnection;
 
     /**
-     *  Nome utente del client.
+     * Nome utente del client.
      */
     private String username;
-
-    /**
-     * Attributo che rappresenta il titolo della pannello della lobby.
-     */
-    private final String LOBBY_PANEL_NAME = "lobbyPanel";
-
-    /**
-     * Attributo che rappresenta il titolo del pannello di gioco.
-     */
-    private final String GAME_PANEL_NAME = "gamePanel";
-
-    /**
-     * Nome del pannello di benvenuto.
-     */
-    private final String WELCOME_PANEL_NAME = "welcomePanel";
 
     /**
      * Crea scribble client.
@@ -122,17 +130,15 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
         pack();
     }
 
+    // ------------------------------------------------------------ Help Methods
     /**
-     * Avvio di scribble (client).
+     * Rimpiazza il pannello corrente con un altro pannello, che deve già essere
+     * stato aggiunto al JPanel
+     * {@link samt.scribble.client.ScribbleClient#cardsPanel cardsPanel}.
      *
-     * @param args Argomenti da linea di comando.
+     * @param panelName Il nome del pannello da visualizzare al posto di quello
+     * corrente.
      */
-    public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ScribbleClient().setVisible(true);
-            }
-        });
     private void replacePanel(String panelName) {
 
         CardLayout cl = (CardLayout) cardsPanel.getLayout();
@@ -213,5 +219,17 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
         replacePanel(WELCOME_PANEL_NAME);
     }
 
+    // ------------------------------------------------------- Static Components
+    /**
+     * Avvio di scribble (client).
+     *
+     * @param args Argomenti da linea di comando.
+     */
+    public static void main(String[] args) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ScribbleClient().setVisible(true);
+            }
+        });
     }
 }
