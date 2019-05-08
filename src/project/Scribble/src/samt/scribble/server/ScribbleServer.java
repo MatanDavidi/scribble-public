@@ -129,6 +129,7 @@ public class ScribbleServer implements DatagramListener {
                         //controllo se il tentativo di indovinare la parola è corretto
                         if(wManager.isGuessedWord(userWord)){
                             //parola indovinata
+                            groupConnection.send(message);
                         }
                 }
             } catch (IOException ex) {

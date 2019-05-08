@@ -1,4 +1,3 @@
-
 package samt.scribble.communication;
 
 /**
@@ -76,10 +75,16 @@ public class Commands {
      */
     public final static byte START = 9;
 
-      /**
+    /**
      * Un byte di comando che segnala che il messaggio inviato contiene l'ordine
      * di fine del gioco.
      */
     public final static byte END = 10;
+
+    /**
+     * Un byte di comando che segnala che il messaggio inviato contiene che la
+     * parola è stata indovinata.
+     */
+    public final static byte GUESSED_WORD = 12;
 
 }
