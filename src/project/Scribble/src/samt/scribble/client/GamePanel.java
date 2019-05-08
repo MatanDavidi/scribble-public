@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 SAMT.
+ * Copyright 2019 Asus.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,37 @@
 package samt.scribble.client;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import javax.swing.JOptionPane;
+import samt.scribble.DefaultScribbleParameters;
+import samt.scribble.client.ScribblePanel;
 import samt.scribble.client.game.PlayerRole;
+import samt.scribble.client.login.LoginListener;
 import samt.scribble.communication.Connection;
+import samt.scribble.communication.DatagramListener;
+import samt.scribble.communication.ListeningThread;
+import samt.scribble.communication.MessageSender;
+import samt.scribble.communication.messages.JoinMessage;
+import samt.scribble.communication.messages.WordGuessMessage;
 
 /**
- * La classe GamePanel è una sottoclasse di JPanel che contiene la grafica e la
- * logica del gioco.
- *
- * @author Matan Davidi
+ * Classe che gestisce le parole indoviate e le invia.
+ * @author MattiaRuberto
  * @version 1.0 (2019-05-08 - 2019-05-08)
  */
-public class GamePanel extends javax.swing.JPanel {
-
+public class GamePanel extends javax.swing.JPanel implements DatagramListener {
+    private Connection serverConnection;
+    
     private ScribblePanel scribblePanel;
-
     /**
      * Creates new form GamePanel
-     *
-     * @param connection
-     * @param playerRole
      */
-    public GamePanel(Connection connection, PlayerRole playerRole) {
+    public GamePanel(Connection connection) {
         initComponents();
-        scribblePanel = new ScribblePanel(connection, PlayerRole.Drawer);
+        this.serverConnection = serverConnection;
+        scribblePanel = new ScribblePanel(connection, PlayerRole.Guesser);
         add(scribblePanel, BorderLayout.WEST);
     }
 
@@ -59,25 +67,58 @@ public class GamePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        wordGuessPanel = new javax.swing.JPanel();
-        wordGuessTextField = new javax.swing.JTextField();
-        sendWordGuessButton = new javax.swing.JButton();
+        jTextFieldWord = new javax.swing.JTextField();
+        jButtonSendWord = new javax.swing.JButton();
 
-        setLayout(new java.awt.BorderLayout());
+        setLayout(new java.awt.GridLayout(2, 0));
+        add(jTextFieldWord);
 
-        wordGuessPanel.setLayout(new java.awt.GridLayout(2, 1));
-        wordGuessPanel.add(wordGuessTextField);
-
-        sendWordGuessButton.setText("Invia");
-        wordGuessPanel.add(sendWordGuessButton);
-
-        add(wordGuessPanel, java.awt.BorderLayout.CENTER);
+        jButtonSendWord.setText("Send Word");
+        jButtonSendWord.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonSendWordMouseClicked(evt);
+            }
+        });
+        add(jButtonSendWord);
     }// </editor-fold>//GEN-END:initComponents
+    /**
+     * Metodo che parte quando l'utente schiaccia il bottone per inviare al server
+     * la parola da indovinare.
+     * @param evt Attributo che rappresenta le informazioni del bottone.
+     */
+    private void jButtonSendWordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSendWordMouseClicked
+        String wordToGuess = jTextFieldWord.getText();
+        if (!wordToGuess.isEmpty()) {
+
+                WordGuessMessage wordGuessMessage = new WordGuessMessage(wordToGuess);
+                
+                try {
+                    MessageSender.sendMessage(
+                            InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
+                            DefaultScribbleParameters.DEFAULT_SERVER_PORT,
+                            wordGuessMessage
+                    );
+
+                } catch (IOException ex) {
+
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
+
+                }
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Inserire un nome utente all'interno del relativo campo.");
+
+        }
+    }//GEN-LAST:event_jButtonSendWordMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton sendWordGuessButton;
-    private javax.swing.JPanel wordGuessPanel;
-    private javax.swing.JTextField wordGuessTextField;
+    private javax.swing.JButton jButtonSendWord;
+    private javax.swing.JTextField jTextFieldWord;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void messageReceived(DatagramPacket datagramPacket) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

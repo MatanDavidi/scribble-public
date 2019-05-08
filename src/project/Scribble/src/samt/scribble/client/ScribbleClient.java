@@ -141,7 +141,7 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
     @Override
     public void gameStarting(PlayerRole playerRole) {
 
-        gamePanel = new GamePanel(serverConnection, playerRole);
+        gamePanel = new GamePanel(serverConnection);
 
         cardsPanel.add(GAME_PANEL_NAME, gamePanel);
         CardLayout cl = (CardLayout) cardsPanel.getLayout();
