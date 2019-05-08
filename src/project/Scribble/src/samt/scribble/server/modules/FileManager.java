@@ -43,7 +43,7 @@ public class FileManager {
     /**
      * Costante che contiene il percorso di default del file.
      */
-    public static final Path DEFAULT_FILEPATH = Paths.get("data", "file.txt");
+    public static final Path DEFAULT_FILEPATH = Paths.get("data", "words.txt");
 
     /**
      * Attributo che rappresenta il percorso del file csv.
