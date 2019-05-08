@@ -36,9 +36,9 @@ public class WordGuessMessage extends Message {
      *
      * @param message Il messaggio da inviare sotto forma di array di byte.
      */
-    public WordGuessMessage(byte[] message) {
+    public WordGuessMessage(String message) {
 
-        super(Commands.WORD_GUESS, message);
+        super(Commands.WORD_GUESS, message.getBytes());
 
     }
 
