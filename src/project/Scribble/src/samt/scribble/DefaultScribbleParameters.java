@@ -102,7 +102,7 @@ public class DefaultScribbleParameters {
      * Messaggio di errore che segnala che non è stato trovato nessun player
      * in base all'indirizzo ip e alla porta.
      */
-    public static final String NO_FOUND_USERNAME_BY_ADDRESS = "Non è stato trovato nessuno player";
+    public static final String NO_FOUND_USERNAME_BY_ADDRESS = "Non è stato trovato nessun player";
 
     /**
      * Percorso del file contenente le parole da utilizzare nel gioco.
