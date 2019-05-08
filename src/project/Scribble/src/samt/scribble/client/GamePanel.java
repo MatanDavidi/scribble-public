@@ -35,6 +35,7 @@ import samt.scribble.communication.Connection;
 import samt.scribble.communication.DatagramListener;
 import samt.scribble.communication.MessageSender;
 import samt.scribble.communication.messages.WordGuessMessage;
+import samt.scribble.server.modules.DatagramConverter;
 
 /**
  * Classe che gestisce le parole indoviate e le invia.
@@ -131,7 +132,16 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         switch (bytes[0]) {
 
             case Commands.WORD_GUESS:
-                JOptionPane.showMessageDialog(this, "Hai indovinato la parola!!!");
+                try{
+                    InetAddress ip = datagramPacket.getAddress();
+                    int port = datagramPacket.getPort();
+                    String username = DatagramConverter.dataToString(datagramPacket);
+                    String msg = username + " ha indovinato la parola";
+                    
+                    JOptionPane.showMessageDialog(this, msg);
+                }catch(IOException ex){
+                    System.out.println("ERROR: " + ex.getMessage());
+                }
                 break;
 
         }
