@@ -77,8 +77,8 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         jTextFieldWord = new javax.swing.JTextField();
         jButtonSendWord = new javax.swing.JButton();
 
-        setLayout(new java.awt.BorderLayout());
-        add(jTextFieldWord, java.awt.BorderLayout.CENTER);
+        setLayout(new java.awt.GridLayout(2, 0));
+        add(jTextFieldWord);
 
         jButtonSendWord.setText("Send Word");
         jButtonSendWord.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -86,7 +86,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
                 jButtonSendWordMouseClicked(evt);
             }
         });
-        add(jButtonSendWord, java.awt.BorderLayout.PAGE_END);
+        add(jButtonSendWord);
     }// </editor-fold>//GEN-END:initComponents
     /**
      * Metodo che parte quando l'utente schiaccia il bottone per inviare al server

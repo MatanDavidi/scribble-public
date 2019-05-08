@@ -32,9 +32,21 @@ package samt.scribble;
  * @version 1.0.1 (2019-05-04 - 2019-05-06)
  */
 public class DebugVerbosity {
+    /**
+     * Costante che dice che deve mostrare tutti gli errori.
+     */
     public static final byte RELEASE = 0;
+    /**
+     * Costante che dice che deve mostrare gli avvisi e gli errori.
+     */
     public static final byte ERRORS = 1;
+    /**
+     * Costante che dice che deve mostrare solo gli errori.
+     */
     public static final byte WARNINGS = 2;
+    /**
+     * Costante che dice che deve mostrare solo le informazioni.
+     */
     public static final byte INFORMATION = 3;
 
 }
