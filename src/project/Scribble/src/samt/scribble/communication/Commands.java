@@ -15,7 +15,7 @@ public class Commands {
     /**
      * Il numero totale di byte comando definiti.
      */
-    public final static short COMMANDS_NUMBER = 11;
+    public final static short COMMANDS_NUMBER = 12;
 
     /**
      * Un byte di comando che segnala che il messaggio inviato è di tipo
@@ -76,10 +76,15 @@ public class Commands {
      */
     public final static byte START = 9;
 
-      /**
+     /**
      * Un byte di comando che segnala che il messaggio inviato contiene l'ordine
      * di fine del gioco.
      */
     public final static byte END = 10;
+    
+    /**
+     * Un byte di comando che segnala che il messagio e una parola indovinata.
+     */
+    public final static byte WORD_GUESSED = 11;
 
 }
