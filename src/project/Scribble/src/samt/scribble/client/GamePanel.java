@@ -41,14 +41,15 @@ import samt.scribble.communication.messages.WordGuessMessage;
  * @version 1.0 (2019-05-08 - 2019-05-08)
  */
 public class GamePanel extends javax.swing.JPanel implements DatagramListener {
-    private Connection serverConnection;
-    
-    private ScribblePanel scribblePanel;
     /**
-     * Creates new form GamePanel
-     * @param connection
-     * @param playerRole
+     * Attributo che rappresenta la connessione al server.
      */
+    private Connection serverConnection;
+    /**
+     * Attributo che rappresenta il pannello di scribble.
+     */
+    private ScribblePanel scribblePanel;
+
     public GamePanel(Connection connection, PlayerRole playerRole) {
         initComponents();
         this.serverConnection = serverConnection;
@@ -85,7 +86,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
      * @param evt Attributo che rappresenta le informazioni del bottone.
      */
     private void jButtonSendWordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSendWordMouseClicked
-        String wordToGuess = jTextFieldWord.getText();
+        String wordToGuess = jTextFieldWord.getText().trim();
         if (!wordToGuess.isEmpty()) {
 
                 WordGuessMessage wordGuessMessage = new WordGuessMessage(wordToGuess);
@@ -102,10 +103,6 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
                     JOptionPane.showMessageDialog(this, ex.getMessage());
 
                 }
-        } else {
-
-            JOptionPane.showMessageDialog(this, "Inserire un nome utente all'interno del relativo campo.");
-
         }
     }//GEN-LAST:event_jButtonSendWordMouseClicked
 
