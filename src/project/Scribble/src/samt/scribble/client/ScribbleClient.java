@@ -48,9 +48,9 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
     private JPanel cardsPanel;
 
     /**
-     * Pannello scribble, dove verrà disegnato il disegno.
+     * Istanza di GamePanel che contiene la GUI relativa alla partita.
      */
-    private ScribblePanel scribblePanel;
+    private GamePanel gamePanel;
 
     /**
      * Istanza di LoginPanel che contiene i componenti e la logica per
@@ -69,10 +69,10 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
      * con il server.
      */
     private Connection serverConnection;
-    
+
     private final String LOBBY_PANEL_NAME = "lobbyPanel";
-    
-    private final String SCRIBBLE_PANEL_NAME = "scribblePanel";
+
+    private final String GAME_PANEL_NAME = "gamePanel";
 
     // ------------------------------------------------------- Getters & Setters
     // ------------------------------------------------------------ Constructors
@@ -136,13 +136,13 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
     @Override
     public void gameStarting(PlayerRole playerRole) {
 
-        scribblePanel = new ScribblePanel(serverConnection, playerRole);
+        gamePanel = new GamePanel(serverConnection, playerRole);
 
-        cardsPanel.add(SCRIBBLE_PANEL_NAME, scribblePanel);
+        cardsPanel.add(GAME_PANEL_NAME, gamePanel);
         CardLayout cl = (CardLayout) cardsPanel.getLayout();
-        cl.show(cardsPanel, SCRIBBLE_PANEL_NAME);
+        cl.show(cardsPanel, GAME_PANEL_NAME);
         pack();
-        
+
     }
 
 }
