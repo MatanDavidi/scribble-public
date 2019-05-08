@@ -63,7 +63,7 @@ public class ScribbleServer implements DatagramListener {
      * Getsione della connessione con il gruppo multicast.
      */
     private GroupConnection groupConnection;
-    
+
     /**
      * Attributo che indica il gestore delle parole.
      */
@@ -124,13 +124,18 @@ public class ScribbleServer implements DatagramListener {
                         }
                         groupConnection.send(new UsersListMessage(playerManager.getPlayers()));
                         break;
-                        
+
                     case Commands.WORD_GUESS:
                         String userWord = datagramPacket.toString();
+
                         //controllo se il tentativo di indovinare la parola è corretto
-                        if(wManager.isGuessedWord(userWord)){
-                            //parola indovinata
-                            String username = "";
+                        if (wManager.isGuessedWord(userWord)) {
+
+                            //ricavo lo username del player che ha indovinato
+                            InetAddress ip = datagramPacket.getAddress();
+                            int port = datagramPacket.getPort();
+                            String username = playerManager.getUsernameByAddress(ip, port);
+
                             groupConnection.send(new WordGuessMessage(username));
                         }
                 }
