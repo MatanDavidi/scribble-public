@@ -48,7 +48,7 @@ import samt.scribble.server.player.Player;
 public class ScribbleServer implements DatagramListener {
 
     /**
-     * Datagram listening thread.
+     * Thread di ascolto dei pacchetti.
      */
     private ListeningThread listeningThread;
 
