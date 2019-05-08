@@ -24,7 +24,6 @@
  
 package samt.scribble.communication;
 
-import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.communication.messages.Message;
 
 import java.io.IOException;
