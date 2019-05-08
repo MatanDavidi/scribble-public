@@ -37,7 +37,9 @@ import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.client.game.PlayerRole;
 import samt.scribble.communication.messages.StartMessage;
 import samt.scribble.communication.messages.UsersListMessage;
+import samt.scribble.server.modules.WordModule;
 import samt.scribble.server.player.Player;
+import samt.scribble.wordmanager.WordManager;
 
 /**
  * Scribble server.
@@ -56,6 +58,8 @@ public class ScribbleServer implements DatagramListener {
      * Gestione dei giocatori di scribble.
      */
     private PlayerManager playerManager;
+    
+    private WordManager wordManager;
 
     /**
      * Getsione della connessione con il gruppo multicast.
@@ -116,6 +120,10 @@ public class ScribbleServer implements DatagramListener {
                         }
                         groupConnection.send(new UsersListMessage(playerManager.getPlayers()));
                         break;
+                    
+                    case Commands.WORD_GUESS:
+                            sendMessage(WordModule.guessed(datagramPacket));
+                        
                 }
             } catch (IOException ex) {
                 if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.ERRORS) {
