@@ -91,5 +91,7 @@ public class DefaultScribbleParameters {
      * valido o meno.
      */
     public static final String USERNAME_REGEX = "^(?=.{1,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
+    
+    public static final Path WORDS_CSV_PATH = Paths.get("data", "words.csv");
 
 }
