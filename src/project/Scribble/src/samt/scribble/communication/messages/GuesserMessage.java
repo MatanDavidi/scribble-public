@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 SAMT.
+ * Copyright 2019 Matan Davidi.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,28 +23,16 @@
  */
 package samt.scribble.communication.messages;
 
-import samt.scribble.client.game.PlayerRole;
 import samt.scribble.communication.Commands;
 
 /**
- * La classe StartMessage è una sottoclasse di Message dedicata a segnalare
- * l'inizio di una partita.
  *
- * @author MatanDavidi
- * @version 1.1 (2019-05-05 - 2019-05-07)
+ * @author Matan Davidi
  */
-public class StartMessage extends Message {
+public class GuesserMessage extends Message {
 
-    /**
-     * Istanzia un nuovo oggetto di tipo StartMessage utilizzando come byte di
-     * comando {@link samt.scribble.communication.Commands#START START} e
-     * permettendo di specificare il ruolo di un giocatore.
-     *
-     * @param role Il ruolo che deve assumere il giocatore a cui si sta mandando
-     * questo messaggio.
-     */
-    public StartMessage(PlayerRole role) {
-        super(Commands.START, role.name().getBytes());
+    public GuesserMessage() {
+        super(Commands.START_GUESSER, null);
     }
-
+    
 }

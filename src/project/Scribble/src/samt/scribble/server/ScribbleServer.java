@@ -35,7 +35,9 @@ import java.net.InetAddress;
 import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.client.game.PlayerRole;
-import samt.scribble.communication.messages.StartMessage;
+import samt.scribble.communication.messages.DrawerMessage;
+import samt.scribble.communication.messages.GuesserMessage;
+import samt.scribble.communication.messages.Message;
 import samt.scribble.communication.messages.UsersListMessage;
 import samt.scribble.communication.messages.WordGuessMessage;
 import samt.scribble.server.modules.WordManager;
@@ -158,16 +160,20 @@ public class ScribbleServer implements DatagramListener {
         for (int i = 0; i < playersNumber; ++i) {
 
             Player player = playerManager.getPlayers().get(i);
-
-            PlayerRole currentPlayerRole = PlayerRole.Guesser;
+            
+            Message msgToSend;
 
             if (i == drawerIndex) {
 
-                currentPlayerRole = PlayerRole.Drawer;
+                msgToSend = new DrawerMessage(wordToGuess);
 
+            } else {
+                
+                msgToSend = new GuesserMessage();
+                
             }
 
-            MessageSender.sendMessage(player.getIp(), player.getPort(), new StartMessage(currentPlayerRole));
+            MessageSender.sendMessage(player.getIp(), player.getPort(), msgToSend);
 
         }
 

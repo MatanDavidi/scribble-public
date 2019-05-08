@@ -160,9 +160,6 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
 
         switch (bytes[0]) {
 
-            case Commands.START:
-                break;
-
             case Commands.DRAWING:
                 if (bytes.length > 1) {
                     int x = bytes[1] & 0x000000FF;
