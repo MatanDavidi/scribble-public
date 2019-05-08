@@ -114,9 +114,9 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
 
         cardsPanel = new JPanel(new CardLayout());
 
-        loginPanel = new LoginPanel();
-        loginPanel.setListener(this);
-        cardsPanel.add(loginPanel);
+        welcomePanel = new WelcomePanel();
+        welcomePanel.setListener(this);
+        cardsPanel.add(welcomePanel);
         add(cardsPanel);
 
         pack();
