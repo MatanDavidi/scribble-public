@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Matan Davidi.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,14 @@
 package samt.scribble.client.game;
 
 /**
- * L'interfaccia WordGuessListener contiene i metodi .
- * @author Matan Davidi
- * @version 1.0 (2019-05-08 2019-05-08)
+ * L'interfaccia WordGuessListener contiene gli eventi relativi ai tentativi di
+ * indovinare la parola disegnata da parte del disegnatore.
+ *
+ * @author MatanDavidi
+ * @version 1.0 (2019-05-08 - 2019-05-08)
  */
 public interface WordGuessListener {
-    
+
     public void wordGuessed(String word);
-    
+
 }
