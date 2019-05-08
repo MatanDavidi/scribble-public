@@ -46,9 +46,10 @@ import samt.scribble.communication.Connection;
  * @version 1.2.1 (2019-05-04 - 2019-05-07)
  */
 public class ScribbleClient extends JFrame implements LoginListener, LobbyListener, WordGuessListener {
-    // ---------------------------------------------------------------- Costants
-    // -------------------------------------------------------------- Attributes
-
+    
+    /**
+     * Pannello contenente tutti i pannelli.
+     */
     private JPanel cardsPanel;
 
     /**
@@ -68,6 +69,9 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
      */
     private LobbyPanel lobbyPanel;
 
+    /**
+     * Pannello di benvenuto.
+     */
     private WelcomePanel welcomePanel;
 
     /**
@@ -76,6 +80,9 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
      */
     private Connection serverConnection;
 
+    /**
+     *  Nome utente del client.
+     */
     private String username;
 
     /**
@@ -88,10 +95,11 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
      */
     private final String GAME_PANEL_NAME = "gamePanel";
 
+    /**
+     * Nome del pannello di benvenuto.
+     */
     private final String WELCOME_PANEL_NAME = "welcomePanel";
 
-    // ------------------------------------------------------- Getters & Setters
-    // ------------------------------------------------------------ Constructors
     /**
      * Crea scribble client.
      */
@@ -114,9 +122,6 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
         pack();
     }
 
-    // ------------------------------------------------------------ Help Methods
-    // --------------------------------------------------------- General Methods
-    // ------------------------------------------------------- Static Components
     /**
      * Avvio di scribble (client).
      *
