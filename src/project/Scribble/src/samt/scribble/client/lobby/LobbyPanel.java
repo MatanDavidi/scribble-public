@@ -134,9 +134,7 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
             case Commands.START:
                 listener.gameStarting(new String(message).equals("Drawer") ? PlayerRole.Drawer : PlayerRole.Guesser);
                 break;
-
         }
-
     }
 
     private List<String> rebuildUsernames(byte[] packetData) {
