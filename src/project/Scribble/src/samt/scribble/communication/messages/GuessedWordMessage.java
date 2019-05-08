@@ -27,9 +27,9 @@ package samt.scribble.communication.messages;
  *
  * @author Bryan Beffa
  */
-public class GuessedWord extends Message{
+public class GuessedWordMessage extends Message{
     
-    public GuessedWord(byte command, byte[] message) {
+    public GuessedWordMessage(byte command, byte[] message) {
         super(command, message);
     }
     
