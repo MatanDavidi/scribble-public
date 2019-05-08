@@ -97,7 +97,7 @@ public class ScribbleServer implements DatagramListener {
 
         this.groupConnection = new GroupConnection(groupIp, DefaultScribbleParameters.DEFAULT_GROUP_PORT);
         this.groupConnection.addDatagramListener(this);
-        this.scribbleGame = new ScribbleGame(DefaultScribbleParameters.HEIGHT, DefaultScribbleParameters.WIDTH);
+        this.scribbleGame = new ScribbleGame(DefaultScribbleParameters.SCRIBBLE_HEIGHT, DefaultScribbleParameters.SCRIBBLE_WIDTH);
     }
 
     /**
