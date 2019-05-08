@@ -29,15 +29,10 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import javax.swing.JOptionPane;
 import samt.scribble.DefaultScribbleParameters;
-import samt.scribble.client.ScribblePanel;
 import samt.scribble.client.game.PlayerRole;
-import samt.scribble.client.login.LoginListener;
 import samt.scribble.communication.Connection;
 import samt.scribble.communication.DatagramListener;
-import samt.scribble.communication.GroupConnection;
-import samt.scribble.communication.ListeningThread;
 import samt.scribble.communication.MessageSender;
-import samt.scribble.communication.messages.JoinMessage;
 import samt.scribble.communication.messages.WordGuessMessage;
 
 /**
@@ -54,14 +49,11 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
      * Attributo che rappresenta il pannello di scribble.
      */
     private ScribblePanel scribblePanel;
-    /**
-     * Metodo costruttore che istanzia la connessione al server e il scribble panel.
-     * @param serverConnection Attributo che rappresenta la connessione al server.
-     */
-    public GamePanel(Connection connection) {
+
+    public GamePanel(Connection connection, PlayerRole playerRole) {
         initComponents();
         this.serverConnection = serverConnection;
-        scribblePanel = new ScribblePanel(connection, PlayerRole.Guesser);
+        scribblePanel = new ScribblePanel(connection, playerRole);
         add(scribblePanel, BorderLayout.WEST);
     }
 

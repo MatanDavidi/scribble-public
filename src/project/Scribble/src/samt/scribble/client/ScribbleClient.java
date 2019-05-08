@@ -69,7 +69,7 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
      * con il server.
      */
     private Connection serverConnection;
-    
+
     /**
      * Attributo che rappresenta il titolo della pannello della lobby.
      */
@@ -139,9 +139,24 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
     }
 
     @Override
-    public void gameStarting(PlayerRole playerRole) {
+    public void gameStartingGuesser() {
 
-        gamePanel = new GamePanel(serverConnection);
+        gamePanel = new GamePanel(serverConnection, PlayerRole.Guesser);
+
+        addGamePanel();
+
+    }
+
+    @Override
+    public void gameStartingDrawer(String word) {
+
+        gamePanel = new GamePanel(serverConnection, PlayerRole.Drawer);
+
+        addGamePanel();
+
+    }
+
+    private void addGamePanel() {
 
         cardsPanel.add(GAME_PANEL_NAME, gamePanel);
         CardLayout cl = (CardLayout) cardsPanel.getLayout();

@@ -34,15 +34,14 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
-import samt.scribble.client.game.PlayerRole;
 import samt.scribble.communication.messages.DrawerMessage;
 import samt.scribble.communication.messages.GuesserMessage;
 import samt.scribble.communication.messages.Message;
 import samt.scribble.communication.messages.UsersListMessage;
 import samt.scribble.communication.messages.WordGuessMessage;
+import samt.scribble.server.modules.DatagramConverter;
 import samt.scribble.server.modules.WordManager;
 import samt.scribble.server.player.Player;
-import samt.scribble.server.modules.WordModule;
 
 /**
  * Scribble server.
@@ -62,6 +61,9 @@ public class ScribbleServer implements DatagramListener {
      */
     private PlayerManager playerManager;
 
+    /**
+     * Gestione delle parole.
+     */
     private WordManager wordManager;
 
     /**
@@ -131,7 +133,7 @@ public class ScribbleServer implements DatagramListener {
                         break;
 
                     case Commands.WORD_GUESS:
-                        String userWord = WordModule.guessed(datagramPacket);
+                        String userWord = DatagramConverter.dataToString(datagramPacket);
 
                         //controllo se il tentativo di indovinare la parola è corretto
                         if (wManager.isGuessedWord(userWord)) {
