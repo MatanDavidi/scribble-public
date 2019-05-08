@@ -133,6 +133,13 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
                 new ScribbleClient().setVisible(true);
             }
         });
+        if (loginPanel == null) {
+
+            loginPanel = new LoginPanel();
+            loginPanel.setListener(this);
+            cardsPanel.add(LOGIN_PANEL_NAME, loginPanel);
+
+        }
     }
 
     @Override
@@ -145,6 +152,13 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
 
         lobbyPanel = new LobbyPanel(serverConnection, username);
         lobbyPanel.setListener(this);
+        if (lobbyPanel == null) {
+
+            lobbyPanel = new LobbyPanel(serverConnection, username);
+            lobbyPanel.setListener(this);
+            cardsPanel.add(LOBBY_PANEL_NAME, lobbyPanel);
+
+        }
 
         this.serverConnection = serverConnection;
 
@@ -158,8 +172,13 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
     public void gameStartingGuesser() {
 
         gamePanel = new GamePanel(serverConnection, username, PlayerRole.Guesser);
+        if (gamePanel == null) {
 
-        addGamePanel();
+            gamePanel = new GamePanel(serverConnection, username, PlayerRole.Guesser);
+            gamePanel.setListener(this);
+            cardsPanel.add(GAME_PANEL_NAME, gamePanel);
+
+        }
 
     }
 
@@ -167,10 +186,13 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
     public void gameStartingDrawer(String word) {
 
         gamePanel = new GamePanel(serverConnection, username, PlayerRole.Drawer);
+        if (gamePanel == null) {
 
-        addGamePanel();
+            gamePanel = new GamePanel(serverConnection, username, PlayerRole.Drawer);
+            gamePanel.setListener(this);
+            cardsPanel.add(GAME_PANEL_NAME, gamePanel);
 
-    }
+        }
 
 
     }
