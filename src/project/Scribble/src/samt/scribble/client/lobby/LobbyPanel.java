@@ -168,7 +168,7 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
                 usernames.add(username.toString());
                 username.setLength(0);
 
-            } else {
+            } else if (packetData[i] != 0) {
 
                 username.append((char) packetData[i]);
 
