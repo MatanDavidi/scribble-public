@@ -148,6 +148,24 @@ public class PlayerManager {
         }
 
     }
+    
+    /**
+     * Metodo che ritorna lo username ricevendo come parametro la porta e l'ip.
+     * 
+     * @param ip ip del player.
+     * @param port porta del player.
+     * @return username del player.
+     */
+    public String getUsernameByAddress(InetAddress ip, int port){       
+        for(Player pl : players){
+            //controllo se la porta e l'ip corrispondono all'utente corrente
+            if(pl.getIp().toString().equals(ip.toString()) && pl.getPort() == port){
+                return pl.getUsername();
+            }
+        }
+        
+        return DefaultScribbleParameters.NO_FOUND_USERNAME_BY_ADDRESS;
+    }
 
     /**
      * Metodo main della classe, utilizzato per testare PlayerManager e player.
