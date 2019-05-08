@@ -67,6 +67,12 @@ public class DefaultScribbleParameters {
      * la lista rappresentante la classifica.
      */
     public static final Path RANKING_CSV_PATH = Paths.get("data", "ranking.csv");
+    
+    /**
+     * Attributo che rappresenta il percorso del file di testo in cui sono
+     * salvate le parole che vengono estratte per il disegnatore.
+     */
+    public static final Path WORDS_DICTIONARY_PATH = Paths.get("data", "words.txt");
 
     /**
      * L'indirizzo IP del server che gestisce il gioco.

@@ -37,6 +37,7 @@ import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.client.game.PlayerRole;
 import samt.scribble.communication.messages.StartMessage;
 import samt.scribble.communication.messages.UsersListMessage;
+import samt.scribble.server.modules.WordManager;
 import samt.scribble.server.player.Player;
 
 /**
@@ -61,6 +62,11 @@ public class ScribbleServer implements DatagramListener {
      * Getsione della connessione con il gruppo multicast.
      */
     private GroupConnection groupConnection;
+    
+    /**
+     * Attributo che indica il gestore delle parole.
+     */
+    private WordManager wManager;
 
     /**
      * Crea server scribbe con il l'indirizzo del gruppo multicast.
@@ -70,6 +76,7 @@ public class ScribbleServer implements DatagramListener {
      * pacchetti.
      */
     public ScribbleServer(InetAddress groupIp) throws IOException {
+        this.wManager = new WordManager(DefaultScribbleParameters.WORDS_DICTIONARY_PATH);
         this.listeningThread = new ListeningThread(DefaultScribbleParameters.DEFAULT_SERVER_PORT);
         this.listeningThread.addDatagramListener(this);
 
@@ -116,6 +123,13 @@ public class ScribbleServer implements DatagramListener {
                         }
                         groupConnection.send(new UsersListMessage(playerManager.getPlayers()));
                         break;
+                        
+                    case Commands.WORD_GUESS:
+                        String userWord = datagramPacket.toString();
+                        //controllo se il tentativo di indovinare la parola è corretto
+                        if(wManager.isGuessedWord(userWord)){
+                            //parola indovinata
+                        }
                 }
             } catch (IOException ex) {
                 if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.ERRORS) {
