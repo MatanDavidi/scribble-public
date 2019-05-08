@@ -53,6 +53,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     public GamePanel(Connection connection, PlayerRole playerRole) {
         initComponents();
         this.serverConnection = serverConnection;
+        serverConnection.addDatagramListener(this);
         scribblePanel = new ScribblePanel(connection, playerRole);
         add(scribblePanel, BorderLayout.WEST);
     }
@@ -114,6 +115,16 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
 
     @Override
     public void messageReceived(DatagramPacket datagramPacket) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        byte[] bytes = datagramPacket.getData();
+
+        switch (bytes[0]) {
+
+            case Commands.WORD_GUESS:
+                JOptionPane.showMessageDialog(this, "Hai indovinato la parola!!!");
+                break;
+
+        }
+
     }
 }
