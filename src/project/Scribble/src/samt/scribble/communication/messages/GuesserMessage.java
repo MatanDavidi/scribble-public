@@ -32,7 +32,7 @@ import samt.scribble.communication.Commands;
 public class GuesserMessage extends Message {
 
     public GuesserMessage() {
-        super(Commands.START_GUESSER, null);
+        super(Commands.START_GUESSER, new byte[0]);
     }
     
 }
