@@ -27,7 +27,6 @@ import java.net.DatagramPacket;
 import java.util.ArrayList;
 import java.util.List;
 import samt.scribble.DefaultScribbleParameters;
-import samt.scribble.client.game.PlayerRole;
 import samt.scribble.communication.Commands;
 import samt.scribble.communication.Connection;
 import samt.scribble.communication.DatagramListener;
@@ -36,8 +35,10 @@ import samt.scribble.communication.DatagramListener;
  *
  * @author Matan Davidi
  * @author Mattia Ruberto
+ * @version 1.0.1 (2019-05-08 - 2019-05-08)
  */
 public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
+
     /**
      * Attributo che rappresenta la connessione al server.
      */
@@ -139,17 +140,18 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
                 break;
 
             case Commands.START_DRAWER:
-                listener.gameStarting(PlayerRole.Drawer);
+                listener.gameStartingDrawer(new String(message));
                 break;
-                
+
             case Commands.START_GUESSER:
-                listener.gameStarting(PlayerRole.Guesser);
+                listener.gameStartingGuesser();
                 break;
         }
     }
 
     /**
      * Metodo che ricostruisce la lista con i nomi utenti.
+     *
      * @param packetData Lista di utenti in byte.
      * @return la lista di utenti in stringa.
      */
