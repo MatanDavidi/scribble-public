@@ -172,7 +172,11 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
     public void mouseMoved(MouseEvent e) {
 
     }
-
+    /**
+     * Metodo che il punto da disegnare al server.
+     * @param p attributro che rappresenta il punto.
+     * @throws IOException eccezzione che gestisce i messaggi.
+     */
     public void sendPoint(Point p) throws IOException {
         DrawMessage message = new DrawMessage(p);
 
