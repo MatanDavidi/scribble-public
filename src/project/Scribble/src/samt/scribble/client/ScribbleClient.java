@@ -172,16 +172,6 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
 
     }
 
-    /**
-     * Metodo che aggiunnge GamePane al layout.
-     */
-    private void addGamePanel() {
-
-        gamePanel.setListener(this);
-        cardsPanel.add(GAME_PANEL_NAME, gamePanel);
-        CardLayout cl = (CardLayout) cardsPanel.getLayout();
-        cl.show(cardsPanel, GAME_PANEL_NAME);
-        pack();
 
     }
 
