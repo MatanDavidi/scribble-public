@@ -133,6 +133,18 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
                 new ScribbleClient().setVisible(true);
             }
         });
+    private void replacePanel(String panelName) {
+
+        CardLayout cl = (CardLayout) cardsPanel.getLayout();
+        cl.show(cardsPanel, panelName);
+        pack();
+
+    }
+
+    // --------------------------------------------------------- General Methods
+    @Override
+    public void welcomeClicked() {
+
         if (loginPanel == null) {
 
             loginPanel = new LoginPanel();
@@ -140,6 +152,9 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
             cardsPanel.add(LOGIN_PANEL_NAME, loginPanel);
 
         }
+
+        replacePanel(LOGIN_PANEL_NAME);
+
     }
 
     @Override
@@ -150,8 +165,6 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
             System.out.println(username + ": accesso al gruppo multicast " + serverConnection.getGroupConnection().getGroupIp().getHostAddress());
         }
 
-        lobbyPanel = new LobbyPanel(serverConnection, username);
-        lobbyPanel.setListener(this);
         if (lobbyPanel == null) {
 
             lobbyPanel = new LobbyPanel(serverConnection, username);
@@ -162,16 +175,12 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
 
         this.serverConnection = serverConnection;
 
-        cardsPanel.add(LOBBY_PANEL_NAME, lobbyPanel);
-        CardLayout cl = (CardLayout) cardsPanel.getLayout();
-        cl.show(cardsPanel, LOBBY_PANEL_NAME);
-        pack();
+        replacePanel(LOBBY_PANEL_NAME);
     }
 
     @Override
     public void gameStartingGuesser() {
 
-        gamePanel = new GamePanel(serverConnection, username, PlayerRole.Guesser);
         if (gamePanel == null) {
 
             gamePanel = new GamePanel(serverConnection, username, PlayerRole.Guesser);
@@ -180,12 +189,13 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
 
         }
 
+        replacePanel(GAME_PANEL_NAME);
+
     }
 
     @Override
     public void gameStartingDrawer(String word) {
 
-        gamePanel = new GamePanel(serverConnection, username, PlayerRole.Drawer);
         if (gamePanel == null) {
 
             gamePanel = new GamePanel(serverConnection, username, PlayerRole.Drawer);
@@ -194,16 +204,14 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
 
         }
 
+        replacePanel(GAME_PANEL_NAME);
 
     }
 
     @Override
     public void wordGuessed(String word) {
-        this.welcomePanel = new WelcomePanel();
+        replacePanel(WELCOME_PANEL_NAME);
+    }
 
-        cardsPanel.add(WELCOME_PANEL_NAME, welcomePanel);
-        CardLayout cl = (CardLayout) cardsPanel.getLayout();
-        cl.show(cardsPanel, WELCOME_PANEL_NAME);
-        pack();
     }
 }
