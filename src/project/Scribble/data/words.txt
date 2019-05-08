@@ -11,7 +11,7 @@ parola
 punto
 lavoro
 stato
-citt‡
+citt√†
 guerra
 strada
 figlio
@@ -54,7 +54,7 @@ zona
 fuoco
 soldato
 vista
-libert‡
+libert√†
 risultato
 importanza
 dubbio
@@ -87,8 +87,8 @@ sviluppo
 sorella
 effetto
 giardino
-attivit‡
-volont‡
+attivit√†
+volont√†
 volto
 base
 carattere
@@ -112,7 +112,7 @@ istituto
 quadro
 attenzione
 autore
-difficolt‡
+difficolt√†
 passione
 commissione
 dito
@@ -178,7 +178,7 @@ fine
 forma
 resto
 popolo
-societ‡
+societ√†
 studio
 legge
 libro
@@ -188,7 +188,7 @@ luogo
 condizione
 professore
 marito
-verit‡
+verit√†
 segno
 diritto
 lettera
@@ -207,11 +207,11 @@ rispetto
 scena
 don
 oggetto
-possibilit‡
+possibilit√†
 mamma
 presenza
 teatro
-caffË
+caff√®
 principio
 termine
 lingua
@@ -219,14 +219,14 @@ pezzo
 capello
 regione
 monte
-universit‡
+universit√†
 treno
 inverno
 nazione
 pagina
 scopo
 compagno
-necessit‡
+necessit√†
 potere
 musica
 dottore
@@ -245,7 +245,7 @@ materia
 scala
 maniera
 arma
-autorit‡
+autorit√†
 gamba
 patria
 albergo
@@ -288,10 +288,10 @@ ufficiale
 crisi
 cucina
 gatto
-piet‡
+piet√†
 territorio
 attimo
-civilt‡
+civilt√†
 contatto
 errore
 fretta
@@ -353,7 +353,7 @@ giro
 automobile
 atto
 aspetto
-et‡
+et√†
 fortuna
 oro
 partito
@@ -364,7 +364,7 @@ tratto
 settimana
 notizia
 fratello
-realt‡
+realt√†
 industria
 piacere
 maestro
@@ -379,8 +379,8 @@ pubblico
 sede
 affare
 bene
-met‡
-pap‡
+met√†
+pap√†
 fiume
 lotta
 mercato
@@ -430,7 +430,7 @@ poesia
 fiducia
 filo
 folla
-qualit‡
+qualit√†
 roba
 conoscenza
 favore
