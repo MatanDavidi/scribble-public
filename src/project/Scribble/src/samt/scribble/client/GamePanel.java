@@ -105,7 +105,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
                 }
         } else {
 
-            JOptionPane.showMessageDialog(this, "Inserire un nome utente all'interno del relativo campo.");
+            JOptionPane.showMessageDialog(this, "Inserire la parola");
 
         }
     }//GEN-LAST:event_jButtonSendWordMouseClicked
