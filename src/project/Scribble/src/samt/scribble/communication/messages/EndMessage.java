@@ -29,7 +29,7 @@ import samt.scribble.communication.Commands;
  * La classe EndMessage � una sottoclasse di Message dedicata a segnalare
  * la fine di una partita.
  *
- * @author Nemanja Stojanovic
+ * @author nemastojanovic
  * @version 1.1 (08.05.2019)
  */
 public class EndMessage extends Message {
