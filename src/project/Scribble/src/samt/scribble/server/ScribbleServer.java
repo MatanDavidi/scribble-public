@@ -61,6 +61,9 @@ public class ScribbleServer implements DatagramListener {
      */
     private PlayerManager playerManager;
 
+    /**
+     * Gestione delle parole.
+     */
     private WordManager wordManager;
 
     /**
