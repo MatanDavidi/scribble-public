@@ -152,12 +152,12 @@ public class ScribbleServer implements DatagramListener {
                         //controllo se il tentativo di indovinare la parola è corretto
                         if (wManager.isGuessedWord(userWord)) {
 
-                            //ricavo lo username del player che ha indovinato
+                            /*ricavo lo username del player che ha indovinato
                             InetAddress ip = datagramPacket.getAddress();
                             int port = datagramPacket.getPort();
-                            String username = playerManager.getUsernameByAddress(ip, port);
+                            String username = playerManager.getUsernameByAddress(ip, port);*/
 
-                            groupConnection.send(new WordGuessMessage(username));
+                            groupConnection.send(new WordGuessMessage(""));
                         }
                 }
             } catch (IOException ex) {
