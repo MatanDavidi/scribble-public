@@ -35,11 +35,15 @@ import java.net.InetAddress;
 import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.client.game.PlayerRole;
-import samt.scribble.communication.messages.StartMessage;
+import samt.scribble.communication.messages.DrawerMessage;
+import samt.scribble.communication.messages.GuesserMessage;
+import samt.scribble.communication.messages.Message;
 import samt.scribble.communication.messages.UsersListMessage;
 import samt.scribble.communication.messages.WordGuessMessage;
 import samt.scribble.server.modules.WordManager;
 import samt.scribble.server.player.Player;
+import samt.scribble.wordmanager.WordManager;
+import samt.scribble.server.modules.WordModule;
 
 /**
  * Scribble server.
@@ -58,6 +62,8 @@ public class ScribbleServer implements DatagramListener {
      * Gestione dei giocatori di scribble.
      */
     private PlayerManager playerManager;
+
+    private WordManager wordManager;
 
     /**
      * Getsione della connessione con il gruppo multicast.
@@ -151,7 +157,7 @@ public class ScribbleServer implements DatagramListener {
 
         int playersNumber = playerManager.getPlayersNumber();
         int drawerIndex = (int) (Math.random() * playersNumber);
-        
+
         //ottengo la parola da indovinare
         String wordToGuess = wManager.getUniqueNewWord();
 
@@ -159,15 +165,19 @@ public class ScribbleServer implements DatagramListener {
 
             Player player = playerManager.getPlayers().get(i);
 
-            PlayerRole currentPlayerRole = PlayerRole.Guesser;
+            Message msgToSend;
 
             if (i == drawerIndex) {
 
-                currentPlayerRole = PlayerRole.Drawer;
+                msgToSend = new DrawerMessage(wordToGuess);
+
+            } else {
+
+                msgToSend = new GuesserMessage();
 
             }
 
-            MessageSender.sendMessage(player.getIp(), player.getPort(), new StartMessage(currentPlayerRole));
+            MessageSender.sendMessage(player.getIp(), player.getPort(), msgToSend);
 
         }
 
@@ -189,9 +199,13 @@ public class ScribbleServer implements DatagramListener {
      * @param args Argomenti da line di comando.
      * @throws IOException Errore nel server.
      */
-    public static void main(String[] args) throws IOException {
-        InetAddress ip = InetAddress.getByName(DefaultScribbleParameters.GROUP_ADDRESS);
-        ScribbleServer server = new ScribbleServer(ip);
-        server.start();
+    public static void main(String[] args){
+        try{
+            InetAddress ip = InetAddress.getByName(DefaultScribbleParameters.GROUP_ADDRESS);
+            ScribbleServer server = new ScribbleServer(ip);
+            server.start();
+        }catch(IOException ex){
+            System.out.println("ERROR: " + ex.getMessage());
+        }
     }
 }

@@ -138,8 +138,12 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
                 updateUsersListTextArea();
                 break;
 
-            case Commands.START:
-                listener.gameStarting(new String(message).equals("Drawer") ? PlayerRole.Drawer : PlayerRole.Guesser);
+            case Commands.START_DRAWER:
+                listener.gameStarting(PlayerRole.Drawer);
+                break;
+                
+            case Commands.START_GUESSER:
+                listener.gameStarting(PlayerRole.Guesser);
                 break;
         }
     }
