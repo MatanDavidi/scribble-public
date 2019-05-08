@@ -23,22 +23,20 @@
  */
 package samt.scribble.server;
 
+import samt.scribble.client.game.ScribbleGame;
+import samt.scribble.communication.messages.*;
 import samt.scribble.server.player.PlayerManager;
 import samt.scribble.communication.*;
 import samt.scribble.server.modules.EchoModule;
 import samt.scribble.server.modules.JoinModule;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
-import samt.scribble.communication.messages.DrawerMessage;
-import samt.scribble.communication.messages.GuesserMessage;
-import samt.scribble.communication.messages.Message;
-import samt.scribble.communication.messages.UsersListMessage;
-import samt.scribble.communication.messages.WordGuessMessage;
 import samt.scribble.server.modules.WordManager;
 import samt.scribble.server.player.Player;
 import samt.scribble.server.modules.WordModule;
@@ -47,7 +45,7 @@ import samt.scribble.server.modules.WordModule;
  * Scribble server.
  *
  * @author giuliobosco (giuliobva@gmail.com)
- * @version 1.0 (2019-04-19)
+ * @version 1.0.1 (2019-04-19)
  */
 public class ScribbleServer implements DatagramListener {
 
@@ -76,6 +74,8 @@ public class ScribbleServer implements DatagramListener {
      */
     private WordManager wManager;
 
+    private ScribbleGame scribbleGame;
+
     /**
      * Crea server scribbe con il l'indirizzo del gruppo multicast.
      *
@@ -92,6 +92,7 @@ public class ScribbleServer implements DatagramListener {
 
         this.groupConnection = new GroupConnection(groupIp, DefaultScribbleParameters.DEFAULT_GROUP_PORT);
         this.groupConnection.addDatagramListener(this);
+        this.scribbleGame = new ScribbleGame(DefaultScribbleParameters.HEIGHT, DefaultScribbleParameters.WIDTH);
     }
 
     /**
