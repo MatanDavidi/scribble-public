@@ -47,7 +47,7 @@ public class WordManager {
      */
     public WordManager(Path filePath) throws IOException{
         fManager = new FileManager(filePath);
-        this.words = fManager.getWords();
+        this.words = fManager.readFile();
     }
     
     /**
@@ -59,7 +59,7 @@ public class WordManager {
      */
     public WordManager(Path filePath, boolean debug) throws IOException{
         fManager = new FileManager(filePath);
-        this.words = fManager.getWords();
+        this.words = fManager.readFile();
         this.debug = debug;
     }
     

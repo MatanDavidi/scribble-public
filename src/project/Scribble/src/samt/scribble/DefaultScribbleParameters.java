@@ -72,7 +72,7 @@ public class DefaultScribbleParameters {
      * Attributo che rappresenta il percorso del file di testo in cui sono
      * salvate le parole che vengono estratte per il disegnatore.
      */
-    public static final Path WORDS_FILE_DICTIONARY = Paths.get("data", "words.txt");
+    public static final Path WORDS_DICTIONARY_PATH = Paths.get("data", "words.txt");
 
     /**
      * L'indirizzo IP del server che gestisce il gioco.
