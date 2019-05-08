@@ -28,7 +28,7 @@ import samt.scribble.client.game.PlayerRole;
 /**
  * L'interfaccia LobbyListener contiene gli eventi relativi alla lobby.
  *
- * @author Matan Davidi
+ * @author MatanDavidi
  * @version 1.0 (2019-05-08 - 2019-05-08)
  */
 public interface LobbyListener {
