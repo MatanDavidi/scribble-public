@@ -90,5 +90,14 @@ public class Player extends Record {
     public int getPort() {
         return this.port;
     }
+    
+    /**
+     * Metodo che ritorna lo username del player.
+     * 
+     * @return username del player.
+     */
+    public String getUsername(){
+        return this.username;
+    }
 
 }
