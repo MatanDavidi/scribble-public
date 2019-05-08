@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2019 Matan Davidi
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ public class Commands {
     /**
      * Il numero totale di byte comando definiti.
      */
-    public final static short COMMANDS_NUMBER = 10;
+    public final static short COMMANDS_NUMBER = 11;
 
     /**
      * Un byte di comando che segnala che il messaggio inviato è di tipo
@@ -90,5 +90,11 @@ public class Commands {
      * di inizio del gioco.
      */
     public final static byte START = 9;
+
+      /**
+     * Un byte di comando che segnala che il messaggio inviato contiene l'ordine
+     * di fine del gioco.
+     */
+    public final static byte END = 10;
 
 }
