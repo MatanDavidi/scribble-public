@@ -133,6 +133,14 @@ public class ScribbleServer implements DatagramListener {
                         groupConnection.send(new UsersListMessage(playerManager.getPlayers()));
                         break;
 
+                    case Commands.DRAWING:
+                        InetAddress ipAddress = datagramPacket.getAddress();
+                        if (playerManager.isRegisteredPlayer(ipAddress) && bytes.length > 2) {
+                            Point point = new Point(bytes[1], bytes[2]);
+                            this.scribbleGame.setPixel(point);
+                            groupConnection.send(new DrawMessage(point));
+                        }
+                        break;
                     case Commands.WORD_GUESS:
                         String userWord = WordModule.guessed(datagramPacket);
 
