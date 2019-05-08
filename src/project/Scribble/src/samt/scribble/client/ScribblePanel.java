@@ -23,6 +23,7 @@
  */
 package samt.scribble.client;
 
+import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.communication.Commands;
 import samt.scribble.communication.Connection;
 import samt.scribble.communication.DatagramListener;
@@ -32,10 +33,15 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.IOException;
 import java.net.DatagramPacket;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
+
 import samt.scribble.client.game.PlayerRole;
+import samt.scribble.communication.MessageSender;
+import samt.scribble.communication.messages.DrawMessage;
 
 /**
  * Classe ScribblePanel che si occupa di fornire un pannello funzionante sia per
@@ -47,7 +53,7 @@ import samt.scribble.client.game.PlayerRole;
  * @author giuliobosco
  * @author jarinaeser
  * @author MatanDavidi
- * @version 1.1 (2019-05-06 - 2019-05-07)
+ * @version 1.1.1 (2019-05-06 - 2019-05-07)
  */
 public class ScribblePanel extends JPanel implements DatagramListener, MouseMotionListener, MouseListener {
 
@@ -72,6 +78,11 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
      * Attributo clear che definisce se pulire l'area di disegno oppure no.
      */
     private boolean clear;
+
+    /**
+     * Connessione al server scribble.
+     */
+    private Connection connection;
 
     /**
      * Metodo getter per l'attributo drawer.
@@ -113,12 +124,17 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
         this.drawedPoints = new ArrayList<>();
         this.receivedPoints = new ArrayList<>();
         this.clear = true;
+        this.connection = connection;
         repaint();
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         this.drawedPoints.add(e.getPoint());
+        try {
+            this.sendPoint(e.getPoint());
+        } catch (IOException ignored) {
+        }
         this.repaint();
     }
 
@@ -145,12 +161,25 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
     @Override
     public void mouseDragged(MouseEvent e) {
         this.drawedPoints.add(e.getPoint());
+        try {
+            this.sendPoint(e.getPoint());
+        } catch (IOException ignored) {
+        }
         this.repaint();
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
 
+    }
+
+    public void sendPoint(Point p) throws IOException {
+        DrawMessage message = new DrawMessage(p);
+
+        MessageSender.sendMessage(
+                InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
+                DefaultScribbleParameters.DEFAULT_SERVER_PORT,
+                message);
     }
 
     @Override
