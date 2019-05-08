@@ -151,6 +151,9 @@ public class ScribbleServer implements DatagramListener {
 
         int playersNumber = playerManager.getPlayersNumber();
         int drawerIndex = (int) (Math.random() * playersNumber);
+        
+        //ottengo la parola da indovinare
+        String wordToGuess = wManager.getUniqueNewWord();
 
         for (int i = 0; i < playersNumber; ++i) {
 
