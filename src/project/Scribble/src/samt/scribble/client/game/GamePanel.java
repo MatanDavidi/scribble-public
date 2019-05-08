@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package samt.scribble.client;
+package samt.scribble.client.game;
 
 import java.awt.BorderLayout;
 import java.io.IOException;
@@ -29,6 +29,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import javax.swing.JOptionPane;
 import samt.scribble.DefaultScribbleParameters;
+import samt.scribble.client.ScribblePanel;
 import samt.scribble.client.game.PlayerRole;
 import samt.scribble.communication.Commands;
 import samt.scribble.communication.Connection;

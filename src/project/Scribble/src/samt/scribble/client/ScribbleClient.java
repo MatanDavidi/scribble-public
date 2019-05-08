@@ -23,6 +23,7 @@
  */
 package samt.scribble.client;
 
+import samt.scribble.client.game.GamePanel;
 import samt.scribble.client.lobby.LobbyPanel;
 import samt.scribble.client.login.LoginPanel;
 import samt.scribble.client.login.LoginListener;
