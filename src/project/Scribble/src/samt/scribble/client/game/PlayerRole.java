@@ -26,8 +26,8 @@ package samt.scribble.client.game;
 /**
  * Enumerazione contenente i ruoli che è possibile assumere da giocatore.
  *
- * @author Matan Davidi
- * @version 1.0 (2019-05-07 - 2019-05-07)
+ * @author MatanDavidi
+ * @version 1.0.1 (2019-05-07 - 2019-05-08)
  */
 public enum PlayerRole {
 
