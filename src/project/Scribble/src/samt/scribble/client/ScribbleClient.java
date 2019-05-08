@@ -24,6 +24,7 @@
 package samt.scribble.client;
 
 import samt.scribble.client.game.GamePanel;
+import samt.scribble.client.game.WordGuessListener;
 import samt.scribble.client.lobby.LobbyPanel;
 import samt.scribble.client.login.LoginPanel;
 import samt.scribble.client.login.LoginListener;
@@ -33,6 +34,7 @@ import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.client.game.PlayerRole;
 import samt.scribble.client.lobby.LobbyListener;
+import samt.scribble.client.login.WelcomePanel;
 import samt.scribble.communication.Connection;
 
 /**
@@ -40,9 +42,9 @@ import samt.scribble.communication.Connection;
  *
  * @author giuliobosco (giuliobva@gmail.com)
  * @author MatanDavidi
- * @version 1.2 (2019-05-04 - 2019-05-07)
+ * @version 1.2.1 (2019-05-04 - 2019-05-07)
  */
-public class ScribbleClient extends JFrame implements LoginListener, LobbyListener {
+public class ScribbleClient extends JFrame implements LoginListener, LobbyListener, WordGuessListener {
     // ---------------------------------------------------------------- Costants
     // -------------------------------------------------------------- Attributes
 
@@ -65,6 +67,8 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
      */
     private LobbyPanel lobbyPanel;
 
+    private WelcomePanel welcomePanel;
+
     /**
      * L'istanza di Connection che contiene i membri per gestire la connessione
      * con il server.
@@ -82,6 +86,8 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
      * Attributo che rappresenta il titolo del pannello di gioco.
      */
     private final String GAME_PANEL_NAME = "gamePanel";
+
+    private final String WELCOME_PANEL_NAME = "welcomePanel";
 
     // ------------------------------------------------------- Getters & Setters
     // ------------------------------------------------------------ Constructors
@@ -171,4 +177,13 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
 
     }
 
+    @Override
+    public void wordGuessed(String word) {
+        this.welcomePanel = new WelcomePanel();
+
+        cardsPanel.add(WELCOME_PANEL_NAME, welcomePanel);
+        CardLayout cl = (CardLayout) cardsPanel.getLayout();
+        cl.show(cardsPanel, WELCOME_PANEL_NAME);
+        pack();
+    }
 }
