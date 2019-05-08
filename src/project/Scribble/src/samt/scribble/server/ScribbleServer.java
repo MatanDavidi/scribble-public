@@ -196,7 +196,6 @@ public class ScribbleServer implements DatagramListener {
      * Test della classe.
      *
      * @param args Argomenti da line di comando.
-     * @throws IOException Errore nel server.
      */
     public static void main(String[] args){
         try{
