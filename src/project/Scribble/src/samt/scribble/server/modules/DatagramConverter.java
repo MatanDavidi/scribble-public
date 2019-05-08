@@ -36,18 +36,18 @@ import java.net.DatagramPacket;
  * @author Paolo Guebeli
  * @version 1.0 (2019-05-08)
  */
-public class WordModule {
+public class DatagramConverter {
     
-    public static String guessed(DatagramPacket datagramPacket) throws IOException{
+    public static String dataToString(DatagramPacket datagramPacket) throws IOException{
 
-        String word = "";
+        String text = "";
         for (int i = 1; i < datagramPacket.getData().length; i++) {
             if (datagramPacket.getData()[i] != 0) {
-                word += (char) datagramPacket.getData()[i];
+                text += (char) datagramPacket.getData()[i];
             }
         }
         
-        return word;
+        return text;
     }
     
 }
