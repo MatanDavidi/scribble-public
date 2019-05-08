@@ -46,12 +46,17 @@ import samt.scribble.communication.messages.WordGuessMessage;
  * @version 1.0 (2019-05-08 - 2019-05-08)
  */
 public class GamePanel extends javax.swing.JPanel implements DatagramListener {
+    /**
+     * Attributo che rappresenta la connessione al server.
+     */
     private Connection serverConnection;
-    
+    /**
+     * Attributo che rappresenta il pannello di scribble.
+     */
     private ScribblePanel scribblePanel;
     /**
-     * Creates new form GamePanel
-     * @param serverConnection
+     * Metodo costruttore che istanzia la connessione al server e il scribble panel.
+     * @param serverConnection Attributo che rappresenta la connessione al server.
      */
     public GamePanel(Connection connection) {
         initComponents();
