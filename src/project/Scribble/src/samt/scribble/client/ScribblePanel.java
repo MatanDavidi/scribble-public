@@ -207,6 +207,7 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
     @Override
     protected void paintComponent(Graphics g) {
 
+        super.paintComponent(g);
         if (this.clear) {
             g.setColor(Color.white);
             g.drawRect(0, 0, getWidth(), getHeight());
