@@ -86,7 +86,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
      * @param evt Attributo che rappresenta le informazioni del bottone.
      */
     private void jButtonSendWordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSendWordMouseClicked
-        String wordToGuess = jTextFieldWord.getText();
+        String wordToGuess = jTextFieldWord.getText().trim();
         if (!wordToGuess.isEmpty()) {
 
                 WordGuessMessage wordGuessMessage = new WordGuessMessage(wordToGuess);
