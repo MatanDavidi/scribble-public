@@ -44,7 +44,7 @@ import samt.scribble.wordmanager.WordManager;
 public class WordModule {
     
     public static String guessed(DatagramPacket datagramPacket) throws IOException{
-        WordManager wordManager = new WordManager(DefaultScribbleParameters.WORDS_CSV_PATH);
+
         String word = "";
         for (int i = 1; i < datagramPacket.getData().length; i++) {
             if (datagramPacket.getData()[i] != 0) {

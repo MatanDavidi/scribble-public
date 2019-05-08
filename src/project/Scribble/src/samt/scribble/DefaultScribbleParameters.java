@@ -54,7 +54,7 @@ public class DefaultScribbleParameters {
      * Il numero minimo di giocatori che devono essere registrati per poter
      * avviare la partita.
      */
-    public static final int MINIMUM_PLAYERS_NUMBER = 0;
+    public static final int MINIMUM_PLAYERS_NUMBER = 1;
 
     /**
      * Il livello di verbosità delle informazioni di debug durante l'esecuzione

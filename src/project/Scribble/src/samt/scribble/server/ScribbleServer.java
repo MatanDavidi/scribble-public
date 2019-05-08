@@ -131,7 +131,7 @@ public class ScribbleServer implements DatagramListener {
                         break;
 
                     case Commands.WORD_GUESS:
-                        String userWord = datagramPacket.toString();
+                        String userWord = WordModule.guessed(datagramPacket);
 
                         //controllo se il tentativo di indovinare la parola è corretto
                         if (wManager.isGuessedWord(userWord)) {
