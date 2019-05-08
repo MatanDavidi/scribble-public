@@ -26,7 +26,7 @@ package samt.scribble.communication.messages;
 import samt.scribble.communication.Commands;
 
 /**
- * La classe EndMessage � una sottoclasse di Message dedicata a segnalare
+ * La classe EndMessage è una sottoclasse di Message dedicata a segnalare
  * la fine di una partita.
  *
  * @author nemastojanovic
