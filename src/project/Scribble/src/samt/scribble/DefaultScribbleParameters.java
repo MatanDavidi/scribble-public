@@ -31,7 +31,7 @@ import java.nio.file.Paths;
  *
  * @author giuliobosco (giuliobva@gmail.com)
  * @author MatanDavidi
- * @version 1.0.3 (2019-04-19 - 2019-05-06)
+ * @version 1.0.4 (2019-04-19 - 2019-05-06)
  */
 public class DefaultScribbleParameters {
 
@@ -108,5 +108,9 @@ public class DefaultScribbleParameters {
      * Percorso del file contenente le parole da utilizzare nel gioco.
      */
     public static final Path WORDS_CSV_PATH = Paths.get("data", "words.csv");
+
+    public static final int HEIGHT = 200;
+
+    public static final int WIDTH = 200;
 
 }

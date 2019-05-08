@@ -32,7 +32,8 @@ import java.awt.Point;
  * @author nemastojanovic
  * @author MattiaRuberto
  * @author gabrialessi
- * @version 1.0.2 (2019-05-05 - 2019-05-08)
+ * @author giuliobosco
+ * @version 1.0.3 (2019-05-05 - 2019-05-08)
  */
 public class ScribbleGame {
 
@@ -83,7 +84,7 @@ public class ScribbleGame {
     /**
      * Metodo che imposta un pixel della matrice.
      */
-    private void setPixel(Point position) {
+    public void setPixel(Point position) {
         int x = (int) position.getX();
         int y = (int) position.getY();
         if (x >= 0 && x <= getWidth() && y >= 0 && y <= getWidth()) {
@@ -94,7 +95,7 @@ public class ScribbleGame {
     /**
      * Metodo che imposta più pixel della matrice.
      */
-    private void setPixels(Point[] positions) {
+    public void setPixels(Point[] positions) {
         for (int i = 0; i < positions.length; i++) {
             this.matrix[(int) positions[i].getX()][(int) positions[i].getY()] = true;
         }
@@ -120,7 +121,7 @@ public class ScribbleGame {
     /**
      * Metodo che azzera le proprietà alla matrice.
      */
-    private void resetMatrix() {
+    public void resetMatrix() {
         this.matrix = new boolean[getHeight()][getWidth()];
         for (int h = 0; h < getHeight(); h++) {
             for (int w = 0; w < getWidth(); w++) {
