@@ -109,7 +109,11 @@ public class DefaultScribbleParameters {
      */
     public static final Path WORDS_CSV_PATH = Paths.get("data", "words.csv");
 
-    public static final int HEIGHT = 200;
+    /**
+     * La larghezza massima in pixel della parte disegnabile dello
+     * ScribblePanel.
+     */
+    public static final int SCRIBBLE_HEIGHT = 200;
 
     public static final int WIDTH = 200;
 
