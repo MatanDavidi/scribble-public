@@ -23,14 +23,22 @@
  */
 package samt.scribble.communication.messages;
 
+import samt.scribble.communication.Commands;
+
 /**
  *
  * @author Bryan Beffa
  */
-public class GuessedWordMessage extends Message{
-    
-    public GuessedWordMessage(byte command, byte[] message) {
-        super(command, message);
+public class GuessedWordMessage extends Message {
+
+    /**
+     * Creo il messaggio che la parola è stata indovinata dall'utente passato
+     * come parametro.
+     *
+     * @param nickname nickname del giocatore che ha indovinato la parola.
+     */
+    public GuessedWordMessage(String nickname) {
+        super(Commands.GUESSED_WORD, nickname.getBytes());
     }
-    
+
 }
