@@ -33,6 +33,7 @@ import java.awt.*;
 import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.client.game.PlayerRole;
+import samt.scribble.client.game.WordGuessListener;
 import samt.scribble.client.lobby.LobbyListener;
 import samt.scribble.client.login.WelcomePanel;
 import samt.scribble.communication.Connection;
@@ -76,12 +77,12 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
     private Connection serverConnection;
 
     private String username;
-    
+
     /**
      * Attributo che rappresenta il titolo della pannello della lobby.
      */
     private final String LOBBY_PANEL_NAME = "lobbyPanel";
-    
+
     /**
      * Attributo che rappresenta il titolo del pannello di gioco.
      */
@@ -165,11 +166,13 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
         addGamePanel();
 
     }
+
     /**
      * Metodo che aggiunnge GamePane al layout.
      */
     private void addGamePanel() {
 
+        gamePanel.setListener(this);
         cardsPanel.add(GAME_PANEL_NAME, gamePanel);
         CardLayout cl = (CardLayout) cardsPanel.getLayout();
         cl.show(cardsPanel, GAME_PANEL_NAME);
