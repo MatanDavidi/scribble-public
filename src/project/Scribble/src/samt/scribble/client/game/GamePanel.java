@@ -134,8 +134,6 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
 
             case Commands.WORD_GUESS:
                 try{
-                    InetAddress ip = datagramPacket.getAddress();
-                    int port = datagramPacket.getPort();
                     String username = DatagramConverter.dataToString(datagramPacket);
                     String msg = username + " ha indovinato la parola";
                     
