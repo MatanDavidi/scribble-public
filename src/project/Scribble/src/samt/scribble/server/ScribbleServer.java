@@ -42,7 +42,6 @@ import samt.scribble.communication.messages.UsersListMessage;
 import samt.scribble.communication.messages.WordGuessMessage;
 import samt.scribble.server.modules.WordManager;
 import samt.scribble.server.player.Player;
-import samt.scribble.wordmanager.WordManager;
 import samt.scribble.server.modules.WordModule;
 
 /**
