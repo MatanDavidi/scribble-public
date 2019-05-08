@@ -54,7 +54,7 @@ public class DefaultScribbleParameters {
      * Il numero minimo di giocatori che devono essere registrati per poter
      * avviare la partita.
      */
-    public static final int MINIMUM_PLAYERS_NUMBER = 3;
+    public static final int MINIMUM_PLAYERS_NUMBER = 0;
 
     /**
      * Il livello di verbosità delle informazioni di debug durante l'esecuzione
@@ -104,6 +104,9 @@ public class DefaultScribbleParameters {
      */
     public static final String NO_FOUND_USERNAME_BY_ADDRESS = "Non è stato trovato nessuno player";
 
+    /**
+     * Percorso del file contenente le parole da utilizzare nel gioco.
+     */
     public static final Path WORDS_CSV_PATH = Paths.get("data", "words.csv");
 
 }

@@ -43,7 +43,7 @@ import samt.scribble.wordmanager.WordManager;
  */
 public class WordModule {
     
-    public static DatagramPacket guessed(DatagramPacket datagramPacket) throws IOException{
+    public static String guessed(DatagramPacket datagramPacket) throws IOException{
         WordManager wordManager = new WordManager(DefaultScribbleParameters.WORDS_CSV_PATH);
         String word = "";
         for (int i = 1; i < datagramPacket.getData().length; i++) {
@@ -52,20 +52,7 @@ public class WordModule {
             }
         }
         
-        Message message;
-        
-        if(wordManager.isGuessedWord(word)){
-            message = new WordGuessedMessage(datagramPacket.getAddress().toString());
-        }else{
-            message = new WordGuessMessage(word);
-        }
-        
-        return new DatagramPacket(
-                message.getWholeMessage(),
-                message.getWholeMessage().length,
-                datagramPacket.getAddress(),
-                DefaultScribbleParameters.DEFAULT_GROUP_PORT
-        );
+        return word;
     }
     
 }
