@@ -71,10 +71,13 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
      */
     private Connection serverConnection;
 
+    private String username;
+    
     /**
      * Attributo che rappresenta il titolo della pannello della lobby.
      */
     private final String LOBBY_PANEL_NAME = "lobbyPanel";
+    
     /**
      * Attributo che rappresenta il titolo del pannello di gioco.
      */
@@ -124,7 +127,7 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
     public void loggedIn(String username, Connection serverConnection) {
 
         if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
-
+            this.username = username;
             System.out.println(username + ": accesso al gruppo multicast " + serverConnection.getGroupConnection().getGroupIp().getHostAddress());
         }
 
@@ -142,7 +145,7 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
     @Override
     public void gameStartingGuesser() {
 
-        gamePanel = new GamePanel(serverConnection, PlayerRole.Guesser);
+        gamePanel = new GamePanel(serverConnection, username, PlayerRole.Guesser);
 
         addGamePanel();
 
@@ -151,7 +154,7 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
     @Override
     public void gameStartingDrawer(String word) {
 
-        gamePanel = new GamePanel(serverConnection, PlayerRole.Drawer);
+        gamePanel = new GamePanel(serverConnection, username, PlayerRole.Drawer);
 
         addGamePanel();
 
