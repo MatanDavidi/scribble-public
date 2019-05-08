@@ -35,13 +35,20 @@ import samt.scribble.communication.DatagramListener;
 /**
  *
  * @author Matan Davidi
+ * @author Mattia Ruberto
  */
 public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
-
+    /**
+     * Attributo che rappresenta la connessione al server.
+     */
     private Connection serverConnection;
-
+    /**
+     * Attributo che rappresenta la lista degli username.
+     */
     private List<String> usernames;
-
+    /**
+     * Attributo che rappresenta la classe LobbyListener.
+     */
     private LobbyListener listener;
 
     public void setListener(LobbyListener listener) {
@@ -137,6 +144,11 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
         }
     }
 
+    /**
+     * Metodo che ricostruisce la lista con i nomi utenti.
+     * @param packetData Lista di utenti in byte.
+     * @return la lista di utenti in stringa.
+     */
     private List<String> rebuildUsernames(byte[] packetData) {
 
         List<String> usernames = new ArrayList<>();
@@ -162,6 +174,9 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
 
     }
 
+    /**
+     * Metodo che aggiorna la lista con i nomi utenti nel text area.
+     */
     private void updateUsersListTextArea() {
 
         usersListTextArea.setText("");

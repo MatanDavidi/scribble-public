@@ -69,9 +69,14 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
      * con il server.
      */
     private Connection serverConnection;
-
+    
+    /**
+     * Attributo che rappresenta il titolo della pannello della lobby.
+     */
     private final String LOBBY_PANEL_NAME = "lobbyPanel";
-
+    /**
+     * Attributo che rappresenta il titolo del pannello di gioco.
+     */
     private final String GAME_PANEL_NAME = "gamePanel";
 
     // ------------------------------------------------------- Getters & Setters
