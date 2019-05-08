@@ -131,11 +131,6 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
         CardLayout cl = (CardLayout) cardsPanel.getLayout();
         cl.show(cardsPanel, LOBBY_PANEL_NAME);
         pack();
-
-//        scribblePanel = new ScribblePanel(serverConnection);
-//        getContentPane().add(scribblePanel);
-//        getContentPane().validate();
-//        getContentPane().repaint();
     }
 
     @Override
