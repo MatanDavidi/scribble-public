@@ -34,7 +34,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
-import samt.scribble.client.game.PlayerRole;
 import samt.scribble.communication.messages.DrawerMessage;
 import samt.scribble.communication.messages.GuesserMessage;
 import samt.scribble.communication.messages.Message;

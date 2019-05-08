@@ -29,15 +29,10 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import javax.swing.JOptionPane;
 import samt.scribble.DefaultScribbleParameters;
-import samt.scribble.client.ScribblePanel;
 import samt.scribble.client.game.PlayerRole;
-import samt.scribble.client.login.LoginListener;
 import samt.scribble.communication.Connection;
 import samt.scribble.communication.DatagramListener;
-import samt.scribble.communication.GroupConnection;
-import samt.scribble.communication.ListeningThread;
 import samt.scribble.communication.MessageSender;
-import samt.scribble.communication.messages.JoinMessage;
 import samt.scribble.communication.messages.WordGuessMessage;
 
 /**

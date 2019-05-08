@@ -27,12 +27,7 @@ package samt.scribble.server.modules;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
-import samt.scribble.DefaultScribbleParameters;
-import samt.scribble.communication.messages.EchoMessage;
-import samt.scribble.communication.messages.Message;
-import samt.scribble.communication.messages.WordGuessMessage;
-import samt.scribble.communication.messages.WordGuessedMessage;
-import samt.scribble.wordmanager.WordManager;
+
 
 /**
  * Questo metodo legge la parola inviata e controlla se questa è corretta,
