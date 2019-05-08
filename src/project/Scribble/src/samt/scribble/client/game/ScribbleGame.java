@@ -23,87 +23,110 @@
  */
 package samt.scribble.client.game;
 
-
 import java.awt.Point;
 
 /**
- * Classe che setta pixel e ritorna il valore di una matrice in Byte.
+ * Classe che definisce i valori dell'interfaccia di gioco (matrice dei punti).
+ *
  * @author ThorDublin
  * @author nemastojanovic
  * @author MattiaRuberto
- * @version 1.0.1 (2019-05-05 - 2019-05-05)
+ * @author gabrialessi
+ * @version 1.0.2 (2019-05-05 - 2019-05-08)
  */
 public class ScribbleGame {
-    
+
     /**
-     * Array multidimensionale che definisce la matrice.
+     * Matrice per i punti da disegnare nell'interfaccia.
      */
     private boolean[][] matrix;
-    
+
     /**
-     * Definisce l'altezza della matrice.
+     * Altezza della matrice.
      */
     private int height;
-    
+
     /**
-     * Definisce la larghezza della matrice.
+     * Larghezza della matrice.
      */
     private int width;
-    
+
     /**
-     * Metodo costruttore con i parametri che definiscono la grandezza della matrice.
-     * @param height definisce l'altezza della matrice.
-     * @param width definisce la larghezza della matrice.
+     * Metodo costruttore, si definiscono le grandezze della matrice.
+     *
+     * @param height Altezza della matrice.
+     * @param width Larghezza della matrice.
      */
-    public ScribbleGame(int height, int width){
-        setProperties(height, width);
+    public ScribbleGame(int height, int width) {
+        setSize(height, width);
         resetMatrix();
     }
-    
+
     /**
-     * Metodo che setta un pixel della matrice.
+     * Metodo utile per ottenere l'altezza della matrice.
+     *
+     * @return L'altezza della matrice.
      */
-    private void setPixel(Point position){
-        matrix[position.x][position.y] = true;
+    public int getHeight() {
+        return this.height;
     }
-    
+
     /**
-     * Metodo che setta più punti della matrice.
+     * Metodo utile per ottenere la larghezza della matrice.
+     *
+     * @return La larghezza della matrice.
      */
-    private void setPixels(Point[] positions){
-        for(int i = 0; i < positions.length; i++){
-            matrix[positions[i].x][positions[i].y] = true;
+    public int getWidth() {
+        return this.width;
+    }
+
+    /**
+     * Metodo che imposta un pixel della matrice.
+     */
+    private void setPixel(Point position) {
+        int x = (int) position.getX();
+        int y = (int) position.getY();
+        if (x >= 0 && x <= getWidth() && y >= 0 && y <= getWidth()) {
+            this.matrix[x][y] = true;
         }
     }
-    
+
     /**
-     * Metodo che setta le proprietà della matrice.
-     * @param height definisce l'altezza della matrice.
-     * @param width definisce la larghezza della matrice.
+     * Metodo che imposta più pixel della matrice.
      */
-    private void setProperties(int height, int width){
-        if(height < 0){
+    private void setPixels(Point[] positions) {
+        for (int i = 0; i < positions.length; i++) {
+            this.matrix[(int) positions[i].getX()][(int) positions[i].getY()] = true;
+        }
+    }
+
+    /**
+     * Metodo che imposta le grandezze della matrice.
+     *
+     * @param height Altezza della matrice.
+     * @param width Larghezza della matrice.
+     */
+    private void setSize(int height, int width) {
+        if (height < 0) {
             height = 0;
         }
-        if(width < 0){
+        if (width < 0) {
             width = 0;
         }
-        
         this.height = height;
         this.width = width;
     }
-    
+
     /**
-     * Metodo che setta le proprietà alla matrice.
+     * Metodo che azzera le proprietà alla matrice.
      */
-    private void resetMatrix(){
-        matrix = new boolean[height][width];
-        for(int h = 0; h < height; h++){
-            for(int w = 0; w < width; w++){
-                matrix[h][w] = false;
+    private void resetMatrix() {
+        this.matrix = new boolean[getHeight()][getWidth()];
+        for (int h = 0; h < getHeight(); h++) {
+            for (int w = 0; w < getWidth(); w++) {
+                this.matrix[h][w] = false;
             }
         }
     }
-    
-}
 
+}
