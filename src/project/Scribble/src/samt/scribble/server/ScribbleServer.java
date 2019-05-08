@@ -37,6 +37,7 @@ import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.client.game.PlayerRole;
 import samt.scribble.communication.messages.StartMessage;
 import samt.scribble.communication.messages.UsersListMessage;
+import samt.scribble.communication.messages.WordGuessMessage;
 import samt.scribble.server.modules.WordManager;
 import samt.scribble.server.player.Player;
 
@@ -129,7 +130,8 @@ public class ScribbleServer implements DatagramListener {
                         //controllo se il tentativo di indovinare la parola è corretto
                         if(wManager.isGuessedWord(userWord)){
                             //parola indovinata
-                            groupConnection.send(message);
+                            String username = "";
+                            groupConnection.send(new WordGuessMessage(username));
                         }
                 }
             } catch (IOException ex) {
