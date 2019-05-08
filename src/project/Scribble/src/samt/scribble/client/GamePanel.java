@@ -46,12 +46,13 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     private ScribblePanel scribblePanel;
     /**
      * Creates new form GamePanel
-     * @param serverConnection
+     * @param connection
+     * @param playerRole
      */
-    public GamePanel(Connection connection) {
+    public GamePanel(Connection connection, PlayerRole playerRole) {
         initComponents();
         this.serverConnection = serverConnection;
-        scribblePanel = new ScribblePanel(connection, PlayerRole.Guesser);
+        scribblePanel = new ScribblePanel(connection, playerRole);
         add(scribblePanel, BorderLayout.WEST);
     }
 
