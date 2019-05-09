@@ -32,8 +32,10 @@ import samt.scribble.communication.Connection;
 import samt.scribble.communication.DatagramListener;
 
 /**
+ * La classe LobbyPanel contiene i componenti e la logica che definiscono il
+ * comportamento della "sala d'aspetto" prima dell'inizio della partita.
  *
- * @author Matan Davidi
+ * @author MatanDavidi
  * @author Mattia Ruberto
  * @version 1.0.1 (2019-05-08 - 2019-05-08)
  */

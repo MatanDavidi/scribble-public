@@ -24,7 +24,6 @@
 package samt.scribble.client;
 
 import samt.scribble.client.game.GamePanel;
-import samt.scribble.client.game.WordGuessListener;
 import samt.scribble.client.lobby.LobbyPanel;
 import samt.scribble.client.login.LoginPanel;
 import samt.scribble.client.login.LoginListener;
@@ -33,22 +32,53 @@ import java.awt.*;
 import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.client.game.PlayerRole;
+import samt.scribble.client.game.WordGuessListener;
 import samt.scribble.client.lobby.LobbyListener;
-import samt.scribble.client.login.WelcomePanel;
+import samt.scribble.client.welcome.WelcomeListener;
+import samt.scribble.client.welcome.WelcomePanel;
 import samt.scribble.communication.Connection;
 
 /**
- * Scribble client.
+ * Finestra contenente tutti i pannelli.
  *
  * @author giuliobosco (giuliobva@gmail.com)
  * @author MatanDavidi
- * @version 1.2.1 (2019-05-04 - 2019-05-07)
+ * @author JariNaeser
+ * @version 1.2.2 (2019-05-04 - 2019-05-09)
  */
-public class ScribbleClient extends JFrame implements LoginListener, LobbyListener, WordGuessListener {
-    // ---------------------------------------------------------------- Costants
-    // -------------------------------------------------------------- Attributes
+public class ScribbleClient extends JFrame implements WelcomeListener, LoginListener, LobbyListener, WordGuessListener {
 
+    // ---------------------------------------------------------------- Costants
+    /**
+     * Attributo che rappresenta il titolo della pannello di benvenuto.
+     */
+    private final String WELCOME_PANEL_NAME = "welcomePanel";
+    /**
+     * Attributo che rappresenta il titolo della pannello di login.
+     */
+    private final String LOGIN_PANEL_NAME = "loginPanel";
+    /**
+     * Attributo che rappresenta il titolo della pannello della lobby.
+     */
+    private final String LOBBY_PANEL_NAME = "lobbyPanel";
+
+    /**
+     * Attributo che rappresenta il titolo del pannello di gioco.
+     */
+    private final String GAME_PANEL_NAME = "gamePanel";
+
+    // -------------------------------------------------------------- Attributes
+    /**
+     * Istanza di JPanel usata per la gestione della visualizzazione o del
+     * nascondimento di un pannello quando esso entra o esce di scena.
+     */
     private JPanel cardsPanel;
+
+    /**
+     * Il pannello di benvenuto mostrato all'inizio, prima di mostrare il
+     * pannello di login.
+     */
+    private WelcomePanel welcomePanel;
 
     /**
      * Istanza di GamePanel che contiene la GUI relativa alla partita.
@@ -67,30 +97,17 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
      */
     private LobbyPanel lobbyPanel;
 
-    private WelcomePanel welcomePanel;
-
     /**
      * L'istanza di Connection che contiene i membri per gestire la connessione
      * con il server.
      */
     private Connection serverConnection;
 
+    /**
+     * Nome utente del client.
+     */
     private String username;
-    
-    /**
-     * Attributo che rappresenta il titolo della pannello della lobby.
-     */
-    private final String LOBBY_PANEL_NAME = "lobbyPanel";
-    
-    /**
-     * Attributo che rappresenta il titolo del pannello di gioco.
-     */
-    private final String GAME_PANEL_NAME = "gamePanel";
 
-    private final String WELCOME_PANEL_NAME = "welcomePanel";
-
-    // ------------------------------------------------------- Getters & Setters
-    // ------------------------------------------------------------ Constructors
     /**
      * Crea scribble client.
      */
@@ -105,16 +122,103 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
 
         cardsPanel = new JPanel(new CardLayout());
 
-        loginPanel = new LoginPanel();
-        loginPanel.setListener(this);
-        cardsPanel.add(loginPanel);
+        welcomePanel = new WelcomePanel();
+        welcomePanel.setListener(this);
+        cardsPanel.add(welcomePanel);
         add(cardsPanel);
 
         pack();
     }
 
     // ------------------------------------------------------------ Help Methods
+    /**
+     * Rimpiazza il pannello corrente con un altro pannello, che deve già essere
+     * stato aggiunto al JPanel
+     * {@link samt.scribble.client.ScribbleClient#cardsPanel cardsPanel}.
+     *
+     * @param panelName Il nome del pannello da visualizzare al posto di quello
+     * corrente.
+     */
+    private void replacePanel(String panelName) {
+
+        CardLayout cl = (CardLayout) cardsPanel.getLayout();
+        cl.show(cardsPanel, panelName);
+        pack();
+
+    }
+
     // --------------------------------------------------------- General Methods
+    @Override
+    public void welcomeClicked() {
+
+        if (loginPanel == null) {
+
+            loginPanel = new LoginPanel();
+            loginPanel.setListener(this);
+            cardsPanel.add(LOGIN_PANEL_NAME, loginPanel);
+
+        }
+
+        replacePanel(LOGIN_PANEL_NAME);
+
+    }
+
+    @Override
+    public void loggedIn(String username, Connection serverConnection) {
+
+        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+            this.username = username;
+            System.out.println(username + ": accesso al gruppo multicast " + serverConnection.getGroupConnection().getGroupIp().getHostAddress());
+        }
+
+        if (lobbyPanel == null) {
+
+            lobbyPanel = new LobbyPanel(serverConnection, username);
+            lobbyPanel.setListener(this);
+            cardsPanel.add(LOBBY_PANEL_NAME, lobbyPanel);
+
+        }
+
+        this.serverConnection = serverConnection;
+
+        replacePanel(LOBBY_PANEL_NAME);
+    }
+
+    @Override
+    public void gameStartingGuesser() {
+
+        if (gamePanel == null) {
+
+            gamePanel = new GamePanel(serverConnection, username, PlayerRole.Guesser);
+            gamePanel.setListener(this);
+            cardsPanel.add(GAME_PANEL_NAME, gamePanel);
+
+        }
+
+        replacePanel(GAME_PANEL_NAME);
+
+    }
+
+    @Override
+    public void gameStartingDrawer(String word) {
+
+        if (gamePanel == null) {
+
+            gamePanel = new GamePanel(serverConnection, username, PlayerRole.Drawer);
+            gamePanel.setListener(this);
+            cardsPanel.add(GAME_PANEL_NAME, gamePanel);
+
+        }
+
+        replacePanel(GAME_PANEL_NAME);
+
+    }
+
+    @Override
+    public void wordGuessed(String word) {
+        replacePanel(WELCOME_PANEL_NAME);
+    }
+
     // ------------------------------------------------------- Static Components
     /**
      * Avvio di scribble (client).
@@ -127,63 +231,5 @@ public class ScribbleClient extends JFrame implements LoginListener, LobbyListen
                 new ScribbleClient().setVisible(true);
             }
         });
-    }
-
-    @Override
-    public void loggedIn(String username, Connection serverConnection) {
-
-        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
-            this.username = username;
-            System.out.println(username + ": accesso al gruppo multicast " + serverConnection.getGroupConnection().getGroupIp().getHostAddress());
-        }
-
-        lobbyPanel = new LobbyPanel(serverConnection, username);
-        lobbyPanel.setListener(this);
-
-        this.serverConnection = serverConnection;
-
-        cardsPanel.add(LOBBY_PANEL_NAME, lobbyPanel);
-        CardLayout cl = (CardLayout) cardsPanel.getLayout();
-        cl.show(cardsPanel, LOBBY_PANEL_NAME);
-        pack();
-    }
-
-    @Override
-    public void gameStartingGuesser() {
-
-        gamePanel = new GamePanel(serverConnection, username, PlayerRole.Guesser);
-
-        addGamePanel();
-
-    }
-
-    @Override
-    public void gameStartingDrawer(String word) {
-
-        gamePanel = new GamePanel(serverConnection, username, PlayerRole.Drawer);
-
-        addGamePanel();
-
-    }
-    /**
-     * Metodo che aggiunnge GamePane al layout.
-     */
-    private void addGamePanel() {
-
-        cardsPanel.add(GAME_PANEL_NAME, gamePanel);
-        CardLayout cl = (CardLayout) cardsPanel.getLayout();
-        cl.show(cardsPanel, GAME_PANEL_NAME);
-        pack();
-
-    }
-
-    @Override
-    public void wordGuessed(String word) {
-        this.welcomePanel = new WelcomePanel();
-
-        cardsPanel.add(WELCOME_PANEL_NAME, welcomePanel);
-        CardLayout cl = (CardLayout) cardsPanel.getLayout();
-        cl.show(cardsPanel, WELCOME_PANEL_NAME);
-        pack();
     }
 }

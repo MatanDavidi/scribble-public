@@ -55,6 +55,10 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
      * Attributo che rappresenta il pannello di scribble.
      */
     private ScribblePanel scribblePanel;
+    
+    private String username;
+    
+    private WordGuessListener listener;
 
     public GamePanel(Connection connection, String username, PlayerRole playerRole) {
         initComponents();
@@ -62,6 +66,10 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         serverConnection.addDatagramListener(this);
         scribblePanel = new ScribblePanel(connection, playerRole);
         add(scribblePanel, BorderLayout.WEST);
+    }
+
+    public void setListener(WordGuessListener listener) {
+        this.listener = listener;
     }
 
     /**
@@ -138,6 +146,9 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
                     String msg = "La parola è stata indovinata";
                     
                     JOptionPane.showMessageDialog(this, msg);
+                    
+                    //"la parola" è un segnaposto
+                    listener.wordGuessed("la parola");
                 }catch(IOException ex){
                     System.out.println("ERROR: " + ex.getMessage());
                 }

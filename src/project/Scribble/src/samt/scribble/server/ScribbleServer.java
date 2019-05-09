@@ -79,6 +79,9 @@ public class ScribbleServer implements DatagramListener {
      */
     private WordManager wManager;
 
+    /**
+     * Classe che definisce i valori dell'interfaccia di gioco (matrice dei punti).
+     */
     private ScribbleGame scribbleGame;
 
     /**
@@ -106,6 +109,7 @@ public class ScribbleServer implements DatagramListener {
     public void start() {
         this.listeningThread.start();
         this.groupConnection.start();
+        System.out.println("Server startato correttamente, attualmente in ascolto.");
     }
 
     /**

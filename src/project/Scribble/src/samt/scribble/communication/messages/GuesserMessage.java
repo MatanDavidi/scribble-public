@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Matan Davidi.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,13 +26,17 @@ package samt.scribble.communication.messages;
 import samt.scribble.communication.Commands;
 
 /**
+ * La classe GuesserMessage è una sottoclasse di Message che definisce che,
+ * nella partita che si sta per avviare, l'utente a cui è diretto questo
+ * messaggio sarà un indovinatore.
  *
- * @author Matan Davidi
+ * @author MatanDavidi
+ * @version 1.0 (2019-05-08 - 2019-05-08)
  */
 public class GuesserMessage extends Message {
 
     public GuesserMessage() {
         super(Commands.START_GUESSER, new byte[0]);
     }
-    
+
 }

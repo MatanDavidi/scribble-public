@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 SAMT.
+ * Copyright 2019 Matan Davidi.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,25 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package samt.scribble.client.game;
+package samt.scribble.client.welcome;
 
 /**
- * Enumerazione contenente i ruoli che è possibile assumere da giocatore.
+ * La classe WelcomeListener contiene i metodi relativi a un
+ * {@link samt.scribble.client.welcome.WelcomePanel WelcomePanel}.
  *
- * @author MatanDavidi
- * @version 1.0.1 (2019-05-07 - 2019-05-08)
+ * @author Matan Davidi
+ * @version 1.0 (2019-05-08 - 2019-05-08)
  */
-public enum PlayerRole {
+public interface WelcomeListener {
 
     /**
-     * Indica il ruolo del giocatore che deve disegnare e far indovinare agli
-     * altri utenti la parola che sta disegnando.
+     * L'evento che viene richiamato quando un utente clicca su un punto
+     * qualsiasi del pannello.
      */
-    Drawer,
-    /**
-     * Indica il ruolo di uno dei giocatori che deve indovinare la parola che
-     * sta disegnando il Drawer.
-     */
-    Guesser
+    public void welcomeClicked();
 
 }

@@ -21,21 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package samt.scribble.client.login;
+package samt.scribble.client.welcome;
 
 /**
  * Welcome panel.
  *
  * @author gabrialessi
- * @version 1.0 (2019-05-08)
+ * @author MatanDavidi
+ * @version 1.0.1 (2019-05-08 - 2019-05-09)
  */
 public class WelcomePanel extends javax.swing.JPanel {
+
+    private WelcomeListener listener;
 
     /**
      * Creates new form WelcomePanel
      */
     public WelcomePanel() {
         initComponents();
+    }
+
+    public void setListener(WelcomeListener listener) {
+        this.listener = listener;
     }
 
     /**
@@ -51,18 +58,33 @@ public class WelcomePanel extends javax.swing.JPanel {
         clickLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(200, 200, 200));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
         setLayout(new java.awt.BorderLayout());
 
         welcomeLabel.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
         welcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        welcomeLabel.setText("Welcome to Scribble");
+        welcomeLabel.setText("Benvenuto su Scribble");
         add(welcomeLabel, java.awt.BorderLayout.CENTER);
         welcomeLabel.getAccessibleContext().setAccessibleName("welcomePanel");
 
         clickLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        clickLabel.setText("Click to start");
+        clickLabel.setText("Clicca per avviare");
         add(clickLabel, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+
+        if (listener != null) {
+
+            listener.welcomeClicked();
+
+        }
+
+    }//GEN-LAST:event_formMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
