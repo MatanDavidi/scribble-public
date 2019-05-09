@@ -53,7 +53,7 @@ import samt.scribble.communication.messages.DrawMessage;
  * @author giuliobosco
  * @author jarinaeser
  * @author MatanDavidi
- * @version 1.1.3 (2019-05-06 - 2019-05-07)
+ * @version 1.1.4 (2019-05-06 - 2019-05-09)
  */
 public class ScribblePanel extends JPanel implements DatagramListener, MouseMotionListener, MouseListener {
 
@@ -217,13 +217,11 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
         g.setColor(Color.gray);
         for (int i = 0; i < this.drawedPoints.size(); i++) {
             g.drawRect(this.drawedPoints.get(i).x, this.drawedPoints.get(i).y, 1, 1);
-            this.drawedPoints.remove(this.drawedPoints.get(i));
         }
 
         g.setColor(Color.black);
         for (int i = 0; i < this.receivedPoints.size(); i++) {
             g.drawRect(this.receivedPoints.get(i).x, this.receivedPoints.get(i).y, 1, 1);
-            this.receivedPoints.remove(this.receivedPoints.get(i));
         }
     }
 }
