@@ -23,6 +23,7 @@
  */
 package samt.scribble.communication.messages;
 
+import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.communication.Commands;
 
 /**
@@ -41,6 +42,9 @@ public class JoinMessage extends Message {
      * @param port La porta d'ascolto del giocatore.
      */
     public JoinMessage(String username, int port) {
+        super(Commands.JOIN, buildMessage(username, port));
+    }
+
     /**
      * Costruisce l'array di byte da mandare assieme a questo messaggio.
      *
