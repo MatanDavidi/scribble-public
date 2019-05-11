@@ -34,12 +34,13 @@ import samt.scribble.communication.Commands;
 public class JoinMessage extends Message {
 
     /**
-     * Crea messaggio di join con il nickname del giocatore.
+     * Crea messaggio di join con il nickname del giocatore e la sua porta
+     * d'ascolto.
      *
-     * @param nickname Nickname del giocatore.
+     * @param username Nickname del giocatore.
+     * @param port La porta d'ascolto del giocatore.
      */
-    public JoinMessage(String nickname) {
-        super(Commands.JOIN, nickname.getBytes());
+    public JoinMessage(String username, int port) {
     }
 
 }
