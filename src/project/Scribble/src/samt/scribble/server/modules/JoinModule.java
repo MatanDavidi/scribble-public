@@ -33,6 +33,7 @@ import samt.scribble.server.player.PlayerManager;
 
 import java.net.DatagramPacket;
 import samt.scribble.DefaultScribbleParameters;
+import samt.scribble.communication.messages.JoinMessage;
 
 /**
  * Aggiunta di un giocatore alla lista, e ritorno al giocatore l'indirizzo IP
@@ -54,31 +55,62 @@ public class JoinModule {
      */
     public static DatagramPacket join(DatagramPacket datagramPacket, PlayerManager playerManager,
             GroupConnection groupConnection) {
-        String nickname = "";
-        for (int i = 1; i < datagramPacket.getData().length; i++) {
-            if (datagramPacket.getData()[i] != 0) {
-                nickname += (char) datagramPacket.getData()[i];
+        boolean nicknamePart = true;
+        StringBuilder nickname = new StringBuilder();
+        int port = -1;
+        byte[] packetData = datagramPacket.getData();
+        for (int i = 1; i < packetData.length; i++) {
+            if (packetData[i] != 0) {
+                if (packetData[i] == DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR) {
+
+                    nicknamePart = false;
+
+                } else {
+
+                    if (nicknamePart) {
+
+                        nickname.append((char) packetData[i]);
+
+                    } else {
+
+                        byte[] portBytes = new byte[]{
+                            packetData[i],
+                            packetData[i + 1],
+                            packetData[i + 2],
+                            packetData[i + 3]};
+
+                        port = JoinMessage.byteArrayToInt(portBytes);
+
+                    }
+
+                }
             }
         }
 
-        Player player = new Player(
-                nickname,
-                datagramPacket.getAddress(),
-                DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
+        if (port != -1) {
 
-        Message message;
-        try {
-            playerManager.registerPlayer(player);
-            message = new GroupAddressMessage(groupConnection.getGroupIp());
-        } catch (PlayerAlreadyRegisteredException pare) {
-            message = new ErrorMessage(pare.getMessage());
+            Player player = new Player(
+                    nickname.toString(),
+                    datagramPacket.getAddress(),
+                    port);
+
+            Message message;
+            try {
+                playerManager.registerPlayer(player);
+                message = new GroupAddressMessage(groupConnection.getGroupIp());
+            } catch (PlayerAlreadyRegisteredException pare) {
+                message = new ErrorMessage(pare.getMessage());
+            }
+
+            return new DatagramPacket(
+                    message.getWholeMessage(),
+                    message.getWholeMessage().length,
+                    datagramPacket.getAddress(),
+                    port);
+
         }
-
-        return new DatagramPacket(
-                message.getWholeMessage(),
-                message.getWholeMessage().length,
-                datagramPacket.getAddress(),
-                DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
+        
+        return null;
 
     }
 
