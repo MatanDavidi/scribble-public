@@ -80,7 +80,8 @@ public class ScribbleServer implements DatagramListener {
     private WordManager wManager;
 
     /**
-     * Classe che definisce i valori dell'interfaccia di gioco (matrice dei punti).
+     * Classe che definisce i valori dell'interfaccia di gioco (matrice dei
+     * punti).
      */
     private ScribbleGame scribbleGame;
 
@@ -128,18 +129,26 @@ public class ScribbleServer implements DatagramListener {
                         break;
 
                     case Commands.JOIN:
-                        sendMessage(JoinModule.join(
+
+                        DatagramPacket joinPacket = JoinModule.join(
                                 datagramPacket,
                                 this.playerManager,
-                                groupConnection));
+                                groupConnection);
 
-                        int playersNumber = playerManager.getPlayersNumber();
-                        if (playersNumber == DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
+                        if (joinPacket != null) {
 
-                            startGame();
+                            sendMessage(joinPacket);
+
+                            int playersNumber = playerManager.getPlayersNumber();
+                            if (playersNumber == DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
+
+                                startGame();
+
+                            }
+                            groupConnection.send(new UsersListMessage(playerManager.getPlayers()));
 
                         }
-                        groupConnection.send(new UsersListMessage(playerManager.getPlayers()));
+
                         break;
 
                     case Commands.DRAWING:
@@ -160,7 +169,6 @@ public class ScribbleServer implements DatagramListener {
                             InetAddress ip = datagramPacket.getAddress();
                             int port = datagramPacket.getPort();
                             String username = playerManager.getUsernameByAddress(ip, port);*/
-
                             groupConnection.send(new WordGuessMessage(""));
                         }
                 }
@@ -217,12 +225,12 @@ public class ScribbleServer implements DatagramListener {
      *
      * @param args Argomenti da line di comando.
      */
-    public static void main(String[] args){
-        try{
+    public static void main(String[] args) {
+        try {
             InetAddress ip = InetAddress.getByName(DefaultScribbleParameters.GROUP_ADDRESS);
             ScribbleServer server = new ScribbleServer(ip);
             server.start();
-        }catch(IOException ex){
+        } catch (IOException ex) {
             System.out.println("ERROR: " + ex.getMessage());
         }
     }
