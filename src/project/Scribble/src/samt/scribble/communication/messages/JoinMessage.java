@@ -102,8 +102,22 @@ public class JoinMessage extends Message {
     }
 
     public static void main(String[] args) {
+    /**
+     * Converte il valore di un array di 4 byte in un numero intero. Preso da
+     * https://stackoverflow.com/questions/7619058/convert-a-byte-array-to-integer-in-java-and-vice-versa
+     * Grazie a Jarek Przygódzki.
+     *
+     * @param value L'array di byte da convertire in un numero intero.
+     * @return Un numero intero corrispondente ai 4 byte contenuti all'interno
+     * dell'array passato come parametro.
+     */
+    public static int byteArrayToInt(byte[] value) {
 
         byte[] testMessage = buildMessage("PAOLONE", Integer.MAX_VALUE);
+        return ByteBuffer.wrap(value).getInt();
+
+    }
+
 
         for (byte b : testMessage) {
 
