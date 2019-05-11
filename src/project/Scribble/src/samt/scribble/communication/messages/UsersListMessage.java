@@ -62,7 +62,7 @@ public class UsersListMessage extends Message {
 
             }
 
-            playersArray[playersArrayIndex] = DefaultScribbleParameters.USERS_LIST_SEPARATOR;
+            playersArray[playersArrayIndex] = DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR;
             ++playersArrayIndex;
             ++currentPlayerIndex;
 
@@ -94,7 +94,7 @@ public class UsersListMessage extends Message {
 
         for (int i = 0; i < packetData.length; ++i) {
 
-            if (packetData[i] == DefaultScribbleParameters.USERS_LIST_SEPARATOR) {
+            if (packetData[i] == DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR) {
 
                 usernames.add(username.toString());
                 username.setLength(0);

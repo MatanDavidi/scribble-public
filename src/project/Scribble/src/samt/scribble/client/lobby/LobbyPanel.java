@@ -165,7 +165,7 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
 
         for (int i = 0; i < packetData.length; ++i) {
 
-            if (packetData[i] == DefaultScribbleParameters.USERS_LIST_SEPARATOR) {
+            if (packetData[i] == DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR) {
 
                 usernames.add(username.toString());
                 username.setLength(0);
