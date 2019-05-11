@@ -23,6 +23,7 @@
  */
 package samt.scribble.communication.messages;
 
+import java.nio.ByteBuffer;
 import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.communication.Commands;
 
@@ -85,22 +86,18 @@ public class JoinMessage extends Message {
     }
 
     /**
-     * Converte un il valore di una variabile di tipo intero in un array di 4
+     * Converte il valore di una variabile di tipo intero in un array di 4
      * bytes. Preso da
-     * https://stackoverflow.com/questions/2183240/java-integer-to-byte-array
-     * Grazie a Grzegorz Oledzki.
+     * https://stackoverflow.com/questions/7619058/convert-a-byte-array-to-integer-in-java-and-vice-versa
+     * Grazie a Jarek Przygódzki.
      *
      * @param value Il numero da convertire in array di byte.
      * @return Un array di byte che contiene i quattro byte che compongono il
      * numero intero passato come parametro.
      */
-    private static byte[] intToByteArray(int value) {
+    public static byte[] intToByteArray(int value) {
 
-        return new byte[]{
-            (byte) (value >>> 24),
-            (byte) (value >>> 16),
-            (byte) (value >>> 8),
-            (byte) value};
+        return ByteBuffer.allocate(4).putInt(value).array();
 
     }
 
