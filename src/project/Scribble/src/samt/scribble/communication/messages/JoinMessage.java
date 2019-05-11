@@ -42,6 +42,45 @@ public class JoinMessage extends Message {
      */
     public JoinMessage(String username, int port) {
     /**
+     * Costruisce l'array di byte da mandare assieme a questo messaggio.
+     *
+     * @param username Il nome dell'utente che si sta registrando al server.
+     * @param port La porta di ascolto del client dell'utente che si sta
+     * registrando al server.
+     * @return Un array di byte contenente il messaggio composto da username
+     * convertito, separatore (vedi
+     * {@link samt.scribble.DefaultScribbleParameters#COMMAND_MESSAGE_SEPARATOR COMMAND_MESSAGE_SEPARATOR})
+     * e un array di 4 byte contenente il valore del parametro port.
+     */
+    private static byte[] buildMessage(String username, int port) {
+
+        byte[] nickBytes = username.getBytes();
+        byte[] portBytes = intToByteArray(port);
+        byte[] message = new byte[nickBytes.length + portBytes.length + 1];
+
+        for (int i = 0; i < message.length; ++i) {
+
+            if (i < nickBytes.length) {
+
+                message[i] = nickBytes[i];
+
+            } else if (i == nickBytes.length) {
+
+                message[i] = DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR;
+
+            } else {
+
+                message[i] = portBytes[i - nickBytes.length - 1];
+
+            }
+
+        }
+
+        return message;
+
+    }
+
+    /**
      * Converte un il valore di una variabile di tipo intero in un array di 4
      * bytes. Preso da
      * https://stackoverflow.com/questions/2183240/java-integer-to-byte-array
