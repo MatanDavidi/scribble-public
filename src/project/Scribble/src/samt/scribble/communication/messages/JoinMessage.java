@@ -101,7 +101,6 @@ public class JoinMessage extends Message {
 
     }
 
-    public static void main(String[] args) {
     /**
      * Converte il valore di un array di 4 byte in un numero intero. Preso da
      * https://stackoverflow.com/questions/7619058/convert-a-byte-array-to-integer-in-java-and-vice-versa
@@ -113,17 +112,19 @@ public class JoinMessage extends Message {
      */
     public static int byteArrayToInt(byte[] value) {
 
-        byte[] testMessage = buildMessage("PAOLONE", Integer.MAX_VALUE);
         return ByteBuffer.wrap(value).getInt();
 
     }
 
+    public static void main(String[] args) {
 
-        for (byte b : testMessage) {
+        final int EXPECTED_VALUE = Integer.MIN_VALUE;
+        byte[] testArray = intToByteArray(EXPECTED_VALUE);
+        int testInt = byteArrayToInt(testArray);
 
-            System.out.println(b);
+        assert testInt == EXPECTED_VALUE;
 
-        }
+        System.out.println(testInt + " == " + EXPECTED_VALUE);
 
     }
 
