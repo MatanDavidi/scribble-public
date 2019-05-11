@@ -94,13 +94,14 @@ public class ListeningThread extends Thread {
     public void run() {
         try {
             datagramSocket = new DatagramSocket(this.getPort());
+            port = datagramSocket.getLocalPort();
 
             while (!isInterrupted()) {
                 byte[] buffer = new byte[256];
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 
                 datagramSocket.receive(packet);
-
+                
                 for (int i = 0; i < datagramListeners.size(); ++i) {
                     datagramListeners.get(i).messageReceived(packet);
                 }
