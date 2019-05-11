@@ -41,6 +41,25 @@ public class JoinMessage extends Message {
      * @param port La porta d'ascolto del giocatore.
      */
     public JoinMessage(String username, int port) {
+    /**
+     * Converte un il valore di una variabile di tipo intero in un array di 4
+     * bytes. Preso da
+     * https://stackoverflow.com/questions/2183240/java-integer-to-byte-array
+     * Grazie a Grzegorz Oledzki.
+     *
+     * @param value Il numero da convertire in array di byte.
+     * @return Un array di byte che contiene i quattro byte che compongono il
+     * numero intero passato come parametro.
+     */
+    private static byte[] intToByteArray(int value) {
+
+        return new byte[]{
+            (byte) (value >>> 24),
+            (byte) (value >>> 16),
+            (byte) (value >>> 8),
+            (byte) value};
+
+    }
     }
 
 }
