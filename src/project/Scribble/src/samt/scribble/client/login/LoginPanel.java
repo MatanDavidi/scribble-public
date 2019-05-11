@@ -135,8 +135,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
         if (!username.isEmpty()) {
 
             if (username.matches(DefaultScribbleParameters.USERNAME_REGEX)) {
-
-                JoinMessage joinMessage = new JoinMessage(username);
+                
                 this.username = username;
 
                 try {
@@ -144,6 +143,8 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
                     listeningThread = new ListeningThread(DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
                     listeningThread.addDatagramListener(this);
                     listeningThread.start();
+                    
+                    JoinMessage joinMessage = new JoinMessage(username, listeningThread.getPort());
 
                     MessageSender.sendMessage(
                             InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
