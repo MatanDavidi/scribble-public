@@ -99,6 +99,17 @@ public class JoinMessage extends Message {
             (byte) value};
 
     }
+
+    public static void main(String[] args) {
+
+        byte[] testMessage = buildMessage("PAOLONE", Integer.MAX_VALUE);
+
+        for (byte b : testMessage) {
+
+            System.out.println(b);
+
+        }
+
     }
 
 }
