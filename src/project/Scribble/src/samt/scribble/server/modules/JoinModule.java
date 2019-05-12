@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 giuliobosco.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,8 +36,8 @@ import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.communication.messages.JoinMessage;
 
 /**
- * Aggiunta di un giocatore alla lista, e ritorno al giocatore l'indirizzo IP
- * del gruppo multicast.
+ * Aggiunta di un giocatore alla lista e ritorno al giocatore l'indirizzo IP del
+ * gruppo multicast.
  *
  * @author giuliobosco (giuliobva@gmail.com)
  * @version 1.0 (2019-04-19)
@@ -45,72 +45,52 @@ import samt.scribble.communication.messages.JoinMessage;
 public class JoinModule {
 
     /**
-     * Aggiunta di un giocatore alla lista, e ritorno al giocatore l'indirizzo
-     * IP del gruppo multicast.
+     * Aggiunta di un giocatore alla lista e ritorno al giocatore l'indirizzo IP
+     * del gruppo multicast.
      *
-     * @param datagramPacket Dagramma di richiesta join.
+     * @param datagramPacket Messaggio di richiesta join.
      * @param playerManager Gestione dei giocatori di scribble.
      * @param groupConnection Connessione al gruppo multicast.
      * @return Pacchetto di risposta al client.
      */
-    public static DatagramPacket join(DatagramPacket datagramPacket, PlayerManager playerManager,
-            GroupConnection groupConnection) {
+    public static DatagramPacket join(DatagramPacket datagramPacket, PlayerManager playerManager, GroupConnection groupConnection) {
         boolean nicknamePart = true;
         StringBuilder nickname = new StringBuilder();
         int port = -1;
         byte[] packetData = datagramPacket.getData();
+
         for (int i = 1; i < packetData.length; i++) {
-            if (packetData[i] != 0) {
-                if (packetData[i] == DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR) {
-
-                    nicknamePart = false;
-
-                } else {
-
-                    if (nicknamePart) {
-
-                        nickname.append((char) packetData[i]);
-
-                    } else {
-
-                        byte[] portBytes = new byte[]{
-                            packetData[i],
-                            packetData[i + 1],
-                            packetData[i + 2],
-                            packetData[i + 3]};
-
-                        port = JoinMessage.byteArrayToInt(portBytes);
-
-                    }
-
-                }
+            if (packetData[i] != 0 && packetData[i] == DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR) {
+                nicknamePart = false;
+            } else if (nicknamePart) {
+                nickname.append((char) packetData[i]);
+            } else {
+                byte[] portBytes = new byte[]{
+                    packetData[i],
+                    packetData[i + 1],
+                    packetData[i + 2],
+                    packetData[i + 3]};
+                port = JoinMessage.byteArrayToInt(portBytes);
             }
         }
 
         if (port != -1) {
-
-            Player player = new Player(
-                    nickname.toString(),
-                    datagramPacket.getAddress(),
-                    port);
-
+            Player player = new Player(nickname.toString(), datagramPacket.getAddress(), port);
             Message message;
             try {
                 playerManager.registerPlayer(player);
                 message = new GroupAddressMessage(groupConnection.getGroupIp());
-            } catch (PlayerAlreadyRegisteredException pare) {
-                message = new ErrorMessage(pare.getMessage());
+            } catch (PlayerAlreadyRegisteredException ex) {
+                message = new ErrorMessage(ex.getMessage());
             }
-
             return new DatagramPacket(
                     message.getWholeMessage(),
                     message.getWholeMessage().length,
                     datagramPacket.getAddress(),
                     port);
-
+        } else {
+            return null;
         }
-        
-        return null;
 
     }
 

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 giuliobosco.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package samt.scribble.server.modules;
 
 import samt.scribble.communication.messages.InformationMessage;
@@ -30,7 +29,7 @@ import java.net.DatagramPacket;
 import samt.scribble.DefaultScribbleParameters;
 
 /**
- * Ritorna al mittente il messaggio che riceve.
+ * Classe utile per il ritorno al mittente del messaggio che riceve.
  *
  * @author giuliobosco (giuliobva@gmail.com)
  * @version 1.0 (2019-04-19)
@@ -38,18 +37,18 @@ import samt.scribble.DefaultScribbleParameters;
 public class EchoModule {
 
     /**
-     * Ritorna al mittene il messaggio che riceve.
+     * Ritorna al mittente il messaggio che riceve.
      *
-     * @param datagramPacket Messaggio ricevuto.
-     * @return Messaggio di tipo informazione da ritornare al mittente.
+     * @param packet Messaggio ricevuto.
+     * @return Messaggio di tipo informativo da ritornare al mittente.
      */
-    public static DatagramPacket echo(DatagramPacket datagramPacket) {
-        byte[] bytes = new byte[datagramPacket.getData().length - 1];
-        for (int i = 1; i < datagramPacket.getData().length; i++) {
-            bytes[i - 1] = datagramPacket.getData()[i];
+    public static DatagramPacket echo(DatagramPacket packet) {
+        byte[] bytes = new byte[packet.getData().length - 1];
+        for (int i = 1; i < packet.getData().length; i++) {
+            bytes[i - 1] = packet.getData()[i];
         }
         InformationMessage message = new InformationMessage(bytes);
-        return new DatagramPacket(message.getWholeMessage(), message.getWholeMessage().length, datagramPacket.getAddress(), DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
+        return new DatagramPacket(message.getWholeMessage(), message.getWholeMessage().length, packet.getAddress(), DefaultScribbleParameters.DEFAULT_CLIENT_PORT);
     }
 
 }

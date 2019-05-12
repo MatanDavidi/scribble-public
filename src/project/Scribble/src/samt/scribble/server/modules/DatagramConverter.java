@@ -1,8 +1,7 @@
-
 /*
  * The MIT License
  *
- * Copyright 2019 guebe.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,32 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package samt.scribble.server.modules;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 
-
 /**
- * Questo metodo legge la parola inviata e controlla se questa è corretta,
- * se lo è controlla quanti player devono ancora indovinare.
- * 
- * @author Paolo Guebeli
+ * Lettura di una parola e controllo del tentativo, poi si controllano anche
+ * quanti giocatori devono ancora indovinare.
+ *
+ * @author PaoloGuebeli
  * @version 1.0 (2019-05-08)
  */
 public class DatagramConverter {
-    
-    public static String dataToString(DatagramPacket datagramPacket) throws IOException{
 
+    public static String dataToString(DatagramPacket packet) throws IOException {
         String text = "";
-        for (int i = 1; i < datagramPacket.getData().length; i++) {
-            if (datagramPacket.getData()[i] != 0) {
-                text += (char) datagramPacket.getData()[i];
+        for (int i = 1; i < packet.getData().length; i++) {
+            if (packet.getData()[i] != 0) {
+                text += (char) packet.getData()[i];
             }
         }
-        
         return text;
     }
-    
+
 }
