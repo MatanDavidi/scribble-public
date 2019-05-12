@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 giuliobosco.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,28 +23,32 @@
  */
 package samt.scribble.server;
 
-import samt.scribble.client.game.ScribbleGame;
-import samt.scribble.communication.messages.*;
-import samt.scribble.server.player.PlayerManager;
-import samt.scribble.communication.*;
-import samt.scribble.server.modules.EchoModule;
-import samt.scribble.server.modules.JoinModule;
-
-import java.awt.*;
+import java.awt.Point;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.Random;
 import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
+import samt.scribble.client.game.ScribbleGame;
+import samt.scribble.communication.Commands;
+import samt.scribble.communication.DatagramListener;
+import samt.scribble.communication.GroupConnection;
+import samt.scribble.communication.ListeningThread;
+import samt.scribble.communication.MessageSender;
+import samt.scribble.communication.messages.DrawMessage;
 import samt.scribble.communication.messages.DrawerMessage;
 import samt.scribble.communication.messages.GuesserMessage;
 import samt.scribble.communication.messages.Message;
 import samt.scribble.communication.messages.UsersListMessage;
 import samt.scribble.communication.messages.WordGuessMessage;
 import samt.scribble.server.modules.DatagramConverter;
+import samt.scribble.server.modules.EchoModule;
+import samt.scribble.server.modules.JoinModule;
 import samt.scribble.server.modules.WordManager;
 import samt.scribble.server.player.Player;
+import samt.scribble.server.player.PlayerManager;
 
 /**
  * Scribble server.
@@ -65,19 +69,14 @@ public class ScribbleServer implements DatagramListener {
     private PlayerManager playerManager;
 
     /**
-     * Gestione delle parole.
-     */
-    private WordManager wordManager;
-
-    /**
-     * Getsione della connessione con il gruppo multicast.
+     * Gestione della connessione con il gruppo multicast.
      */
     private GroupConnection groupConnection;
 
     /**
      * Attributo che indica il gestore delle parole.
      */
-    private WordManager wManager;
+    private WordManager wordManager;
 
     /**
      * Classe che definisce i valori dell'interfaccia di gioco (matrice dei
@@ -86,21 +85,19 @@ public class ScribbleServer implements DatagramListener {
     private ScribbleGame scribbleGame;
 
     /**
-     * Crea server scribbe con il l'indirizzo del gruppo multicast.
+     * Crea server scribble con l'indirizzo del gruppo multicast.
      *
      * @param groupIp Indirizzo del gruppo multicast.
      * @throws IOException Errore con il gruppo multicast o la recezione di
      * pacchetti.
      */
     public ScribbleServer(InetAddress groupIp) throws IOException {
-        this.wManager = new WordManager(DefaultScribbleParameters.WORDS_DICTIONARY_PATH);
         this.listeningThread = new ListeningThread(DefaultScribbleParameters.DEFAULT_SERVER_PORT);
         this.listeningThread.addDatagramListener(this);
-
-        this.playerManager = new PlayerManager();
-
         this.groupConnection = new GroupConnection(groupIp, DefaultScribbleParameters.DEFAULT_GROUP_PORT);
         this.groupConnection.addDatagramListener(this);
+        this.playerManager = new PlayerManager();
+        this.wordManager = new WordManager(DefaultScribbleParameters.WORDS_DICTIONARY_PATH);
         this.scribbleGame = new ScribbleGame(DefaultScribbleParameters.SCRIBBLE_HEIGHT, DefaultScribbleParameters.SCRIBBLE_WIDTH);
     }
 
@@ -110,66 +107,60 @@ public class ScribbleServer implements DatagramListener {
     public void start() {
         this.listeningThread.start();
         this.groupConnection.start();
-        System.out.println("Server startato correttamente, attualmente in ascolto.");
+        System.out.println("Server avviato correttamente, attualmente in ascolto.");
     }
 
     /**
-     * Ricevuto messaggio dal gruppo multicast oppure dalla thread di ascolto.
+     * Ricezione del messaggio dal gruppo multicast oppure dalla thread di
+     * ascolto.
      *
-     * @param datagramPacket Messaggio ricevuto.
+     * @param packet Messaggio ricevuto.
      */
     @Override
-    public void messageReceived(DatagramPacket datagramPacket) {
-        byte[] bytes = datagramPacket.getData();
-        if (bytes.length > 0) {
+    public void messageReceived(DatagramPacket packet) {
+        byte[] data = packet.getData();
+        if (data.length > 0) {
             try {
-                switch (bytes[0]) {
+                switch (data[0]) {
                     case Commands.ECHO:
-                        sendMessage(EchoModule.echo(datagramPacket));
+                        sendMessage(EchoModule.echo(packet));
                         break;
 
                     case Commands.JOIN:
-
                         DatagramPacket joinPacket = JoinModule.join(
-                                datagramPacket,
+                                packet,
                                 this.playerManager,
-                                groupConnection);
-
+                                this.groupConnection);
                         if (joinPacket != null) {
-
                             sendMessage(joinPacket);
-
-                            int playersNumber = playerManager.getPlayersNumber();
+                            int playersNumber = this.playerManager.getPlayersNumber();
                             if (playersNumber == DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
-
                                 startGame();
-
                             }
-                            groupConnection.send(new UsersListMessage(playerManager.getPlayers()));
+                            this.groupConnection.send(new UsersListMessage(this.playerManager.getPlayers()));
 
                         }
-
                         break;
 
                     case Commands.DRAWING:
-                        InetAddress ipAddress = datagramPacket.getAddress();
-                        if (playerManager.isRegisteredPlayer(ipAddress) && bytes.length > 2) {
-                            Point point = new Point(bytes[1], bytes[2]);
+                        if (this.playerManager.isRegisteredPlayer(packet.getAddress()) && data.length > 2) {
+                            Point point = new Point(data[1], data[2]);
                             this.scribbleGame.setPixel(point);
-                            groupConnection.send(new DrawMessage(point));
+                            this.groupConnection.send(new DrawMessage(point));
                         }
                         break;
+
                     case Commands.WORD_GUESS:
-                        String userWord = DatagramConverter.dataToString(datagramPacket);
-
-                        //controllo se il tentativo di indovinare la parola è corretto
-                        if (wManager.isGuessedWord(userWord)) {
-
-                            /*ricavo lo username del player che ha indovinato
+                        String attempt = DatagramConverter.dataToString(packet);
+                        // Controllo se il tentativo di indovinare la parola è corretto.
+                        if (this.wordManager.isGuessedWord(attempt)) {
+                            /* 
+                            Ricavo lo username del player che ha indovinato.
                             InetAddress ip = datagramPacket.getAddress();
                             int port = datagramPacket.getPort();
-                            String username = playerManager.getUsernameByAddress(ip, port);*/
-                            groupConnection.send(new WordGuessMessage(""));
+                            String username = playerManager.getUsernameByAddress(ip, port); 
+                             */
+                            this.groupConnection.send(new WordGuessMessage(attempt));
                         }
                 }
             } catch (IOException ex) {
@@ -181,37 +172,24 @@ public class ScribbleServer implements DatagramListener {
     }
 
     private void startGame() throws IOException {
-
-        int playersNumber = playerManager.getPlayersNumber();
-        int drawerIndex = (int) (Math.random() * playersNumber);
-
-        //ottengo la parola da indovinare
-        String wordToGuess = wManager.getUniqueNewWord();
-
-        for (int i = 0; i < playersNumber; ++i) {
-
-            Player player = playerManager.getPlayers().get(i);
-
+        int playersAmount = this.playerManager.getPlayersNumber();
+        int drawerIndex = new Random().nextInt(playersAmount);
+        // Ottengo la parola da indovinare.
+        String wordToGuess = this.wordManager.getUniqueNewWord();
+        for (int i = 0; i < playersAmount; ++i) {
+            Player player = this.playerManager.getPlayers().get(i);
             Message msgToSend;
-
             if (i == drawerIndex) {
-
                 msgToSend = new DrawerMessage(wordToGuess);
-
             } else {
-
                 msgToSend = new GuesserMessage();
-
             }
-
             MessageSender.sendMessage(player.getIp(), player.getPort(), msgToSend);
-
         }
-
     }
 
     /**
-     * Invia pacchetto a singolo client.
+     * Invio di un pacchetto a un singolo client.
      *
      * @param packet Pacchetto da inviare.
      * @throws IOException Errore di invio.
@@ -223,13 +201,12 @@ public class ScribbleServer implements DatagramListener {
     /**
      * Test della classe.
      *
-     * @param args Argomenti da line di comando.
+     * @param args Argomenti da linea di comando.
      */
     public static void main(String[] args) {
         try {
             InetAddress ip = InetAddress.getByName(DefaultScribbleParameters.GROUP_ADDRESS);
-            ScribbleServer server = new ScribbleServer(ip);
-            server.start();
+            new ScribbleServer(ip).start();
         } catch (IOException ex) {
             System.out.println("ERROR: " + ex.getMessage());
         }
