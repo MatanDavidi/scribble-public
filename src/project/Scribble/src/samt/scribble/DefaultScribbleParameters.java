@@ -69,6 +69,11 @@ public class DefaultScribbleParameters {
     public static final Path RANKING_CSV_PATH = Paths.get("data", "ranking.csv");
 
     /**
+     * Costante che definisce il separatore tra username e punteggio nel file.
+     */
+    public static final String RANKING_CSV_SEP = ",";
+
+    /**
      * Attributo che rappresenta il percorso del file di testo in cui sono
      * salvate le parole che vengono estratte per il disegnatore.
      */

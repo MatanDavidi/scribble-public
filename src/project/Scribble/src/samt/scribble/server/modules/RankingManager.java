@@ -24,6 +24,7 @@
 package samt.scribble.server.modules;
 
 import samt.scribble.server.player.Record;
+import samt.scribble.DefaultScribbleParameters;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -36,17 +37,12 @@ import java.util.List;
  * @author gabrialessi
  * @version 2019-05-04
  */
-public class RankingModule {
-
-    /**
-     * Costante che definisce il separatore tra username e punteggio nel file.
-     */
-    public static final String SEP = ",";
+public class RankingManager {
 
     /**
      * Attributo che rappresenta la lista dei giocatori nella classifica.
      */
-    private List<Record> records = new ArrayList<>();
+    private List<Record> records;
 
     /**
      * Attributo che rappresenta il gestore del file.
@@ -60,8 +56,9 @@ public class RankingModule {
      * @throws java.io.IOException Se si verifica un'eccezione di input o di
      * output.
      */
-    public RankingModule(Path filePath) throws IOException {
+    public RankingManager(Path filePath) throws IOException {
         this.fileManager = new FileManager(filePath);
+        setRecords(new ArrayList<>());
     }
 
     /**
@@ -72,8 +69,8 @@ public class RankingModule {
      * @throws java.io.IOException Se si verifica un'eccezione di input o di
      * output.
      */
-    public RankingModule(Path filePath, List<Record> records) throws IOException {
-        this(filePath);
+    public RankingManager(Path filePath, List<Record> records) throws IOException {
+        this.fileManager = new FileManager(filePath);
         setRecords(records);
     }
 
@@ -162,8 +159,8 @@ public class RankingModule {
         List<Record> records = new ArrayList<>();
         List<String> lines = getFileManager().readFile();
         for (String line : lines) {
-            String username = line.split(SEP)[0];
-            int score = Integer.parseInt(line.split(SEP)[1]);
+            String username = line.split(DefaultScribbleParameters.RANKING_CSV_SEP)[0];
+            int score = Integer.parseInt(line.split(DefaultScribbleParameters.RANKING_CSV_SEP)[1]);
             Record record = new Record(username, score);
             records.add(record);
         }
@@ -180,7 +177,7 @@ public class RankingModule {
     public void writeRanking(List<Record> records) throws IOException {
         List<String> lines = new ArrayList<>();
         for (Record player : records) {
-            lines.add((player.getUsername() + SEP + player.getScore()));
+            lines.add((player.getUsername() + DefaultScribbleParameters.RANKING_CSV_SEP + player.getScore()));
         }
         getFileManager().writeFile(lines);
     }
