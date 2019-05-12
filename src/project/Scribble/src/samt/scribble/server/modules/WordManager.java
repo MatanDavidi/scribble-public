@@ -1,107 +1,188 @@
+/*
+ * The MIT License
+ *
+ * Copyright 2019 SAMT.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 package samt.scribble.server.modules;
-
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
- * 
- * 
- * @author Bryan Beffa
- * @author Matteo Forni
- * @version 18.04.2019
+ * Gestione del dizionario di scribble.
+ *
+ * @author bryanbeffa
+ * @author matteoforni
+ * @author gabrialessi
+ * @version 1.1 (2019-05-12)
  */
 public class WordManager {
-    
-    private FileManager fManager;
+
+    /**
+     * Attributo che rappresenta il gestore del file.
+     */
+    private FileManager fileManager;
 
     /**
      * Lista che contiene tutte le parole del file.
      */
-    private List<String> words = new ArrayList<>();
+    private List<String> words;
 
     /**
      * Lista che contiene le parole già estratte.
      */
-    private List<String> pickedWords = new ArrayList<>();
+    private List<String> pickedWords;
 
     /**
      * Stringa che contiene la parola corrente.
      */
-    private String currentWord = "";
-    
-    /**
-     * Attributo booleano che indica se la modalità debug è attiva. 
-     * Valore di default = false.
-     */
-    private boolean debug = false;
+    private String currentWord;
 
     /**
-     * Metodo costruttore che richiede la path del file.
-     * @param filePath La path del file.
-     * @throws IOException 
+     * Attributo booleano che indica se la modalità debug è attiva.
      */
-    public WordManager(Path filePath) throws IOException{
-        fManager = new FileManager(filePath);
-        this.words = fManager.readFile();
-    }
-    
+    private boolean debug;
+
     /**
-     * Metodo costruttore che richiede la path del file e consente di
-     * utilizzare la modalità di debug.
-     * @param filePath La path del file.
-     * @param debug Stato della modalità di debug (true = attiva).
-     * @throws IOException 
+     * Metodo costruttore dove si definisce il file.
+     *
+     * @param filePath Il percorso del file.
+     * @throws java.io.IOException Se si verifica un'eccezione di input o di
+     * output.
      */
-    public WordManager(Path filePath, boolean debug) throws IOException{
-        fManager = new FileManager(filePath);
-        this.words = fManager.readFile();
+    public WordManager(Path filePath) throws IOException {
+        this(filePath, false);
+    }
+
+    /**
+     * Metodo costruttore che richiede la path del file e consente di utilizzare
+     * la modalità di debug.
+     *
+     * @param filePath Il percorso del file.
+     * @param debug Stato della modalità di debug (true = attiva).
+     * @throws java.io.IOException Se si verifica un'eccezione di input o di
+     * output.
+     */
+    public WordManager(Path filePath, boolean debug) throws IOException {
+        this.fileManager = new FileManager(filePath);
+        this.words = fileManager.readFile();
+        this.pickedWords = new ArrayList<>();
+        this.currentWord = "";
         this.debug = debug;
     }
-    
+
+    /**
+     * Metodo utile per sapere se si è in debug mode.
+     *
+     * @return Se si è in debug o meno.
+     */
+    public boolean isDebug() {
+        return this.debug;
+    }
+
+    /**
+     * Metodo che ritorna la lista delle parole.
+     *
+     * @return La lista completa delle parole.
+     */
+    public List<String> getWords() {
+        return this.words;
+    }
+
+    /**
+     * Metodo che ritorna la lista delle parole già estratte.
+     *
+     * @return La lista delle parole estratte.
+     */
+    public List<String> getPickedWords() {
+        return this.pickedWords;
+    }
+
     /**
      * Metodo getter dell'attributo currentWord.
+     *
      * @return La parola corrente.
      */
-    public String getCurrentWord(){
-        return currentWord;
+    public String getCurrentWord() {
+        return this.currentWord;
     }
-    
+
+    /**
+     * Metodo che imposta la parola corrente.
+     *
+     * @param word La parola corrente.
+     */
+    private void setCurrentWord(String word) {
+        this.currentWord = word;
+    }
+
+    /**
+     * Metodo che imposta la lista delle parole.
+     *
+     * @param word La lista da impostare.
+     */
+    private void setWords(List<String> words) {
+        this.words = words;
+    }
+
+    /**
+     * Metodo che imposta la lista delle parole già estratte.
+     *
+     * @param word La lista da impostare.
+     */
+    private void setPickedWords(List<String> words) {
+        this.pickedWords = words;
+    }
+
     /**
      * Metodo che ritorna una parola casuale dalla lista delle parole non ancora
      * estratte.
+     *
+     * @return Una parola casuale.
      */
     private String getRandomWord() {
-        //numero casuale
-        int rnd = (int) (Math.random() * words.size());
-
-        return words.get(rnd);
+        int rand = new Random().nextInt(getWords().size());
+        return getWords().get(rand);
     }
-    
+
     /**
      * Metodo che determina se la parola passata è uguale a quella corrente.
+     *
      * @param userWord La parola da confrontare.
      * @return Se le parole corrispondono (True = le parole sono uguali).
      */
-    public boolean isGuessedWord(String userWord){
-        
+    public boolean isGuessedWord(String userWord) {
         userWord = userWord.trim();
-        
-        if(debug){
-            System.out.println("Parola corrente: '" + currentWord + "' " + currentWord.trim().length());
-            System.out.println("Parola dell'utente: '" + userWord + "' " + userWord.length());
-            System.out.println("Statement: " + userWord.equalsIgnoreCase(currentWord));
-        }
-        
-        if(currentWord.equalsIgnoreCase(userWord.trim())){
+        if (isDebug()) {
+            System.out.println("Parola corrente: '" + getCurrentWord() + "', " + getCurrentWord().trim().length());
+            System.out.println("Parola dell'utente: '" + userWord + "', " + userWord.length());
+            System.out.println("Statement: " + userWord.equalsIgnoreCase(getCurrentWord()));
+        } else if (getCurrentWord().equalsIgnoreCase(userWord)) {
             System.out.println("Parola indovinata");
             return true;
-        } 
-        
+        }
         System.out.println("Parola sbagliata");
         return false;
     }
@@ -110,40 +191,35 @@ public class WordManager {
      * Metodo che ordina la lista di parole estratte in ordine alfabetico.
      */
     public void sortList() {
-        Collections.sort(pickedWords);
-
-        if (debug) {
-            for (String word : pickedWords) {
-                System.out.println("Word: " + word);
+        Collections.sort(getPickedWords());
+        if (isDebug()) {
+            for (String pickedWord : getPickedWords()) {
+                System.out.println("Word: " + pickedWord);
             }
         }
     }
 
     /**
      * Metodo che ritorna una parola casuale non ancora estratta.
-     * 
-     * @return parola casuale non ancora estratta.
+     *
+     * @return Parola casuale non ancora estratta.
      */
     public String getUniqueNewWord() {
-        //controllo se la lista di parole non estratte è vuota
-        if (words.size() > 0) {
-            String word = getRandomWord();
-
-            words.remove(word);
-            pickedWords.add(word);
-            currentWord = word.trim();
-            
-            return word;
+        // Controllo se la lista di parole non estratte è vuota
+        if (getWords().size() > 0) {
+            String randWord = getRandomWord();
+            getWords().remove(randWord);
+            getPickedWords().add(randWord);
+            setCurrentWord(randWord.trim());
+            return getCurrentWord();
         }
-        
-        words = pickedWords;
-        pickedWords = new ArrayList<>();
-
-        if (debug) {
+        setWords(getPickedWords());
+        setPickedWords(new ArrayList<>());
+        if (isDebug()) {
             System.out.println("Parole terminate: ricarico la lista");
         }
-
-        //chiamata ricursiva
+        // Chiamata ricursiva
         return getUniqueNewWord();
     }
+
 }
