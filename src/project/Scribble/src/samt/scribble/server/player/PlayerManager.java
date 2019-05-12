@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 giuliobosco.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 package samt.scribble.server.player;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import samt.scribble.DebugVerbosity;
@@ -34,7 +33,8 @@ import samt.scribble.DefaultScribbleParameters;
  * Gestione della lista dei giocatori di scribble.
  *
  * @author giuliobosco (giuliobva@gmail.com)
- * @version 1.0 (2019-04-18)
+ * @author gabrialessi
+ * @version 1.1 (2019-05-12)
  */
 public class PlayerManager {
 
@@ -57,7 +57,7 @@ public class PlayerManager {
      * registrato.
      */
     public List<Player> getPlayers() {
-        return players;
+        return this.players;
     }
 
     /**
@@ -66,132 +66,89 @@ public class PlayerManager {
      * @return Il numero totale di giocatori registrati.
      */
     public int getPlayersNumber() {
-
-        return players.size();
-
+        return this.players.size();
     }
 
     /**
-     * Controlla se il username &egrave; registrato nella lista dei giocatori di
-     * scribble.
+     * Controlla se lo username è registrato nella lista dei giocatori.
      *
-     * @param username Username da controllare se &egrave; nella lista.
-     * @return True se il giocatore &egrave; registrato.
+     * @param username Username da controllare se è nella lista.
+     * @return Se il giocatore è registrato o meno.
      */
     public boolean isRegisteredPlayer(String username) {
-        for (Player player : this.players) {
+        for (Player player : getPlayers()) {
             if (player.getUsername().equalsIgnoreCase(username)) {
                 return true;
             }
         }
-
         return false;
     }
 
     /**
-     * Controlla se l'ip è già stato registrato nella lista dei giocatori di
-     * scribble.
+     * Controlla se l'IP è già stato registrato nella lista dei giocatori.
      *
-     * @param ip IP da controllare se &egrave; nella lista.
-     * @return True se l'IP &egrave; registrato.
+     * @param ip IP da controllare se è nella lista.
+     * @return Se l'IP è registrato o meno.
      */
     public boolean isRegisteredPlayer(InetAddress ip) {
-        for (Player player : this.players) {
+        for (Player player : getPlayers()) {
             if (player.getIp().equals(ip)) {
                 return true;
             }
         }
-
         return false;
     }
 
     /**
-     * Controlla se il username e l'IP sono registrati nella lista dei giocatori
+     * Controlla se lo username e l'IP sono registrati nella lista dei giocatori
      * di scribble.
      *
-     * @param username Username da controllare se &egrave; nella lista.
-     * @param ip IP da controlla se &egrave; nella lista.
-     * @return True se il username e l'IP sono nella lista dei giocatori di
-     * scribble.
+     * @param username Username da controllare se è nella lista.
+     * @param ip IP da controllare se è nella lista.
+     * @return Se username e IP sono nella lista dei giocatori o meno.
      */
     public boolean isRegisteredPlayer(String username, InetAddress ip) {
-        for (Player player : this.players) {
+        for (Player player : getPlayers()) {
             if (player.getUsername().equalsIgnoreCase(username) && player.getIp().equals(ip)) {
                 return true;
             }
         }
-
         return false;
     }
 
     /**
      * Registra il giocatore nella lista dei giocatori di scribble.
      *
-     * @param player Giocatore di scribble.
-     * @throws PlayerAlreadyRegisteredException Il username del giocatore è già
-     * in uso.
+     * @param newPlayer Giocatore da registrare.
+     * @throws PlayerAlreadyRegisteredException Se lo username del giocatore è
+     * già in uso.
      */
-    public void registerPlayer(Player player) throws PlayerAlreadyRegisteredException {
-        for (Player playerInList : this.players) {
-            if (playerInList.getUsername().equalsIgnoreCase(player.getUsername())) {
-                String message = "Il username \"" + player.getUsername() + "\" è già in uso!";
-                throw new PlayerAlreadyRegisteredException(message);
+    public void registerPlayer(Player newPlayer) throws PlayerAlreadyRegisteredException {
+        if (isRegisteredPlayer(newPlayer.getUsername())) {
+            throw new PlayerAlreadyRegisteredException("Lo username \"" + newPlayer.getUsername() + "\" è già in uso!");
+        } else {
+            getPlayers().add(newPlayer);
+            if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+                System.out.println("Il giocatore \"" + newPlayer.getUsername() + "\" è stato registrato con successo.");
             }
         }
-
-        this.players.add(player);
-
-        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
-
-            System.out.println("Il giocatore " + player.getUsername() + " è stato registrato con successo.");
-
-        }
-
-    }
-    
-    /**
-     * Metodo che ritorna lo username ricevendo come parametro la porta e l'ip.
-     * 
-     * @param ip ip del player.
-     * @param port porta del player.
-     * @return username del player.
-     */
-    public String getUsernameByAddress(InetAddress ip, int port){       
-        for(Player pl : players){
-            //controllo se la porta e l'ip corrispondono all'utente corrente
-            if(pl.getIp().toString().equals(ip.toString()) && pl.getPort() == port){
-                return pl.getUsername();
-            }
-        }
-        
-        return DefaultScribbleParameters.NO_FOUND_USERNAME_BY_ADDRESS;
     }
 
     /**
-     * Metodo main della classe, utilizzato per testare PlayerManager e player.
+     * Metodo che ritorna lo username ricevendo come parametro la porta e l'IP.
      *
-     * @param args Argomenti da linea di comando.
+     * @param ip IP del giocatore.
+     * @param port Porta del giocatore.
+     * @return Username del giocatore.
      */
-    public static void main(String[] args) {
-        try {
-            PlayerManager playerManager = new PlayerManager();
-
-            Player p0 = new Player("player0", InetAddress.getByName("localhost"), 2000);
-            Player p1 = new Player("player1", InetAddress.getByName("localhost"), 2001);
-            Player p2 = new Player("player2", InetAddress.getByName("localhost"), 2002);
-            Player p3 = new Player("player2", InetAddress.getByName("localhost"), 2003);
-
-            playerManager.registerPlayer(p0);
-            System.out.println(p0.getUsername() + " registrato!");
-            playerManager.registerPlayer(p1);
-            System.out.println(p1.getUsername() + " registrato!");
-            playerManager.registerPlayer(p2);
-            System.out.println(p2.getUsername() + " registrato!");
-            playerManager.registerPlayer(p3);
-            System.out.println(p3.getUsername() + " registrato!");
-        } catch (PlayerAlreadyRegisteredException | UnknownHostException ex) {
-            System.out.println(ex.getMessage());
+    public String getUsernameByAddress(InetAddress ip, int port) {
+        for (Player player : getPlayers()) {
+            // Controllo se la porta e l'IP corrispondono all'utente corrente
+            if (player.getIp().toString().equals(ip.toString()) && player.getPort() == port) {
+                return player.getUsername();
+            }
         }
+        return DefaultScribbleParameters.NO_FOUND_USERNAME_BY_ADDRESS;
     }
 
 }

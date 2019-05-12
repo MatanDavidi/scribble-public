@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 giuliobosco.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
 package samt.scribble.server.player;
 
 /**
- * Giocatore gi&agrave; registrato nella lista dei giocatori scribble.
+ * Giocatore già registrato nella lista dei giocatori scribble.
  *
  * @author giuliobosco (giuliobva@gmail.com)
  * @version 1.0 (2019-04-18)
@@ -33,12 +32,12 @@ package samt.scribble.server.player;
 public class PlayerAlreadyRegisteredException extends Exception {
 
     /**
-     * Crea eccezione giocatore già registrato.
+     * Creazione di un eccezione per un giocatore già registrato.
      *
      * @param message Messaggio dell'eccezione.
      */
     public PlayerAlreadyRegisteredException(String message) {
         super(message);
     }
-    
+
 }
