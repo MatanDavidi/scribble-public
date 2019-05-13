@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 giuliobosco.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,21 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package samt.scribble.communication;
 
 import samt.scribble.communication.messages.Message;
-
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
+import samt.scribble.DebugVerbosity;
+import samt.scribble.DefaultScribbleParameters;
 
 /**
  * Connessione al gruppo multicast di scribble.
  *
  * @author giuliobosco (giuliobva@gmail.com)
- * @version 1.0 (2019-04-19)
+ * @author gabrialessi
+ * @version 1.0.1 (2019-05-13)
  */
 public class GroupConnection extends Thread {
 
@@ -50,14 +51,29 @@ public class GroupConnection extends Thread {
     private int port;
 
     /**
-     * Gruppo multicast.
+     * Connessione del gruppo multicast.
      */
     private MulticastSocket socket;
 
     /**
      * Lista di listeners dei pacchetti provenienti dal gruppo.
      */
-    private List<DatagramListener> datagramListeners;
+    private List<DatagramListener> listeners;
+
+    /**
+     * Crea la connessione al gruppo, con l'indirizzo IP e la porta.
+     *
+     * @param groupIp Indirizzo IP del gruppo.
+     * @param port Porta del gruppo.
+     * @throws IOException Errore nel multicast socket.
+     */
+    public GroupConnection(InetAddress groupIp, int port) throws IOException {
+        setGroupIp(groupIp);
+        setPort(port);
+        this.socket = new MulticastSocket(this.port);
+        this.socket.joinGroup(getGroupIp());
+        this.listeners = new ArrayList<>();
+    }
 
     /**
      * Getter per l'indirizzo IP del gruppo multicast.
@@ -69,44 +85,50 @@ public class GroupConnection extends Thread {
     }
 
     /**
-     * Crea la connessione al gruppo, con l'indirizzo IP del gruppo, e la porta.
+     * Imposta l'indirizzo del gruppo.
      *
-     * @param groupIp Indirizzo ip del gruppo.
-     * @param port    Porta del gruppo.
-     * @throws IOException Errore nel multicast socket.
+     * @param groupIp Indirizzo da impostare.
+     * @throws IllegalArgumentException Se l'indirizzo non è valido.
      */
-    public GroupConnection(InetAddress groupIp, int port) throws IOException {
-        if (!groupIp.isMulticastAddress()) {
+    private void setGroupIp(InetAddress groupIp) throws IllegalArgumentException {
+        if (groupIp.isMulticastAddress()) {
+            this.groupIp = groupIp;
+        } else {
             throw new IllegalArgumentException("Indirizzo del gruppo non valido.");
         }
+    }
 
-        if (port < 1 || port > 65535) {
-            throw new IllegalArgumentException("La porta " + port + " non è valida");
+    /**
+     * Metodo che imposta la porta di ascolto.
+     *
+     * @param port La porta da impostare alla connessione.
+     * @throws IllegalArgumentException Porta passata non valida.
+     */
+    private void setPort(int port) throws IllegalArgumentException {
+        if (port > -1 && port < 65536) {
+            this.port = port;
+        } else {
+            String message = "Porta '" + port + "' fuori dal range valido (0-65535).";
+            throw new IllegalArgumentException(message);
         }
-
-        this.groupIp = groupIp;
-        this.port = port;
-        this.socket = new MulticastSocket(this.port);
-        socket.joinGroup(this.groupIp);
-        this.datagramListeners = new ArrayList<>();
     }
 
     /**
      * Aggiungere un listener alla lista dei listeners.
      *
-     * @param datagramListener Listener da aggiungere alla lista.
+     * @param listener Listener da aggiungere alla lista.
      */
-    public void addDatagramListener(DatagramListener datagramListener) {
-        this.datagramListeners.add(datagramListener);
+    public void addDatagramListener(DatagramListener listener) {
+        this.listeners.add(listener);
     }
 
     /**
      * Rimuovere un listener dalla lista dei listeners.
      *
-     * @param datagramListener Listeners da rimuovere dalla lista.
+     * @param listener Listeners da rimuovere dalla lista.
      */
-    public void removeDatagramListener(DatagramListener datagramListener) {
-        this.datagramListeners.remove(datagramListener);
+    public void removeDatagramListener(DatagramListener listener) {
+        this.listeners.remove(listener);
     }
 
     /**
@@ -117,12 +139,17 @@ public class GroupConnection extends Thread {
         try {
             while (!isInterrupted()) {
                 DatagramPacket packet = receive();
-
-                for (DatagramListener datagramListener : this.datagramListeners) {
-                    datagramListener.messageReceived(packet);
+                for (DatagramListener listener : this.listeners) {
+                    listener.messageReceived(packet);
                 }
             }
-        } catch (IOException ioe) {
+            if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+                System.out.println("ListeningThread '" + getId() + "' interrotta con successo.");
+            }
+        } catch (IOException ex) {
+            if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.ERRORS) {
+                System.out.println("ListeningThread '" + getId() + "': " + ex.getMessage());
+            }
         }
     }
 
@@ -132,12 +159,12 @@ public class GroupConnection extends Thread {
      * @throws IOException Errore con il gruppo.
      */
     public void close() throws IOException {
-        this.socket.leaveGroup(this.groupIp);
+        this.socket.leaveGroup(getGroupIp());
         this.socket.close();
     }
 
     /**
-     * Ricevi un pacchetto dal gruppo multicast.
+     * Ricezione di un pacchetto dal gruppo multicast.
      *
      * @return Pacchetto ricevuto dal gruppo.
      * @throws IOException Errore durante la recezione di un pacchetto.
@@ -150,13 +177,13 @@ public class GroupConnection extends Thread {
     }
 
     /**
-     * Invia un pacchetto al gruppo multicast.
+     * Invio di un pacchetto al gruppo multicast.
      *
-     * @param message Pacchetto da invialre al gruppo.
+     * @param message Pacchetto da inviare al gruppo.
      * @throws IOException Errore durante l'invio del pacchetto.
      */
     public void send(Message message) throws IOException {
-        DatagramPacket packet = new DatagramPacket(message.getWholeMessage(), message.getWholeMessage().length, groupIp, port);
+        DatagramPacket packet = new DatagramPacket(message.getWholeMessage(), message.getWholeMessage().length, getGroupIp(), this.port);
         this.socket.send(packet);
     }
 
