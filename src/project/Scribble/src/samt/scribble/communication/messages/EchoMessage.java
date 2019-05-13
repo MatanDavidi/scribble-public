@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 giuliobosco.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
 package samt.scribble.communication.messages;
 
 import samt.scribble.communication.Commands;
@@ -35,9 +34,9 @@ import samt.scribble.communication.Commands;
 public class EchoMessage extends Message {
 
     /**
-     * Create echo message.
+     * Creazione del echo message.
      *
-     * @param text EchoMessage message.
+     * @param text Messaggio da inviare.
      */
     public EchoMessage(String text) {
         super(Commands.ECHO, text.getBytes());
@@ -61,5 +60,5 @@ public class EchoMessage extends Message {
         assert message.equals(rebuild);
         System.out.println(message.equals(rebuild));
     }
-    
+
 }

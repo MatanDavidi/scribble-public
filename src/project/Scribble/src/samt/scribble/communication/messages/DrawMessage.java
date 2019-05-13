@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 giuliobosco.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,19 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package samt.scribble.communication.messages;
 
 import samt.scribble.communication.Commands;
-
 import java.awt.*;
 
 /**
+ * Messaggio riguardante il la creazione di un nuovo punto disegnato.
+ *
  * @author giuliobosco (giuliobva@gmail.com)
  * @version 1.0 (2019-05-08 - 2019-05-08)
  */
 public class DrawMessage extends Message {
 
+    /**
+     * Messaggio contenente il punto.
+     *
+     * @param p Il punto disegnato
+     */
     public DrawMessage(Point p) {
         super(Commands.DRAWING, new byte[]{(byte) p.getX(), (byte) p.getY()});
     }

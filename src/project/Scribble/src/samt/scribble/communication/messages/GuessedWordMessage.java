@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Bryan.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,10 @@ package samt.scribble.communication.messages;
 import samt.scribble.communication.Commands;
 
 /**
+ * Messaggio di parola indovinata.
  *
- * @author Bryan Beffa
+ * @author bryanbeffa
+ * @version 1.0 (2019-05-13)
  */
 public class GuessedWordMessage extends Message {
 
@@ -35,10 +37,10 @@ public class GuessedWordMessage extends Message {
      * Creo il messaggio che la parola è stata indovinata dall'utente passato
      * come parametro.
      *
-     * @param nickname nickname del giocatore che ha indovinato la parola.
+     * @param username Username del giocatore che ha indovinato la parola.
      */
-    public GuessedWordMessage(String nickname) {
-        super(Commands.GUESSED_WORD, nickname.getBytes());
+    public GuessedWordMessage(String username) {
+        super(Commands.GUESSED_WORD, username.getBytes());
     }
 
 }

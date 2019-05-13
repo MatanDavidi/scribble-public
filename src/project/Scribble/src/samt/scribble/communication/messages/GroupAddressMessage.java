@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 giuliobosco.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,15 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
 package samt.scribble.communication.messages;
 
 import samt.scribble.communication.Commands;
-
 import java.net.InetAddress;
 
 /**
- * Messagio del indirizzo del gruppo multicast di scribble.
+ * Messagio dell'indirizzo del gruppo multicast di scribble.
  *
  * @author giuliobosco (giuliobva@gmail.com)
  * @version 1.0 (2019-04-19)
@@ -37,12 +35,12 @@ import java.net.InetAddress;
 public class GroupAddressMessage extends Message {
 
     /**
-     * Crea messaggio del indirizzo del gruppo multicast di scribble.
+     * Crea messaggio dell'indirizzo del gruppo multicast di scribble.
      *
-     * @param groupAddress Messaggio multicast di scribble.
+     * @param groupAddress Indirizzo del gruppo multicast di scribble.
      */
     public GroupAddressMessage(InetAddress groupAddress) {
-        super (Commands.GROUP_ADDRESS_MESSAGE, groupAddress.getAddress());
+        super(Commands.GROUP_ADDRESS_MESSAGE, groupAddress.getAddress());
     }
-    
+
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Nemanja Stojanovic.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,18 +26,18 @@ package samt.scribble.communication.messages;
 import samt.scribble.communication.Commands;
 
 /**
- * La classe EndMessage è una sottoclasse di Message dedicata a segnalare
- * la fine di una partita.
+ * La classe EndMessage è una sottoclasse di Message dedicata a segnalare la
+ * fine di una partita.
  *
  * @author nemastojanovic
  * @version 1.1 (08.05.2019)
  */
 public class EndMessage extends Message {
+
     /**
      * Istanzia un nuovo oggetto di tipo EndMessage utilizzando come byte di
-     * comando {@link samt.scribble.communication.Commands#END END} e un array di byte vuoto.
-     * 
-     *
+     * comando {@link samt.scribble.communication.Commands#END END} e un array
+     * di byte vuoto.
      */
     public EndMessage() {
         super(Commands.END, new byte[0]);

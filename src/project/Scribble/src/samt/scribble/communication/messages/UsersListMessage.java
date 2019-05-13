@@ -40,36 +40,24 @@ import samt.scribble.server.player.Player;
 public class UsersListMessage extends Message {
 
     public UsersListMessage(List<Player> players) throws IOException {
-
         super(Commands.USERS_LIST, UsersListMessage.playersListToByteArray(players));
-
     }
 
     public static byte[] playersListToByteArray(List<Player> players) {
-
         int currentPlayerIndex = 0;
         int playersArrayIndex = 0;
-
         byte[] playersArray = new byte[256];
-
         while (currentPlayerIndex < players.size()) {
-
             Player player = players.get(currentPlayerIndex);
             for (byte usernameByte : player.getUsername().getBytes()) {
-
                 playersArray[playersArrayIndex] = usernameByte;
                 ++playersArrayIndex;
-
             }
-
             playersArray[playersArrayIndex] = DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR;
             ++playersArrayIndex;
             ++currentPlayerIndex;
-
         }
-
         return playersArray;
-
     }
 
     public static void main(String[] args) {

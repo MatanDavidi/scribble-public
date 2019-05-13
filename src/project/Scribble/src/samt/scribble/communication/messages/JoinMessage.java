@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 giuliobosco.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,10 +36,10 @@ import samt.scribble.communication.Commands;
 public class JoinMessage extends Message {
 
     /**
-     * Crea messaggio di join con il nickname del giocatore e la sua porta
+     * Crea messaggio di join con lo username del giocatore e la sua porta
      * d'ascolto.
      *
-     * @param username Nickname del giocatore.
+     * @param username Username del giocatore.
      * @param port La porta d'ascolto del giocatore.
      */
     public JoinMessage(String username, int port) {
@@ -47,10 +47,10 @@ public class JoinMessage extends Message {
     }
 
     /**
-     * Costruisce l'array di byte da mandare assieme a questo messaggio.
+     * Costruisce l'array di byte da mandare con questo messaggio.
      *
-     * @param username Il nome dell'utente che si sta registrando al server.
-     * @param port La porta di ascolto del client dell'utente che si sta
+     * @param username Il nome del giocatore che si sta registrando al server.
+     * @param port La porta di ascolto del client del giocatore che si sta
      * registrando al server.
      * @return Un array di byte contenente il messaggio composto da username
      * convertito, separatore (vedi
@@ -58,31 +58,19 @@ public class JoinMessage extends Message {
      * e un array di 4 byte contenente il valore del parametro port.
      */
     private static byte[] buildMessage(String username, int port) {
-
-        byte[] nickBytes = username.getBytes();
+        byte[] nameBytes = username.getBytes();
         byte[] portBytes = intToByteArray(port);
-        byte[] message = new byte[nickBytes.length + portBytes.length + 1];
-
+        byte[] message = new byte[nameBytes.length + portBytes.length + 1];
         for (int i = 0; i < message.length; ++i) {
-
-            if (i < nickBytes.length) {
-
-                message[i] = nickBytes[i];
-
-            } else if (i == nickBytes.length) {
-
+            if (i < nameBytes.length) {
+                message[i] = nameBytes[i];
+            } else if (i == nameBytes.length) {
                 message[i] = DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR;
-
             } else {
-
-                message[i] = portBytes[i - nickBytes.length - 1];
-
+                message[i] = portBytes[i - nameBytes.length - 1];
             }
-
         }
-
         return message;
-
     }
 
     /**
@@ -96,9 +84,7 @@ public class JoinMessage extends Message {
      * numero intero passato come parametro.
      */
     public static byte[] intToByteArray(int value) {
-
         return ByteBuffer.allocate(4).putInt(value).array();
-
     }
 
     /**
@@ -111,9 +97,7 @@ public class JoinMessage extends Message {
      * dell'array passato come parametro.
      */
     public static int byteArrayToInt(byte[] value) {
-
         return ByteBuffer.wrap(value).getInt();
-
     }
 
     public static void main(String[] args) {

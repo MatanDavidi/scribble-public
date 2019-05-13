@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 giuliobosco.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package samt.scribble.communication.messages;
 
 import samt.scribble.communication.Commands;
@@ -46,10 +45,10 @@ public class InformationMessage extends Message {
     /**
      * Crea messaggio di informazione con una stringa.
      *
-     * @param message Stringa del messaggio di informazione
+     * @param message Stringa del messaggio di informazione.
      */
     public InformationMessage(String message) {
-        super(Commands.INFORMATION, message.getBytes());
+        this(message.getBytes());
     }
 
 }

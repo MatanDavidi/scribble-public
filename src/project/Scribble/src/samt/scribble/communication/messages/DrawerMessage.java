@@ -35,6 +35,12 @@ import samt.scribble.communication.Commands;
  */
 public class DrawerMessage extends Message {
 
+    /**
+     * Creazione del messaggio da inviare al disegnatore.
+     *
+     * @param wordToGuess La parola del disegnatore che gli altri dovranno
+     * indovinare.
+     */
     public DrawerMessage(String wordToGuess) {
         super(Commands.START_DRAWER, wordToGuess.getBytes());
     }

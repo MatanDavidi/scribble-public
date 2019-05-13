@@ -35,6 +35,9 @@ import samt.scribble.communication.Commands;
  */
 public class GuesserMessage extends Message {
 
+    /**
+     * Metodo costruttore.
+     */
     public GuesserMessage() {
         super(Commands.START_GUESSER, new byte[0]);
     }
