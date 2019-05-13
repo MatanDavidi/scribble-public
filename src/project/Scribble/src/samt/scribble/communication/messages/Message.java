@@ -1,18 +1,25 @@
 /*
- * Copyright (C) 2019 Matan Davidi
+ * The MIT License
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Copyright 2019 SAMT.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 package samt.scribble.communication.messages;
 
@@ -23,7 +30,8 @@ import samt.scribble.communication.Commands;
  * messaggio fisso da inviare come pacchetto attraverso una connessione UDP.
  *
  * @author MatanDavidi
- * @version 1.0.1 (2019-04-16 - 2019-05-06)
+ * @author gabrialessi
+ * @version 1.0.2 (2019-04-16 - 2019-05-12)
  */
 public abstract class Message {
 
@@ -46,10 +54,8 @@ public abstract class Message {
      * @param message Il messaggio da inviare sotto forma di array di byte.
      */
     public Message(byte command, byte[] message) {
-
         setCommand(command);
         setMessage(message);
-
     }
 
     /**
@@ -59,13 +65,9 @@ public abstract class Message {
      * sarà inviato.
      */
     private void setCommand(byte command) {
-
-        if (isCommandByteValid(command)) {
-
+        if (isCommandValid(command)) {
             this.command = command;
-
         }
-
     }
 
     /**
@@ -74,8 +76,27 @@ public abstract class Message {
      * @param message Il messaggio da inviare sotto forma di array di byte.
      */
     private void setMessage(byte[] message) {
-        //Aggiungere controlli sulla validità
-        this.message = message;
+        if (isMessageValid(message)) {
+            this.message = message;
+        }
+    }
+
+    /**
+     * Ritorna il byte di comando.
+     *
+     * @return Byte di comando.
+     */
+    public byte getCommand() {
+        return this.command;
+    }
+
+    /**
+     * Ritorna il messaggio da inviare.
+     *
+     * @return Il messaggio.
+     */
+    public byte[] getMessage() {
+        return this.message;
     }
 
     /**
@@ -85,31 +106,36 @@ public abstract class Message {
      * quello di comando e quelli successivi sono il messaggio.
      */
     public byte[] getWholeMessage() {
-
-        byte[] bytes = new byte[this.message.length + 1];
-        bytes[0] = this.command;
-
-        for (int i = 0; i < this.message.length; i++) {
-            bytes[i + 1] = this.message[i];
+        int length = getMessage().length;
+        byte[] bytes = new byte[length + 1];
+        bytes[0] = getCommand();
+        for (int i = 0; i < length; i++) {
+            bytes[i + 1] = getMessage()[i];
         }
-
         return bytes;
-
     }
 
     /**
      * Controlla se un byte di commando è valido e all'interno dei byte di
-     * comando disponibili (vedi
-     * {@link samt.scribble.communication.Commands samt.scribble.communication.Commands}).
+     * comando disponibili.
      *
+     * @see samt.scribble.communication.Commands
      * @param command Il byte di comando che specifica che tipo di messaggio
      * sarà inviato.
      * @return true se il byte di comando è valido, false se non lo è.
      */
-    private boolean isCommandByteValid(byte command) {
-
+    private boolean isCommandValid(byte command) {
         return command > -1 && command <= Commands.COMMANDS_NUMBER;
+    }
 
+    /**
+     * Controllo della validità del messaggio.
+     *
+     * @param message Messaggio da inviare.
+     * @return Se il messaggio è valido o meno.
+     */
+    private boolean isMessageValid(byte[] message) {
+        return message.length > -1;
     }
 
 }
