@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 giuliobosco.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,11 +32,12 @@ import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
 
 /**
- * Thread di ascolto
+ * Thread di ascolto del ScribbleServer.
  *
  * @author giuliobosco (giuliobva@gmail.com)
  * @author MatanDavidi
- * @version 1.1 (2019-04-19 - 2019-05-06)
+ * @author gabrialessi
+ * @version 1.1.1 (2019-04-19 - 2019-05-12)
  */
 public class ListeningThread extends Thread {
 
@@ -46,9 +47,39 @@ public class ListeningThread extends Thread {
     private int port;
 
     /**
-     * Lista dei datagram listeners, a cui viene inviato il pacchetto ricevuto.
+     * Lista dei datagram listeners a cui viene inviato il pacchetto ricevuto.
      */
-    private List<DatagramListener> datagramListeners;
+    private List<DatagramListener> listeners;
+
+    /**
+     * Connessione di ascolto del thread.
+     */
+    private DatagramSocket socket;
+
+    /**
+     * Crea la thread di ascolto con la porta logica di ascolto.
+     *
+     * @param port Porta logica del socket di ascolto.
+     */
+    public ListeningThread(int port) {
+        setPort(port);
+        this.listeners = new ArrayList<>();
+    }
+
+    /**
+     * Metodo che imposta la porta di ascolto.
+     *
+     * @param port La porta da impostare alla connessione.
+     * @throws IllegalArgumentException Porta passata non valida.
+     */
+    private void setPort(int port) throws IllegalArgumentException {
+        if (port > -1 && port < 65536) {
+            this.port = port;
+        } else {
+            String message = "Porta '" + port + "' fuori dal range valido (0-65535).";
+            throw new IllegalArgumentException(message);
+        }
+    }
 
     /**
      * Getter per la porta logica del socket di ascolto.
@@ -59,31 +90,23 @@ public class ListeningThread extends Thread {
         return this.port;
     }
 
-    private DatagramSocket datagramSocket;
+    /**
+     * Getter per i listener.
+     *
+     * @return I listener del pacchetto ricevuto.
+     */
+    public List<DatagramListener> getListeners() {
+        return this.listeners;
+    }
 
     /**
      * Aggiunge un datagram listener, alla lista dei datagram listeners, a cui
      * viene inviato il pacchetto ricevuto.
      *
-     * @param datagramListener Datagram listener da aggiungere alla lista.
+     * @param listener Datagram listener da aggiungere alla lista.
      */
-    public void addDatagramListener(DatagramListener datagramListener) {
-        this.datagramListeners.add(datagramListener);
-    }
-
-    /**
-     * Crea la thread di ascolto con la porta logica di ascolto.
-     *
-     * @param port Porta logica del socket di ascolto.
-     */
-    public ListeningThread(int port) throws IllegalArgumentException {
-        if (port > 0 && port < 65536) {
-            this.port = port;
-            this.datagramListeners = new ArrayList<>();
-        } else {
-            String message = "Port " + port + " out of valid range (valid range: 1-65535).";
-            throw new IllegalArgumentException(message);
-        }
+    public void addDatagramListener(DatagramListener listener) {
+        getListeners().add(listener);
     }
 
     /**
@@ -93,40 +116,29 @@ public class ListeningThread extends Thread {
     @Override
     public void run() {
         try {
-            datagramSocket = new DatagramSocket(this.getPort());
-            port = datagramSocket.getLocalPort();
-
+            this.socket = new DatagramSocket(this.getPort());
+            setPort(this.socket.getLocalPort());
             while (!isInterrupted()) {
                 byte[] buffer = new byte[256];
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-
-                datagramSocket.receive(packet);
-                
-                for (int i = 0; i < datagramListeners.size(); ++i) {
-                    datagramListeners.get(i).messageReceived(packet);
+                this.socket.receive(packet);
+                for (int i = 0; i < getListeners().size(); ++i) {
+                    getListeners().get(i).messageReceived(packet);
                 }
             }
-
             if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
-
-                System.out.println("ListeningThread " + getId() + " interrotta con successo.");
-
+                System.out.println("ListeningThread '" + getId() + "' interrotta con successo.");
             }
-
-        } catch (IOException ioe) {
-
+        } catch (IOException ex) {
             if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.ERRORS) {
-
-                System.out.println("ListeningThread " + getId() + ": " + ioe.getMessage());
-
+                System.out.println("ListeningThread '" + getId() + "': " + ex.getMessage());
             }
-
         }
     }
 
     @Override
     public void interrupt() {
         super.interrupt();
-        datagramSocket.close();
+        this.socket.close();
     }
 }
