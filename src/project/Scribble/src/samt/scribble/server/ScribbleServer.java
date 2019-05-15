@@ -127,6 +127,9 @@ public class ScribbleServer implements DatagramListener {
                         break;
 
                     case Commands.JOIN:
+                        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+                            System.out.println("Ricevuta richiesta di accesso dall'indirizzo " + packet.getAddress().toString());
+                        }
                         DatagramPacket joinPacket = JoinModule.join(
                                 packet,
                                 this.playerManager,
