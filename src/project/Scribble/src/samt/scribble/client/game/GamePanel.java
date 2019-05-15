@@ -163,6 +163,10 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         }
     }
 
+    /**
+     * Disabilita il bottone e il campo di testo se il giocatore ha il ruolo di
+     * disegnatore.
+     */
     private void adjustToRole() {
 
         if (role == PlayerRole.Drawer) {
