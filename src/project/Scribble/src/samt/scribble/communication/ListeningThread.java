@@ -37,7 +37,7 @@ import samt.scribble.DefaultScribbleParameters;
  * @author giuliobosco (giuliobva@gmail.com)
  * @author MatanDavidi
  * @author gabrialessi
- * @version 1.1.1 (2019-04-19 - 2019-05-12)
+ * @version 1.1.1 (2019-04-19 - 2019-05-15)
  */
 public class ListeningThread extends Thread {
 
@@ -61,7 +61,7 @@ public class ListeningThread extends Thread {
      *
      * @param port Porta logica del socket di ascolto.
      */
-    public ListeningThread(int port) {
+    public ListeningThread(int port) throws IllegalArgumentException {
         setPort(port);
         this.listeners = new ArrayList<>();
     }
@@ -73,7 +73,7 @@ public class ListeningThread extends Thread {
      * @throws IllegalArgumentException Porta passata non valida.
      */
     private void setPort(int port) throws IllegalArgumentException {
-        if (port > -1 && port < 65536) {
+        if (port >= 0 && port < 65536) {
             this.port = port;
         } else {
             String message = "Porta '" + port + "' fuori dal range valido (0-65535).";
@@ -106,7 +106,7 @@ public class ListeningThread extends Thread {
      * @param listener Datagram listener da aggiungere alla lista.
      */
     public void addDatagramListener(DatagramListener listener) {
-        getListeners().add(listener);
+        listeners.add(listener);
     }
 
     /**
