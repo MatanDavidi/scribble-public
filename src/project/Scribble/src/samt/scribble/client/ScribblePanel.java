@@ -199,9 +199,11 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
                     int y = bytes[2] & 0x000000FF;
 
                     this.receivedPoints.add(new Point(x, y));
+                    this.repaint();
                 }
                 break;
         }
+        
     }
 
     @Override
