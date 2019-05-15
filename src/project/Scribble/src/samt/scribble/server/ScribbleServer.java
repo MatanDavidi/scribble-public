@@ -189,6 +189,11 @@ public class ScribbleServer implements DatagramListener {
             }
             MessageSender.sendMessage(player.getIp(), player.getPort(), msgToSend);
         }
+        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+
+            System.out.println("Iniziato la partita con la parola " + wordToGuess + " da indovinare.");
+
+        }
     }
 
     /**
