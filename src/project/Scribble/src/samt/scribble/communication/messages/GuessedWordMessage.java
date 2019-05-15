@@ -23,13 +23,15 @@
  */
 package samt.scribble.communication.messages;
 
+import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.communication.Commands;
 
 /**
  * Messaggio di parola indovinata.
  *
  * @author bryanbeffa
- * @version 1.0 (2019-05-13)
+ * @author MatanDavidi
+ * @version 1.1 (2019-05-13 - 2019-05-15)
  */
 public class GuessedWordMessage extends Message {
 
@@ -38,9 +40,48 @@ public class GuessedWordMessage extends Message {
      * come parametro.
      *
      * @param username Username del giocatore che ha indovinato la parola.
+     * @param word La parola che è stata indovinata.
      */
-    public GuessedWordMessage(String username) {
-        super(Commands.GUESSED_WORD, username.getBytes());
+    public GuessedWordMessage(String username, String word) {
+        super(Commands.GUESSED_WORD, GuessedWordMessage.createMessage(username, word));
     }
 
+    /**
+     * Crea il messaggio da inviare con un'istanza di GuessedWordMessage.
+     *
+     * @param username Il nome dell'utente che ha indovinato la parola.
+     * @param word La parola che è stata indovinata.
+     * @return Un array di byte contenente il nome dell'utente e la parola
+     * separati dal
+     * {@link samt.scribble.DefaultScribbleParameters#COMMAND_MESSAGE_SEPARATOR separatore predefinito}.
+     */
+    private static byte[] createMessage(String username, String word) {
+
+        //username.getBytes() + DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR + word.getBytes()
+        byte[] usernameBytes = username.getBytes();
+        byte[] wordBytes = word.getBytes();
+        byte[] message = new byte[usernameBytes.length + wordBytes.length + 1];
+        
+        for (int i = 0; i < message.length; ++i) {
+            
+            if (i < usernameBytes.length) {
+                
+                message[i] = usernameBytes[i];
+                
+            } else if (i == usernameBytes.length) {
+                
+                message[i] = DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR;
+                
+            } else {
+                
+                message[i] = wordBytes[i - usernameBytes.length - 1];
+                
+            }
+            
+        }
+        
+        return message;
+        
+    }
+    
 }
