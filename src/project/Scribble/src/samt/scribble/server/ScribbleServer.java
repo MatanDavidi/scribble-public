@@ -140,7 +140,16 @@ public class ScribbleServer implements DatagramListener {
                             if (playersNumber == DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
                                 startGame();
                             }
-                            this.groupConnection.send(new UsersListMessage(this.playerManager.getPlayers()));
+
+                            //Should use GroupConnection here, but I can't manage to do it, so peer-to-peer it is!
+//                            this.groupConnection.send(new UsersListMessage(this.playerManager.getPlayers()));
+                            UsersListMessage usersListMessage = new UsersListMessage(playerManager.getPlayers());
+                            for (Player player : playerManager.getPlayers()) {
+
+                                DatagramPacket usersListPacket = new DatagramPacket(usersListMessage.getWholeMessage(), usersListMessage.getWholeMessage().length, player.getIp(), player.getPort());
+                                sendMessage(usersListPacket);
+
+                            }
 
                         }
                         break;
