@@ -54,7 +54,8 @@ import samt.scribble.server.player.PlayerManager;
  * Scribble server.
  *
  * @author giuliobosco (giuliobva@gmail.com)
- * @version 1.0.1 (2019-04-19)
+ * * @author MatanDavidi
+ * @version 1.2 (2019-05-16)
  */
 public class ScribbleServer implements DatagramListener {
 
