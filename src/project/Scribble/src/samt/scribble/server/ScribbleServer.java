@@ -107,7 +107,7 @@ public class ScribbleServer implements DatagramListener {
     public void start() {
         this.listeningThread.start();
         this.groupConnection.start();
-        System.out.println("Server avviato correttamente, attualmente in ascolto.");
+        System.out.println("Server avviato correttamente, attualmente in ascolto sulla porta " + listeningThread.getPort());
     }
 
     /**
