@@ -59,7 +59,7 @@ public class JoinModule {
         int port = -1;
         byte[] packetData = datagramPacket.getData();
 
-        for (int i = 1; i < packetData.length; i++) {
+        for (int i = 1; i < packetData.length - 3; i++) {
             if (packetData[i] != 0 && packetData[i] == DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR) {
                 nicknamePart = false;
             } else if (nicknamePart) {
