@@ -156,10 +156,6 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
                             DefaultScribbleParameters.DEFAULT_SERVER_PORT,
                             joinMessage
                     );
-                    
-                    /*InetAddress ip = new InetAddress();
-                    GroupConnection groupConnection = new GroupConnection(ip);
-                    listener.loggedIn(username);*/
 
                 } catch (IOException ex) {
 
