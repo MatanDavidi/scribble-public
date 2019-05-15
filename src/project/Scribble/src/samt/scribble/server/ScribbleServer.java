@@ -39,10 +39,10 @@ import samt.scribble.communication.ListeningThread;
 import samt.scribble.communication.MessageSender;
 import samt.scribble.communication.messages.DrawMessage;
 import samt.scribble.communication.messages.DrawerMessage;
+import samt.scribble.communication.messages.GuessedWordMessage;
 import samt.scribble.communication.messages.GuesserMessage;
 import samt.scribble.communication.messages.Message;
 import samt.scribble.communication.messages.UsersListMessage;
-import samt.scribble.communication.messages.WordGuessMessage;
 import samt.scribble.server.modules.DatagramConverter;
 import samt.scribble.server.modules.EchoModule;
 import samt.scribble.server.modules.JoinModule;
@@ -166,13 +166,12 @@ public class ScribbleServer implements DatagramListener {
                         String attempt = DatagramConverter.dataToString(packet);
                         // Controllo se il tentativo di indovinare la parola è corretto.
                         if (this.wordManager.isGuessedWord(attempt)) {
-                            /* 
-                            Ricavo lo username del player che ha indovinato.
-                            InetAddress ip = datagramPacket.getAddress();
-                            int port = datagramPacket.getPort();
-                            String username = playerManager.getUsernameByAddress(ip, port); 
-                             */
-                            this.groupConnection.send(new WordGuessMessage(attempt));
+
+                            //Trovare il modo per ottenere la porta di ascolto del giocatore che ha inviato il messaggio senza che esso debba mandarla.
+                            //Ricavo lo username del player che ha indovinato.
+//                            InetAddress ip = packet.getAddress();
+//                            String username = playerManager.getUsernameByAddress(ip); 
+                            this.groupConnection.send(new GuessedWordMessage("username", attempt));
                         }
                 }
             } catch (IOException ex) {
