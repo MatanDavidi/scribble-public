@@ -183,7 +183,8 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
         MessageSender.sendMessage(
                 InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
                 DefaultScribbleParameters.DEFAULT_SERVER_PORT,
-                message);
+                message
+        );
     }
 
     @Override
