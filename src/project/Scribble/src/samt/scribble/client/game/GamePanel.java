@@ -165,7 +165,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
 
     private void adjustToRole() {
 
-        if (role.equals(PlayerRole.Drawer)) {
+        if (role == PlayerRole.Drawer) {
 
             jButtonSendWord.setEnabled(false);
             jTextFieldWord.setEditable(false);
