@@ -31,12 +31,16 @@ import samt.scribble.communication.Commands;
  * messaggio sarà un indovinatore.
  *
  * @author MatanDavidi
- * @version 1.0 (2019-05-08 - 2019-05-08)
+ * @version 1.0.1 (2019-05-08 - 2019-05-16)
  */
 public class GuesserMessage extends Message {
 
     /**
-     * Metodo costruttore.
+     * Istanzia nuovi oggetti di tipo GuesserMessage definendo un byte di
+     * comando di tipo
+     * {@link samt.scribble.communication.Commands#START_GUESSER START_GUESSER}
+     * e privo di messaggio che segnala a un giocatore che, nella prossima
+     * partita, avrà il ruolo di indovinatore.
      */
     public GuesserMessage() {
         super(Commands.START_GUESSER, new byte[0]);
