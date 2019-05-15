@@ -141,7 +141,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     @Override
     public void messageReceived(DatagramPacket packet) {
         byte[] bytes = packet.getData();
-        if (bytes[0] == Commands.WORD_GUESS) {
+        if (bytes[0] == Commands.GUESSED_WORD) {
             String msg = "La parola è stata indovinata";
             JOptionPane.showMessageDialog(this, msg);
             // "la parola" è un segnaposto
