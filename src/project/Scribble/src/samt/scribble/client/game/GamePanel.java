@@ -129,20 +129,24 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
      * @param evt Attributo che rappresenta le informazioni del bottone.
      */
     private void jButtonSendWordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSendWordMouseClicked
-        String wordToGuess = this.jTextFieldWord.getText().trim();
-        if (!wordToGuess.isEmpty()) {
-            WordGuessMessage message = new WordGuessMessage(wordToGuess);
-            try {
-                MessageSender.sendMessage(
-                        InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
-                        DefaultScribbleParameters.DEFAULT_SERVER_PORT,
-                        message
-                );
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage());
+        if (jButtonSendWord.isEnabled()) {
+
+            String wordToGuess = this.jTextFieldWord.getText().trim();
+            if (!wordToGuess.isEmpty()) {
+                WordGuessMessage message = new WordGuessMessage(wordToGuess);
+                try {
+                    MessageSender.sendMessage(
+                            InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
+                            DefaultScribbleParameters.DEFAULT_SERVER_PORT,
+                            message
+                    );
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Inserire la parola");
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Inserire la parola");
+
         }
     }//GEN-LAST:event_jButtonSendWordMouseClicked
 
