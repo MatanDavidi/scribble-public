@@ -23,7 +23,6 @@
  */
 package samt.scribble.communication.messages;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import samt.scribble.DefaultScribbleParameters;
@@ -39,7 +38,7 @@ import samt.scribble.server.player.Player;
  */
 public class UsersListMessage extends Message {
 
-    public UsersListMessage(List<Player> players) throws IOException {
+    public UsersListMessage(List<Player> players) {
         super(Commands.USERS_LIST, UsersListMessage.playersListToByteArray(players));
     }
 
