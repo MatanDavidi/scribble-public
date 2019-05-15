@@ -183,6 +183,11 @@ public class ScribbleServer implements DatagramListener {
         }
     }
 
+    /**
+     * Metodo che fa partire il gioco occupandosi di scegliere chi disegnerà
+     * e la parola da indovinare.
+     * @throws IOException eccezione in caso il messaggio non va a buon fine.
+     */
     private void startGame() throws IOException {
         int playersAmount = this.playerManager.getPlayersNumber();
         int drawerIndex = new Random().nextInt(playersAmount);
