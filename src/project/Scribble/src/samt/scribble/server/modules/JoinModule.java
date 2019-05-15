@@ -66,11 +66,12 @@ public class JoinModule {
                 nickname.append((char) packetData[i]);
             } else {
                 byte[] portBytes = new byte[]{
-                    packetData[i],
-                    packetData[i + 1],
+                    packetData[i + 3],
                     packetData[i + 2],
-                    packetData[i + 3]};
+                    packetData[i],
+                    packetData[i + 1]};
                 port = JoinMessage.byteArrayToInt(portBytes);
+
             }
         }
 
