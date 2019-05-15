@@ -34,14 +34,29 @@ import samt.scribble.server.player.Player;
  * di utenti connessi attualmente al server.
  *
  * @author MatanDavidi
- * @version 1.0.1 (2019-05-07 - 2019-05-08)
+ * @version 1.0.2 (2019-05-07 - 2019-05-16)
  */
 public class UsersListMessage extends Message {
 
+    /**
+     * Istanzia nuovi oggetti di tipo UsersListMessage con un byte di comando di
+     * tipo {@link samt.scribble.communication.Commands#USERS_LIST USERS_LIST} e
+     * una lista di nomi utente dei giocatori come messaggio.
+     *
+     * @param players La lista dei giocatori attualmente connessi al server.
+     */
     public UsersListMessage(List<Player> players) {
         super(Commands.USERS_LIST, UsersListMessage.playersListToByteArray(players));
     }
 
+    /**
+     * Converte una lista di oggetti di tipo
+     * {@link samt.scribble.server.player.Player Player} in un array di byte.
+     *
+     * @param players La lista di Player da convertire.
+     * @return Un array di byte contenente i nomi utente dei giocatori contenuti
+     * nella lista.
+     */
     public static byte[] playersListToByteArray(List<Player> players) {
         int currentPlayerIndex = 0;
         int playersArrayIndex = 0;
@@ -59,6 +74,11 @@ public class UsersListMessage extends Message {
         return playersArray;
     }
 
+    /**
+     * Verifica il corretto funzionamento della classe UsersListMessage.
+     *
+     * @param args Gli argomenti passati da linea di comando.
+     */
     public static void main(String[] args) {
 
         List<Player> players = new ArrayList<>();
@@ -73,6 +93,16 @@ public class UsersListMessage extends Message {
 
     }
 
+    /**
+     * Converte un array di byte in una lista di stringhe, rappresentanti i nomi
+     * utente degli oggetti di tipo
+     * {@link samt.scribble.server.player.Player Player} contenuti in una lista
+     * convertita in array di byte tramite il metodo
+     * {@link samt.scribble.communication.messages.UsersListMessage#playersListToByteArray(java.util.List) playersListToByteArray}.
+     *
+     * @param packetData L'array di byte da convertire.
+     * @return Una lista di stringhe, ognuna il nome utente di un giocatore.
+     */
     private static List<String> rebuildUsernames(byte[] packetData) {
 
         List<String> usernames = new ArrayList<>();
