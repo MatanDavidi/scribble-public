@@ -165,14 +165,14 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
 
     @Override
     public void loggedIn(String username, Connection serverConnection) {
-        
+
         if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
             this.username = username;
             System.out.println(username + ": accesso al gruppo multicast " + serverConnection.getGroupConnection().getGroupIp().getHostAddress());
         }
 
         if (lobbyPanel == null) {
-            
+
             lobbyPanel = new LobbyPanel(serverConnection, username);
             lobbyPanel.setListener(this);
             cardsPanel.add(LOBBY_PANEL_NAME, lobbyPanel);
@@ -189,7 +189,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
 
         if (gamePanel == null) {
 
-            gamePanel = new GamePanel(serverConnection, username, PlayerRole.Guesser);
+            gamePanel = new GamePanel(serverConnection, PlayerRole.Guesser);
             gamePanel.setListener(this);
             cardsPanel.add(GAME_PANEL_NAME, gamePanel);
 
@@ -204,7 +204,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
 
         if (gamePanel == null) {
 
-            gamePanel = new GamePanel(serverConnection, username, PlayerRole.Drawer);
+            gamePanel = new GamePanel(serverConnection, PlayerRole.Drawer);
             gamePanel.setListener(this);
             cardsPanel.add(GAME_PANEL_NAME, gamePanel);
 

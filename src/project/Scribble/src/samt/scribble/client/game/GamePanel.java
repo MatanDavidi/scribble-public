@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Asus.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,20 +30,19 @@ import java.net.InetAddress;
 import javax.swing.JOptionPane;
 import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.client.ScribblePanel;
-import samt.scribble.client.game.PlayerRole;
 import samt.scribble.communication.Commands;
 import samt.scribble.communication.Connection;
 import samt.scribble.communication.DatagramListener;
 import samt.scribble.communication.MessageSender;
 import samt.scribble.communication.messages.WordGuessMessage;
-import samt.scribble.server.modules.DatagramConverter;
 
 /**
  * Classe che gestisce le parole indoviate e le invia.
  *
  * @author MattiaRuberto
  * @author MatanDavidi
- * @version 1.0.1 (2019-05-08 - 2019-05-08)
+ * @author gabrialessi
+ * @version 1.0.2 (2019-05-08 - 2019-05-15)
  */
 public class GamePanel extends javax.swing.JPanel implements DatagramListener {
 
@@ -51,23 +50,37 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
      * Attributo che rappresenta la connessione al server.
      */
     private Connection serverConnection;
+
     /**
      * Attributo che rappresenta il pannello di scribble.
      */
     private ScribblePanel scribblePanel;
-    
-    private String username;
-    
+
+    /**
+     * Attributo che rappresenta il listener delle parole indovinate.
+     */
     private WordGuessListener listener;
 
-    public GamePanel(Connection connection, String username, PlayerRole playerRole) {
+    /**
+     * Definisco un nuovo GamePanel con la connessione al server e il ruolo del
+     * giocatore.
+     *
+     * @param connection Connessione al server.
+     * @param playerRole Ruolo del giocatore.
+     */
+    public GamePanel(Connection connection, PlayerRole playerRole) {
         initComponents();
         this.serverConnection = connection;
-        serverConnection.addDatagramListener(this);
-        scribblePanel = new ScribblePanel(connection, playerRole);
-        add(scribblePanel, BorderLayout.WEST);
+        this.serverConnection.addDatagramListener(this);
+        this.scribblePanel = new ScribblePanel(connection, playerRole);
+        this.add(this.scribblePanel, BorderLayout.WEST);
     }
 
+    /**
+     * Metodo utile per impostare il listener delle parole indovinate.
+     *
+     * @param listener Listener da impostare.
+     */
     public void setListener(WordGuessListener listener) {
         this.listener = listener;
     }
@@ -102,28 +115,20 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
      * @param evt Attributo che rappresenta le informazioni del bottone.
      */
     private void jButtonSendWordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSendWordMouseClicked
-        String wordToGuess = jTextFieldWord.getText().trim();
+        String wordToGuess = this.jTextFieldWord.getText().trim();
         if (!wordToGuess.isEmpty()) {
-
-            WordGuessMessage wordGuessMessage = new WordGuessMessage(wordToGuess);
-
+            WordGuessMessage message = new WordGuessMessage(wordToGuess);
             try {
                 MessageSender.sendMessage(
                         InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
                         DefaultScribbleParameters.DEFAULT_SERVER_PORT,
-                        wordGuessMessage
+                        message
                 );
-
             } catch (IOException ex) {
-
                 JOptionPane.showMessageDialog(this, ex.getMessage());
-
             }
-
         } else {
-
             JOptionPane.showMessageDialog(this, "Inserire la parola");
-
         }
     }//GEN-LAST:event_jButtonSendWordMouseClicked
 
@@ -134,27 +139,14 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void messageReceived(DatagramPacket datagramPacket) {
-
-        byte[] bytes = datagramPacket.getData();
-
-        switch (bytes[0]) {
-
-            case Commands.WORD_GUESS:
-                try{
-                    String username = DatagramConverter.dataToString(datagramPacket);
-                    String msg = "La parola è stata indovinata";
-                    
-                    JOptionPane.showMessageDialog(this, msg);
-                    
-                    //"la parola" è un segnaposto
-                    listener.wordGuessed("la parola");
-                }catch(IOException ex){
-                    System.out.println("ERROR: " + ex.getMessage());
-                }
-                break;
-
+    public void messageReceived(DatagramPacket packet) {
+        byte[] bytes = packet.getData();
+        if (bytes[0] == Commands.WORD_GUESS) {
+            String msg = "La parola è stata indovinata";
+            JOptionPane.showMessageDialog(this, msg);
+            // "la parola" è un segnaposto
+            this.listener.wordGuessed("la parola");
         }
-
     }
+
 }

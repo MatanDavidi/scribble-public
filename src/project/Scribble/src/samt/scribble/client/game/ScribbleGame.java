@@ -83,6 +83,8 @@ public class ScribbleGame {
 
     /**
      * Metodo che imposta un pixel della matrice.
+     *
+     * @param position Il punto da impostare.
      */
     public void setPixel(Point position) {
         int x = (int) position.getX();
@@ -94,6 +96,8 @@ public class ScribbleGame {
 
     /**
      * Metodo che imposta più pixel della matrice.
+     *
+     * @param positions I punti da impostare.
      */
     public void setPixels(Point[] positions) {
         for (int i = 0; i < positions.length; i++) {
