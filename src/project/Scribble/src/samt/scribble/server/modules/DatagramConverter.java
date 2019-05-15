@@ -34,7 +34,12 @@ import java.net.DatagramPacket;
  * @version 1.0 (2019-05-08)
  */
 public class DatagramConverter {
-
+    /**
+     * Metodo che converte il pacchetto contenente il messaggio in una stringa.
+     * @param packet messaggio da convertire.
+     * @return pacchetto convertito in stringa.
+     * @throws IOException che gestisce un eventuale eccezione nella lettura del pacchetto.
+     */
     public static String dataToString(DatagramPacket packet) throws IOException {
         String text = "";
         for (int i = 1; i < packet.getData().length; i++) {
