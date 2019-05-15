@@ -46,7 +46,7 @@ public class Connection {
      */
     private MessageSender messageSender;
 
-    // --------------------------------------------------------------------------- Getters & Setters
+    // ------------------------------------------------------- Getters & Setters
     /**
      * Getter per la connessione al gruppo.
      *
@@ -74,7 +74,7 @@ public class Connection {
         return this.messageSender;
     }
 
-    // -------------------------------------------------------------------------------- Constructors 
+    // ------------------------------------------------------------ Constructors 
     /**
      * Costruttore della connessione dove si definiscono gruppo, thread di
      * ascolto e il mittente di messaggi.
@@ -100,7 +100,7 @@ public class Connection {
         this(null, listeningThread, messageSender);
     }
 
-    // -------------------------------------------------------------------------------- Help Methods
+    // ------------------------------------------------------------ Help Methods
     /**
      * Aggungere un ascoltatore di datagrammi alla connessione al gruppo ed alla
      * thread di ascolto.
@@ -112,7 +112,7 @@ public class Connection {
         this.listeningThread.addDatagramListener(listener);
     }
 
-    // ----------------------------------------------------------------------------- General Methods
+    // --------------------------------------------------------- General Methods
     /**
      * Fa partire la connessione di gruppo e il thread di ascolto contenuti in
      * quest'istanza di connection.
@@ -136,5 +136,5 @@ public class Connection {
         }
 
     }
-    // --------------------------------------------------------------------------- Static Components
+    // ------------------------------------------------------- Static Components
 }
