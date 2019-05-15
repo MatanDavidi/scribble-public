@@ -25,9 +25,9 @@ package samt.scribble.client.login;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import javax.swing.JOptionPane;
+import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.communication.Commands;
 import samt.scribble.communication.Connection;
@@ -157,6 +157,12 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
                             joinMessage
                     );
 
+                    if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+
+                        System.out.println("Inviata richiesta di accesso.");
+
+                    }
+
                 } catch (IOException ex) {
 
                     JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -186,6 +192,12 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
     @Override
     public void messageReceived(DatagramPacket datagramPacket) {
+
+        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+
+            System.out.println(this.getClass().getName() + ": ricevuto pacchetto UDP.");
+
+        }
 
         byte[] packetData = datagramPacket.getData();
 
