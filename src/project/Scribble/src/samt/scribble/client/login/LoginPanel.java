@@ -182,7 +182,6 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
         }
     }//GEN-LAST:event_loginButtonMouseClicked
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel usernameLabel;

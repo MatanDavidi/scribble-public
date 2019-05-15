@@ -34,12 +34,14 @@ import samt.scribble.client.game.PlayerRole;
 public interface LobbyListener {
 
     /**
-     * Evento che segnala che la partita di Scribble sta per cominciare e il ruolo dell'utente sarà indovinatore.
+     * Evento che segnala che la partita di Scribble sta per cominciare e il
+     * ruolo dell'utente sarà indovinatore.
      */
     public void gameStartingGuesser();
-    
+
     /**
-     * Evento che segnala che la partita di Scribble sta per cominciare e il ruolo dell'utente sarà disegnatore.
+     * Evento che segnala che la partita di Scribble sta per cominciare e il
+     * ruolo dell'utente sarà disegnatore.
      */
     public void gameStartingDrawer(String word);
 

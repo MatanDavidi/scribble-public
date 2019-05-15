@@ -62,6 +62,12 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     private WordGuessListener listener;
 
     /**
+     * Il ruolo che il giocatore assume in questa partita (vedi
+     * {@link samt.scribble.client.game.PlayerRole PlayerRole}).
+     */
+    private PlayerRole role;
+
+    /**
      * Definisco un nuovo GamePanel con la connessione al server e il ruolo del
      * giocatore.
      *
@@ -73,10 +79,9 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         this.serverConnection = connection;
         this.serverConnection.addDatagramListener(this);
         this.scribblePanel = new ScribblePanel(connection, playerRole);
-        this.add(this.scribblePanel, BorderLayout.WEST);
-        if(playerRole == PlayerRole.Drawer){
-            jButtonSendWord.setEnabled(false);
-        }
+        role = playerRole;
+        this.add(this.scribblePanel, BorderLayout.CENTER);
+        adjustToRole();
     }
 
     /**
@@ -97,11 +102,14 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        wordGuessPanel = new javax.swing.JPanel();
         jTextFieldWord = new javax.swing.JTextField();
         jButtonSendWord = new javax.swing.JButton();
 
-        setLayout(new java.awt.GridLayout(2, 0));
-        add(jTextFieldWord);
+        setLayout(new java.awt.BorderLayout());
+
+        wordGuessPanel.setLayout(new java.awt.GridLayout(2, 1));
+        wordGuessPanel.add(jTextFieldWord);
 
         jButtonSendWord.setText("Send Word");
         jButtonSendWord.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -109,8 +117,11 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
                 jButtonSendWordMouseClicked(evt);
             }
         });
-        add(jButtonSendWord);
+        wordGuessPanel.add(jButtonSendWord);
+
+        add(wordGuessPanel, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
+
     /**
      * Metodo che parte quando l'utente schiaccia il bottone per inviare al
      * server la parola da indovinare.
@@ -135,10 +146,10 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         }
     }//GEN-LAST:event_jButtonSendWordMouseClicked
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSendWord;
     private javax.swing.JTextField jTextFieldWord;
+    private javax.swing.JPanel wordGuessPanel;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -150,6 +161,17 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
             // "la parola" è un segnaposto
             this.listener.wordGuessed("la parola");
         }
+    }
+
+    private void adjustToRole() {
+
+        if (role == PlayerRole.Drawer) {
+
+            jButtonSendWord.setEnabled(false);
+            jTextFieldWord.setEditable(false);
+
+        }
+
     }
 
 }

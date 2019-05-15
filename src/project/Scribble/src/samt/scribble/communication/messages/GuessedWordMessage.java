@@ -61,27 +61,27 @@ public class GuessedWordMessage extends Message {
         byte[] usernameBytes = username.getBytes();
         byte[] wordBytes = word.getBytes();
         byte[] message = new byte[usernameBytes.length + wordBytes.length + 1];
-        
+
         for (int i = 0; i < message.length; ++i) {
-            
+
             if (i < usernameBytes.length) {
-                
+
                 message[i] = usernameBytes[i];
-                
+
             } else if (i == usernameBytes.length) {
-                
+
                 message[i] = DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR;
-                
+
             } else {
-                
+
                 message[i] = wordBytes[i - usernameBytes.length - 1];
-                
+
             }
-            
+
         }
-        
+
         return message;
-        
+
     }
-    
+
 }

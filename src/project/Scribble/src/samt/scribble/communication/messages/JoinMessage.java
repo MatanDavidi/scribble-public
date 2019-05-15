@@ -109,10 +109,10 @@ public class JoinMessage extends Message {
         assert testInt == EXPECTED_VALUE;
 
         System.out.println(testInt + " == " + EXPECTED_VALUE);
-        
-        testArray = new byte[] { -68, 24, 0, 0 };
+
+        testArray = new byte[]{-68, 24, 0, 0};
         testInt = byteArrayToInt(testArray);
-        
+
         assert testInt != EXPECTED_VALUE;
 
         System.out.println(testInt + " != " + EXPECTED_VALUE);

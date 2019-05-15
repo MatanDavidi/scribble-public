@@ -207,6 +207,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
             gamePanel = new GamePanel(serverConnection, PlayerRole.Drawer);
             gamePanel.setListener(this);
             cardsPanel.add(GAME_PANEL_NAME, gamePanel);
+            JOptionPane.showMessageDialog(gamePanel, "La parola da disegnare è: " + word);
 
         }
 

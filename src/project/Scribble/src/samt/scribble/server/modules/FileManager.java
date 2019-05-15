@@ -94,7 +94,7 @@ public class FileManager {
      * @throws java.io.IOException Se si verifica un'eccezione di input o di
      * output.
      */
-    public List<String> readFile() throws IOException{
+    public List<String> readFile() throws IOException {
         List<String> lines = Files.readAllLines(getFilePath());
         return lines;
     }

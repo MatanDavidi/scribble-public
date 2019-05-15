@@ -31,9 +31,11 @@ package samt.scribble.client.game;
  * @version 1.0 (2019-05-08 - 2019-05-08)
  */
 public interface WordGuessListener {
+
     /**
-     * Metodo che viene utilizzato per rappresentare i tentativi dell'utente di 
+     * Metodo che viene utilizzato per rappresentare i tentativi dell'utente di
      * indovinare la parola.
+     *
      * @param word parola con cui si tenta di indovinare.
      */
     public void wordGuessed(String word);
