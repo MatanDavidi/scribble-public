@@ -107,6 +107,11 @@ public class ListeningThread extends Thread {
      */
     public void addDatagramListener(DatagramListener listener) {
         listeners.add(listener);
+        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+
+            System.out.println(this.getClass().getName() + ": aggiunto listener alla lista.");
+
+        }
     }
 
     /**
