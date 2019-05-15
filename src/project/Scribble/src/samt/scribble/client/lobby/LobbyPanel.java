@@ -63,6 +63,7 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
      *
      * @param serverConnection La connessione al server sotto forma di istanza
      * di {@link samt.scribble.communication.Connection Connection}.
+     * @param username Il nome dell'utente a cui è associato questo client.
      */
     public LobbyPanel(Connection serverConnection, String username) {
         initComponents();
