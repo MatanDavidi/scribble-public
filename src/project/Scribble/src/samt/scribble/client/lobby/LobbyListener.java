@@ -23,13 +23,11 @@
  */
 package samt.scribble.client.lobby;
 
-import samt.scribble.client.game.PlayerRole;
-
 /**
  * L'interfaccia LobbyListener contiene gli eventi relativi alla lobby.
  *
  * @author MatanDavidi
- * @version 1.0 (2019-05-08 - 2019-05-08)
+ * @version 1.0.1 (2019-05-08 - 2019-05-16)
  */
 public interface LobbyListener {
 
@@ -42,6 +40,9 @@ public interface LobbyListener {
     /**
      * Evento che segnala che la partita di Scribble sta per cominciare e il
      * ruolo dell'utente sarà disegnatore.
+     *
+     * @param word La parola che il disegnatore dovrà disegnare durante la
+     * prossima partita.
      */
     public void gameStartingDrawer(String word);
 
