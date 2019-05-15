@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 giuliobosco.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package samt.scribble.communication;
 
 /**
@@ -31,8 +30,6 @@ package samt.scribble.communication;
  * @version 1.0.1 (2019-05-04 - 2019-05-04)
  */
 public class Connection {
-    // ------------------------------------------------------------------------------------ Costants
-    // ---------------------------------------------------------------------------------- Attributes
 
     /**
      * Connessione al gruppo.
@@ -49,7 +46,30 @@ public class Connection {
      */
     private MessageSender messageSender;
 
-    // --------------------------------------------------------------------------- Getters & Setters
+    /**
+     * Costruttore della connessione dove si definiscono gruppo, thread di
+     * ascolto e il mittente di messaggi.
+     *
+     * @param groupConnection Connessione al gruppo.
+     * @param listeningThread Thread di ascolto.
+     * @param messageSender Inviatore di messaggi.
+     */
+    public Connection(GroupConnection groupConnection, ListeningThread listeningThread, MessageSender messageSender) {
+        this.groupConnection = groupConnection;
+        this.listeningThread = listeningThread;
+        this.messageSender = messageSender;
+    }
+
+    /**
+     * Costruttore dove si definiscono thread di ascolto e il mittente di
+     * messaggi.
+     *
+     * @param listeningThread Thread di ascolto.
+     * @param messageSender Inviatore di messaggi.
+     */
+    public Connection(ListeningThread listeningThread, MessageSender messageSender) {
+        this(null, listeningThread, messageSender);
+    }
 
     /**
      * Getter per la connessione al gruppo.
@@ -78,42 +98,15 @@ public class Connection {
         return this.messageSender;
     }
 
-    // -------------------------------------------------------------------------------- Constructors
-
     /**
-     * 
-     * @param listeningThread
-     * @param messageSender 
-     */
-    public Connection(ListeningThread listeningThread, MessageSender messageSender) {
-        this(null, listeningThread, messageSender);
-    }
-    
-    /**
-     * 
-     * @param groupConnection
-     * @param listeningThread
-     * @param messageSender 
-     */
-    public Connection(GroupConnection groupConnection, ListeningThread listeningThread, MessageSender messageSender) {
-        this.groupConnection = groupConnection;
-        this.listeningThread = listeningThread;
-        this.messageSender = messageSender;
-    }
-
-    // -------------------------------------------------------------------------------- Help Methods
-
-    /**
-     * Aggungere un ascoltatore di datagrammi alla connessione al gruppo ed alla thread di ascolto.
+     * Aggungere un ascoltatore di datagrammi alla connessione al gruppo ed alla
+     * thread di ascolto.
      *
-     * @param datagramListener Ascoltatore di datagrammi da aggiungere.
+     * @param listener Listener di datagrammi da aggiungere.
      */
-    public void addDatagramListener(DatagramListener datagramListener) {
-        this.groupConnection.addDatagramListener(datagramListener);
-        this.listeningThread.addDatagramListener(datagramListener);
+    public void addDatagramListener(DatagramListener listener) {
+        this.groupConnection.addDatagramListener(listener);
+        this.listeningThread.addDatagramListener(listener);
     }
-
-    // ----------------------------------------------------------------------------- General Methods
-    // --------------------------------------------------------------------------- Static Components
 
 }
