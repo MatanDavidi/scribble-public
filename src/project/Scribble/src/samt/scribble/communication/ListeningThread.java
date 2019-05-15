@@ -117,7 +117,12 @@ public class ListeningThread extends Thread {
     public void run() {
         try {
             this.socket = new DatagramSocket(this.getPort());
-            setPort(this.socket.getLocalPort());
+
+            if (socket.getLocalPort() != port) {
+
+                setPort(socket.getLocalPort());
+
+            }
 
             if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
 
