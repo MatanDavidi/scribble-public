@@ -23,7 +23,6 @@
  */
 package samt.scribble.communication.messages;
 
-import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.communication.Commands;
 
 /**
@@ -40,51 +39,14 @@ public class WordGuessMessage extends Message {
 
     /**
      * Istanzia nuovi oggetti di tipo WordGuessMessage con un byte di comando
-     * fisso e permettendo di specificare un nome utente e la parola indovinata.
+     * fisso e permettendo di specificare la parola che si pensa stia essendo
+     * disegnata.
      *
-     * @param username Il nome dell'utente che ha indovinato la parola.
-     * @param word La parola che è stata indovinata.
+     * @param word Il tentativo di indovinare la parola, ovvero quello che si
+     * pensa che il disegnatore stia disegnando in questo momento.
      */
-    public WordGuessMessage(String username, String word) {
-        super(Commands.WORD_GUESS, WordGuessMessage.createMessage(username, word));
-    }
-
-    /**
-     * Crea il messaggio da inviare con un'istanza di WordGuessMessage.
-     *
-     * @param username Il nome dell'utente che ha indovinato la parola.
-     * @param word La parola che è stata indovinata.
-     * @return Un array di byte contenente il nome dell'utente e la parola
-     * separati dal
-     * {@link samt.scribble.DefaultScribbleParameters#COMMAND_MESSAGE_SEPARATOR separatore predefinito}.
-     */
-    private static byte[] createMessage(String username, String word) {
-
-        //username.getBytes() + DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR + word.getBytes()
-        byte[] usernameBytes = username.getBytes();
-        byte[] wordBytes = word.getBytes();
-        byte[] message = new byte[usernameBytes.length + wordBytes.length + 1];
-
-        for (int i = 0; i < message.length; ++i) {
-
-            if (i < usernameBytes.length) {
-
-                message[i] = usernameBytes[i];
-
-            } else if (i == usernameBytes.length) {
-
-                message[i] = DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR;
-
-            } else {
-
-                message[i] = wordBytes[i - usernameBytes.length - 1];
-
-            }
-
-        }
-
-        return message;
-
+    public WordGuessMessage(String word) {
+        super(Commands.WORD_GUESS, word.getBytes());
     }
 
 }
