@@ -74,7 +74,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         this.serverConnection.addDatagramListener(this);
         this.scribblePanel = new ScribblePanel(connection, playerRole);
         this.add(this.scribblePanel, BorderLayout.WEST);
-        if(playerRole.equals("Drawer")){
+        if(playerRole == PlayerRole.Drawer){
             jButtonSendWord.setEnabled(false);
         }
     }
