@@ -104,7 +104,6 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
         add(idleLabel, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel idleLabel;
     private javax.swing.JScrollPane usersListScrollPane;

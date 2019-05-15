@@ -146,7 +146,6 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         }
     }//GEN-LAST:event_jButtonSendWordMouseClicked
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSendWord;
     private javax.swing.JTextField jTextFieldWord;
@@ -163,16 +162,16 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
             this.listener.wordGuessed("la parola");
         }
     }
-    
+
     private void adjustToRole() {
-        
+
         if (role.equals(PlayerRole.Drawer)) {
-            
+
             jButtonSendWord.setEnabled(false);
             jTextFieldWord.setEditable(false);
-            
+
         }
-        
+
     }
-    
+
 }

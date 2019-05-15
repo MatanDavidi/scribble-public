@@ -86,7 +86,6 @@ public class WelcomePanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_formMouseClicked
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel clickLabel;
     private javax.swing.JLabel welcomeLabel;
