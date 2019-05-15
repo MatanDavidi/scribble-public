@@ -36,7 +36,7 @@ import java.util.List;
  * @author matteoforni
  * @author mattiaruberto
  * @author gabrialessi
- * @version 2019-05-01
+ * @version 1.0 (2019-05-01)
  */
 public class FileManager {
 

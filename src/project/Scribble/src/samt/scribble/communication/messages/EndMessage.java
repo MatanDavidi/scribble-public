@@ -30,7 +30,7 @@ import samt.scribble.communication.Commands;
  * fine di una partita.
  *
  * @author nemastojanovic
- * @version 1.1 (08.05.2019)
+ * @version 1.1 (2019-05-08)
  */
 public class EndMessage extends Message {
 
