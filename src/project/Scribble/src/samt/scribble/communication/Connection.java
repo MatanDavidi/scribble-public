@@ -46,31 +46,7 @@ public class Connection {
      */
     private MessageSender messageSender;
 
-    /**
-     * Costruttore della connessione dove si definiscono gruppo, thread di
-     * ascolto e il mittente di messaggi.
-     *
-     * @param groupConnection Connessione al gruppo.
-     * @param listeningThread Thread di ascolto.
-     * @param messageSender Inviatore di messaggi.
-     */
-    public Connection(GroupConnection groupConnection, ListeningThread listeningThread, MessageSender messageSender) {
-        this.groupConnection = groupConnection;
-        this.listeningThread = listeningThread;
-        this.messageSender = messageSender;
-    }
-
-    /**
-     * Costruttore dove si definiscono thread di ascolto e il mittente di
-     * messaggi.
-     *
-     * @param listeningThread Thread di ascolto.
-     * @param messageSender Inviatore di messaggi.
-     */
-    public Connection(ListeningThread listeningThread, MessageSender messageSender) {
-        this(null, listeningThread, messageSender);
-    }
-
+    // --------------------------------------------------------------------------- Getters & Setters
     /**
      * Getter per la connessione al gruppo.
      *
@@ -98,6 +74,33 @@ public class Connection {
         return this.messageSender;
     }
 
+    // -------------------------------------------------------------------------------- Constructors 
+    /**
+     * Costruttore della connessione dove si definiscono gruppo, thread di
+     * ascolto e il mittente di messaggi.
+     *
+     * @param groupConnection Connessione al gruppo.
+     * @param listeningThread Thread di ascolto.
+     * @param messageSender Inviatore di messaggi.
+     */
+    public Connection(GroupConnection groupConnection, ListeningThread listeningThread, MessageSender messageSender) {
+        this.groupConnection = groupConnection;
+        this.listeningThread = listeningThread;
+        this.messageSender = messageSender;
+    }
+
+    /**
+     * Costruttore dove si definiscono thread di ascolto e il mittente di
+     * messaggi.
+     *
+     * @param listeningThread Thread di ascolto.
+     * @param messageSender Inviatore di messaggi.
+     */
+    public Connection(ListeningThread listeningThread, MessageSender messageSender) {
+        this(null, listeningThread, messageSender);
+    }
+
+    // -------------------------------------------------------------------------------- Help Methods
     /**
      * Aggungere un ascoltatore di datagrammi alla connessione al gruppo ed alla
      * thread di ascolto.
@@ -109,4 +112,29 @@ public class Connection {
         this.listeningThread.addDatagramListener(listener);
     }
 
+    // ----------------------------------------------------------------------------- General Methods
+    /**
+     * Fa partire la connessione di gruppo e il thread di ascolto contenuti in
+     * quest'istanza di connection.
+     */
+    public void start() {
+
+        if (groupConnection != null) {
+
+            if (!groupConnection.isAlive()) {
+
+                groupConnection.start();
+
+            }
+
+        }
+
+        if (!listeningThread.isAlive()) {
+
+            listeningThread.start();
+
+        }
+
+    }
+    // --------------------------------------------------------------------------- Static Components
 }
