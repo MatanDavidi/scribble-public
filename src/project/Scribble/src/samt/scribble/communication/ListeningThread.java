@@ -118,6 +118,13 @@ public class ListeningThread extends Thread {
         try {
             this.socket = new DatagramSocket(this.getPort());
             setPort(this.socket.getLocalPort());
+
+            if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+
+                System.out.println("Avviato thread di ascolto sulla porta " + port);
+
+            }
+
             while (!isInterrupted()) {
                 byte[] buffer = new byte[256];
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
@@ -126,6 +133,7 @@ public class ListeningThread extends Thread {
                     getListeners().get(i).messageReceived(packet);
                 }
             }
+
             if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
                 System.out.println("ListeningThread '" + getId() + "' interrotta con successo.");
             }
