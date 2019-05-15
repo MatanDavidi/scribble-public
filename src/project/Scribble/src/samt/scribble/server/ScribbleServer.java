@@ -210,7 +210,7 @@ public class ScribbleServer implements DatagramListener {
         }
         if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
 
-            System.out.println("Iniziato la partita con la parola " + wordToGuess + " da indovinare.");
+            System.out.println("Iniziato la partita con la parola '" + wordToGuess + "' da indovinare.");
 
         }
     }
