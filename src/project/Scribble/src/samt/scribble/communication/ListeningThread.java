@@ -26,6 +26,7 @@ package samt.scribble.communication;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import samt.scribble.DebugVerbosity;
@@ -61,9 +62,19 @@ public class ListeningThread extends Thread {
      *
      * @param port Porta logica del socket di ascolto.
      */
-    public ListeningThread(int port) throws IllegalArgumentException {
+    public ListeningThread(int port) throws IllegalArgumentException, SocketException {
         setPort(port);
         this.listeners = new ArrayList<>();
+
+        this.socket = new DatagramSocket(this.getPort());
+
+        //In case the field contained the value 0, which would bind the socket to an unused port. We want the port field to contain the actual port.
+        if (socket.getLocalPort() != port) {
+
+            setPort(socket.getLocalPort());
+
+        }
+
     }
 
     /**
@@ -121,13 +132,6 @@ public class ListeningThread extends Thread {
     @Override
     public void run() {
         try {
-            this.socket = new DatagramSocket(this.getPort());
-
-            if (socket.getLocalPort() != port) {
-
-                setPort(socket.getLocalPort());
-
-            }
 
             if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
 
