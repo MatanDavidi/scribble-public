@@ -172,6 +172,10 @@ public class ScribbleServer implements DatagramListener {
 //                            InetAddress ip = packet.getAddress();
 //                            String username = playerManager.getUsernameByAddress(ip); 
                             this.groupConnection.send(new GuessedWordMessage("username", attempt));
+                            playerManager.resetPlayers();
+                            if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+                                System.out.println("Giocatori rimossi dalla lista.");
+                            }
                         }
                 }
             } catch (IOException ex) {
@@ -183,8 +187,9 @@ public class ScribbleServer implements DatagramListener {
     }
 
     /**
-     * Metodo che fa partire il gioco occupandosi di scegliere chi disegnerà
-     * e la parola da indovinare.
+     * Metodo che fa partire il gioco occupandosi di scegliere chi disegnerà e
+     * la parola da indovinare.
+     *
      * @throws IOException eccezione in caso il messaggio non va a buon fine.
      */
     private void startGame() throws IOException {
@@ -232,4 +237,5 @@ public class ScribbleServer implements DatagramListener {
             System.out.println("ERROR: " + ex.getMessage());
         }
     }
+
 }

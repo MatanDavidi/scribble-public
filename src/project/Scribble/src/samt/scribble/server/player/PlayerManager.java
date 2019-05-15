@@ -151,4 +151,13 @@ public class PlayerManager {
         return DefaultScribbleParameters.NO_FOUND_USERNAME_BY_ADDRESS;
     }
 
+    /**
+     * Cancella tutti i giocatori registrati.
+     */
+    public void resetPlayers() {
+
+        players.clear();
+
+    }
+
 }
