@@ -179,7 +179,8 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
 
         }
         
-        //set JFrame name
+        //set new JFrame name
+        this.setTitle("Scribble: " + username);
 
         this.serverConnection = serverConnection;
 
