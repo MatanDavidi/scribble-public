@@ -66,6 +66,11 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
      * {@link samt.scribble.client.game.PlayerRole PlayerRole}).
      */
     private PlayerRole role;
+    
+    /**
+     * Username dell'utente che sta utilizzando il client.
+     */
+    private String username;
 
     /**
      * Definisco un nuovo GamePanel con la connessione al server e il ruolo del
@@ -74,8 +79,9 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
      * @param connection Connessione al server.
      * @param playerRole Ruolo del giocatore.
      */
-    public GamePanel(Connection connection, PlayerRole playerRole) {
+    public GamePanel(Connection connection, PlayerRole playerRole, String username) {
         initComponents();
+        this.username = username;
         this.serverConnection = connection;
         this.serverConnection.addDatagramListener(this);
         this.scribblePanel = new ScribblePanel(connection, playerRole);
@@ -133,7 +139,8 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
 
             String wordToGuess = this.jTextFieldWord.getText().trim();
             if (!wordToGuess.isEmpty()) {
-                WordGuessMessage message = new WordGuessMessage(wordToGuess);
+                String msg = wordToGuess + DefaultScribbleParameters.MESSAGE_SEPARATOR + username;
+                WordGuessMessage message = new WordGuessMessage(msg);
                 try {
                     MessageSender.sendMessage(
                             InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
