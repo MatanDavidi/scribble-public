@@ -105,12 +105,6 @@ public class DefaultScribbleParameters {
     public static final String USERNAME_REGEX = "^(?=.{1,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
 
     /**
-     * Messaggio di errore che segnala che non è stato trovato nessun player in
-     * base all'indirizzo ip e alla porta.
-     */
-    public static final String NO_FOUND_USERNAME_BY_ADDRESS = "Non è stato trovato nessun player";
-
-    /**
      * Percorso del file contenente le parole da utilizzare nel gioco.
      */
     public static final Path WORDS_CSV_PATH = Paths.get("data", "words.csv");
@@ -129,5 +123,5 @@ public class DefaultScribbleParameters {
     /**
      * Separatore del contenuto di un messaggio.
      */
-    public static final char MESSAGE_SEPARATOR = ';';
+    public static final String MESSAGE_SEPARATOR = ";";
 }
