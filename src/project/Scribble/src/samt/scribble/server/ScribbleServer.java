@@ -165,15 +165,17 @@ public class ScribbleServer implements DatagramListener {
 
                     case Commands.WORD_GUESS:
                         String attempt = DatagramConverter.dataToString(packet);
+                        String[] msgParts = attempt.split(DefaultScribbleParameters.MESSAGE_SEPARATOR);
+                        
+                        //ricavo le due parti del messaggio
+                        String attemptWord = msgParts[0];
+                        String username = msgParts[1];
+                        
                         // Controllo se il tentativo di indovinare la parola è corretto.
-                        if (this.wordManager.isGuessedWord(attempt)) {
+                        if (this.wordManager.isGuessedWord(attemptWord)) {
 
-                            //Trovare il modo per ottenere la porta di ascolto del giocatore che ha inviato il messaggio senza che esso debba mandarla.
                             //Ricavo lo username del player che ha indovinato.
-                            InetAddress ip = packet.getAddress();
-                            int port = packet.getPort();
-                            String username = playerManager.getUsernameByAddress(ip, port); 
-                            this.groupConnection.send(new GuessedWordMessage("username", attempt));
+                            this.groupConnection.send(new GuessedWordMessage(username, attemptWord));
                             playerManager.resetPlayers();
                             if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
                                 System.out.println("Giocatori rimossi dalla lista.");
