@@ -112,7 +112,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
      * Crea scribble client.
      */
     public ScribbleClient() {
-        super();
+        super("Scribble:");
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(200, 200));
@@ -178,6 +178,8 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
             cardsPanel.add(LOBBY_PANEL_NAME, lobbyPanel);
 
         }
+        
+        //set JFrame name
 
         this.serverConnection = serverConnection;
 
@@ -189,7 +191,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
 
         if (gamePanel == null) {
 
-            gamePanel = new GamePanel(serverConnection, PlayerRole.Guesser);
+            gamePanel = new GamePanel(serverConnection, PlayerRole.Guesser, username);
             gamePanel.setListener(this);
             cardsPanel.add(GAME_PANEL_NAME, gamePanel);
 
@@ -204,7 +206,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
 
         if (gamePanel == null) {
 
-            gamePanel = new GamePanel(serverConnection, PlayerRole.Drawer);
+            gamePanel = new GamePanel(serverConnection, PlayerRole.Drawer, username);
             gamePanel.setListener(this);
             cardsPanel.add(GAME_PANEL_NAME, gamePanel);
             JOptionPane.showMessageDialog(gamePanel, "La parola da disegnare è: " + word);
