@@ -134,22 +134,22 @@ public class PlayerManager {
         }
     }
 
-    /**
-     * Metodo che ritorna lo username ricevendo come parametro la porta e l'IP.
-     *
-     * @param ip IP del giocatore.
-     * @param port Porta del giocatore.
-     * @return Username del giocatore.
-     */
-    public String getUsernameByAddress(InetAddress ip, int port) {
-        for (Player player : getPlayers()) {
-            // Controllo se la porta e l'IP corrispondono all'utente corrente
-            if (player.getIp().toString().equals(ip.toString()) && player.getPort() == port) {
-                return player.getUsername();
-            }
-        }
-        return DefaultScribbleParameters.NO_FOUND_USERNAME_BY_ADDRESS;
-    }
+//    /**
+//     * Metodo che ritorna lo username ricevendo come parametro la porta e l'IP.
+//     *
+//     * @param ip IP del giocatore.
+//     * @param port Porta del giocatore.
+//     * @return Username del giocatore.
+//     */
+//    public String getUsernameByAddress(InetAddress ip, int port) {
+//        for (Player player : getPlayers()) {
+//            // Controllo se la porta e l'IP corrispondono all'utente corrente
+//            if (player.getIp().toString().equals(ip.toString()) && player.getPort() == port) {
+//                return player.getUsername();
+//            }
+//        }
+//        return DefaultScribbleParameters.NO_FOUND_USERNAME_BY_ADDRESS;
+//    }
 
     /**
      * Cancella tutti i giocatori registrati.
