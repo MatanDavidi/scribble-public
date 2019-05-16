@@ -160,10 +160,29 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     public void messageReceived(DatagramPacket packet) {
         byte[] bytes = packet.getData();
         if (bytes[0] == Commands.GUESSED_WORD) {
-            String msg = "La parola è stata indovinata";
+            String message = "";
+
+            //estraggo lo username di chi lo ha indovinato
+            for (int i = 0; i < bytes.length; i++) {
+                message += (char) bytes[i];
+            }
+
+            String separator = (char) 127 + "";
+            message = message.trim();
+            String[] msgParts = message.split(separator);
+
+            String username = msgParts[0];
+            String word = msgParts[1];
+
+            String msg = "LA PAROLA È STATA INDOVINATA!!!"
+                    + "\nLa parola era: " + word
+                    + "\nL'utente che ha indovinato la parola è: " + username;
+
             JOptionPane.showMessageDialog(this, msg);
+            
             // "la parola" è un segnaposto
             this.listener.wordGuessed("la parola");
+
         }
     }
 

@@ -170,8 +170,9 @@ public class ScribbleServer implements DatagramListener {
 
                             //Trovare il modo per ottenere la porta di ascolto del giocatore che ha inviato il messaggio senza che esso debba mandarla.
                             //Ricavo lo username del player che ha indovinato.
-//                            InetAddress ip = packet.getAddress();
-//                            String username = playerManager.getUsernameByAddress(ip); 
+                            InetAddress ip = packet.getAddress();
+                            int port = packet.getPort();
+                            String username = playerManager.getUsernameByAddress(ip, port); 
                             this.groupConnection.send(new GuessedWordMessage("username", attempt));
                             playerManager.resetPlayers();
                             if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
