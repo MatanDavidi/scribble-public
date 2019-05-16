@@ -125,5 +125,9 @@ public class DefaultScribbleParameters {
      * L'altezza massima in pixel della parte disegnabile dello ScribblePanel.
      */
     public static final int SCRIBBLE_WIDTH = 200;
-
+    
+    /**
+     * Separatore del contenuto di un messaggio.
+     */
+    public static final char MESSAGE_SEPARATOR = ';';
 }
