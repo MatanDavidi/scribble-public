@@ -100,7 +100,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     }
     
     public void setWordToGuess(String wordToGuess){
-        jLabelWordToGuess.setText("Parola: "+ wordToGuess);
+        jLabelWordToGuess.setText(wordToGuess);
     }
 
     /**
