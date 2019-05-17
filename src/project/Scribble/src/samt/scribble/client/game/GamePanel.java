@@ -198,9 +198,10 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
             String username = msgParts[0];
             String word = msgParts[1];
 
-            String msg = "LA PAROLA È STATA INDOVINATA!!!"
-                    + "\nLa parola era: " + word
-                    + "\nHa vinto: " + username;
+            String msg = "<html><body>"
+                    + "<b style:'font-size: 200%;'>LA PAROLA È STATA INDOVINATA!!!</b>"
+                    + "<br>La parola era: " + word
+                    + "<br>Ha vinto: " + username + "</body></html>";
 
             this.listener.wordGuessed(msg);
 
