@@ -255,6 +255,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
 
     @Override
     public void EndPanelClicked() {
-        replacePanel(LOBBY_PANEL_NAME);
+        this.lobbyPanel = null;
+        loggedIn(username, serverConnection);
     }
 }
