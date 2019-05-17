@@ -203,7 +203,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
                     + "\nHa vinto: " + username;
 
             JOptionPane.showMessageDialog(this, msg);
-            this.listener.wordGuessed(word);
+            this.listener.wordGuessed(msg);
 
         }
     }

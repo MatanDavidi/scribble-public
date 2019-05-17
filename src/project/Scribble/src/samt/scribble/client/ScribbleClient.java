@@ -31,6 +31,7 @@ import javax.swing.*;
 import java.awt.*;
 import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
+import samt.scribble.client.endGame.EndPanel;
 import samt.scribble.client.game.PlayerRole;
 import samt.scribble.client.game.WordGuessListener;
 import samt.scribble.client.lobby.LobbyListener;
@@ -67,6 +68,8 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
      */
     private final String GAME_PANEL_NAME = "gamePanel";
 
+    private final String ENDGAME_PANEL_NAME = "endPanel";
+
     // -------------------------------------------------------------- Attributes
     /**
      * Istanza di JPanel usata per la gestione della visualizzazione o del
@@ -96,6 +99,8 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
      * di giocatori nel server.
      */
     private LobbyPanel lobbyPanel;
+
+    private EndPanel endPanel;
 
     /**
      * L'istanza di Connection che contiene i membri per gestire la connessione
@@ -178,7 +183,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
             cardsPanel.add(LOBBY_PANEL_NAME, lobbyPanel);
 
         }
-        
+
         //set new JFrame name
         this.setTitle("Scribble: " + username);
 
@@ -195,7 +200,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
             gamePanel = new GamePanel(serverConnection, PlayerRole.Guesser, username);
             gamePanel.setListener(this);
             cardsPanel.add(GAME_PANEL_NAME, gamePanel);
-            
+
             //setto il testo del jField nel gamePanel
             gamePanel.setWordToGuess("Indovina la parola per primo");
         }
@@ -212,9 +217,9 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
             gamePanel = new GamePanel(serverConnection, PlayerRole.Drawer, username);
             gamePanel.setListener(this);
             cardsPanel.add(GAME_PANEL_NAME, gamePanel);
-            
+
             //setto la parola da indovinare nel gamePanel
-            gamePanel.setWordToGuess("Parola: " +word);
+            gamePanel.setWordToGuess("Parola: " + word);
         }
 
         replacePanel(GAME_PANEL_NAME);
@@ -223,7 +228,14 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
 
     @Override
     public void wordGuessed(String word) {
-        replacePanel(WELCOME_PANEL_NAME);
+        System.out.println("La parola era: " + word);
+        endPanel = new EndPanel();
+        
+        //setto la stringa contentete il vincitore
+        endPanel.setGuesserLabelText(word);
+        cardsPanel.add(ENDGAME_PANEL_NAME, endPanel);
+        
+        replacePanel(ENDGAME_PANEL_NAME);
     }
 
     // ------------------------------------------------------- Static Components
