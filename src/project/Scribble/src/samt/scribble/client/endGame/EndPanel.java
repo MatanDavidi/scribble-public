@@ -30,6 +30,8 @@ import samt.scribble.client.welcome.WelcomeListener;
  * @author Bryan
  */
 public class EndPanel extends javax.swing.JPanel {
+    
+    private EndGameListener listener;
 
     /**
      * Creates new form EndPanel
@@ -40,6 +42,10 @@ public class EndPanel extends javax.swing.JPanel {
     
     public void setGuesserLabelText(String text){
         guesserLabel.setText(text);
+    }
+    
+    public void setListener(EndGameListener listener) {
+        this.listener = listener;
     }
 
     /**
@@ -57,11 +63,20 @@ public class EndPanel extends javax.swing.JPanel {
         setLayout(new java.awt.BorderLayout());
 
         jButton1.setText("Gioca Ancora");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         add(jButton1, java.awt.BorderLayout.PAGE_END);
 
         guesserLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         add(guesserLabel, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        listener.EndPanelClicked();
+    }//GEN-LAST:event_jButton1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

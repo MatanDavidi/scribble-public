@@ -31,6 +31,7 @@ import javax.swing.*;
 import java.awt.*;
 import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
+import samt.scribble.client.endGame.EndGameListener;
 import samt.scribble.client.endGame.EndPanel;
 import samt.scribble.client.game.PlayerRole;
 import samt.scribble.client.game.WordGuessListener;
@@ -47,7 +48,7 @@ import samt.scribble.communication.Connection;
  * @author JariNaeser
  * @version 1.2.2 (2019-05-04 - 2019-05-09)
  */
-public class ScribbleClient extends JFrame implements WelcomeListener, LoginListener, LobbyListener, WordGuessListener {
+public class ScribbleClient extends JFrame implements WelcomeListener, LoginListener, LobbyListener, WordGuessListener, EndGameListener{
 
     // ---------------------------------------------------------------- Costants
     /**
@@ -228,11 +229,11 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
 
     @Override
     public void wordGuessed(String word) {
-        System.out.println("La parola era: " + word);
-        endPanel = new EndPanel();
         
+        endPanel = new EndPanel();
         //setto la stringa contentete il vincitore
         endPanel.setGuesserLabelText(word);
+        endPanel.setListener(this);
         cardsPanel.add(ENDGAME_PANEL_NAME, endPanel);
         
         replacePanel(ENDGAME_PANEL_NAME);
@@ -250,5 +251,10 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
                 new ScribbleClient().setVisible(true);
             }
         });
+    }
+
+    @Override
+    public void EndPanelClicked() {
+        replacePanel(LOBBY_PANEL_NAME);
     }
 }
