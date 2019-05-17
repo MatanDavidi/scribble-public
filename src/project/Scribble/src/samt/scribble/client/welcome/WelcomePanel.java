@@ -59,7 +59,7 @@ public class WelcomePanel extends javax.swing.JPanel {
         welcomeLabel = new javax.swing.JLabel();
         clickLabel = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(200, 200, 200));
+        setBackground(new java.awt.Color(255, 255, 255));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -67,6 +67,7 @@ public class WelcomePanel extends javax.swing.JPanel {
         });
         setLayout(new java.awt.BorderLayout());
 
+        welcomeLabel.setBackground(new java.awt.Color(255, 255, 255));
         welcomeLabel.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
         welcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         welcomeLabel.setText("Benvenuto su Scribble");

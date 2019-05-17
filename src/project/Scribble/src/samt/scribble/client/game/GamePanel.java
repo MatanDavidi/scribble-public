@@ -117,6 +117,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         jButtonSendWord = new javax.swing.JButton();
         jLabelWordToGuess = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
 
         wordGuessPanel.setLayout(new java.awt.GridLayout(2, 1));

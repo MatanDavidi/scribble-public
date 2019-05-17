@@ -110,10 +110,13 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
         usernameTextField = new javax.swing.JTextField();
         loginButton = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.GridLayout(2, 1));
 
+        usernamePanel.setBackground(new java.awt.Color(255, 255, 255));
         usernamePanel.setLayout(new java.awt.GridLayout(1, 0));
 
+        usernameLabel.setBackground(new java.awt.Color(255, 255, 255));
         usernameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         usernameLabel.setText("Inserisci il tuo nome utente:");
         usernamePanel.add(usernameLabel);

@@ -60,6 +60,7 @@ public class EndPanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         guesserLabel = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
 
         jButton1.setText("Gioca Ancora");
