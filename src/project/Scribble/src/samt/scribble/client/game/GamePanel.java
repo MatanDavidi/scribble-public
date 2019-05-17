@@ -98,6 +98,10 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     public void setListener(WordGuessListener listener) {
         this.listener = listener;
     }
+    
+    public void setWordToGuess(String wordToGuess){
+        jLabelWordToGuess.setText("Parola: "+ wordToGuess);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -111,6 +115,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         wordGuessPanel = new javax.swing.JPanel();
         jTextFieldWord = new javax.swing.JTextField();
         jButtonSendWord = new javax.swing.JButton();
+        jLabelWordToGuess = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -126,6 +131,10 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         wordGuessPanel.add(jButtonSendWord);
 
         add(wordGuessPanel, java.awt.BorderLayout.EAST);
+
+        jLabelWordToGuess.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelWordToGuess.setText("Parola: ");
+        add(jLabelWordToGuess, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -159,6 +168,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSendWord;
+    private javax.swing.JLabel jLabelWordToGuess;
     private javax.swing.JTextField jTextFieldWord;
     private javax.swing.JPanel wordGuessPanel;
     // End of variables declaration//GEN-END:variables
