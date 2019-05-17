@@ -215,8 +215,6 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
             
             //setto la parola da indovinare nel gamePanel
             gamePanel.setWordToGuess("Parola: " +word);
-            //JOptionPane.showMessageDialog(gamePanel, "La parola da disegnare è: " + word);
-
         }
 
         replacePanel(GAME_PANEL_NAME);
