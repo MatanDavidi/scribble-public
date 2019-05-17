@@ -137,10 +137,6 @@ public class ScribbleServer implements DatagramListener {
                                 this.groupConnection);
                         if (joinPacket != null) {
                             sendMessage(joinPacket);
-                            int playersNumber = this.playerManager.getPlayersNumber();
-                            if (playersNumber == DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
-                                startGame();
-                            }
 
                             //Should use GroupConnection here, but I can't manage to do it, so peer-to-peer it is!
 //                            this.groupConnection.send(new UsersListMessage(this.playerManager.getPlayers()));
@@ -152,6 +148,10 @@ public class ScribbleServer implements DatagramListener {
 
                             }
 
+                            int playersNumber = this.playerManager.getPlayersNumber();
+                            if (playersNumber == DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
+                                startGame();
+                            }
                         }
                         break;
 
