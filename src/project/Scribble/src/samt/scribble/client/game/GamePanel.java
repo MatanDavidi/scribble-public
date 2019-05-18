@@ -117,6 +117,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         jTextFieldWord = new javax.swing.JTextField();
         jButtonSendWord = new javax.swing.JButton();
         jLabelWordToGuess = new javax.swing.JLabel();
+        errorLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
@@ -139,6 +140,12 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         jLabelWordToGuess.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelWordToGuess.setText("Parola: ");
         add(jLabelWordToGuess, java.awt.BorderLayout.PAGE_START);
+
+        errorLabel.setBackground(new java.awt.Color(255, 255, 255));
+        errorLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        errorLabel.setForeground(new java.awt.Color(255, 51, 51));
+        errorLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        add(errorLabel, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -160,17 +167,19 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
                             DefaultScribbleParameters.DEFAULT_SERVER_PORT,
                             message
                     );
+                    errorLabel.setText("");
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(this, ex.getMessage());
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Inserire la parola");
+                errorLabel.setText("Inserire la parola");
             }
 
         }
     }//GEN-LAST:event_jButtonSendWordMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel errorLabel;
     private javax.swing.JButton jButtonSendWord;
     private javax.swing.JLabel jLabelWordToGuess;
     private javax.swing.JTextField jTextFieldWord;
