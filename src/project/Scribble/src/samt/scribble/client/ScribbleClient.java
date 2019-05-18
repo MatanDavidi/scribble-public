@@ -175,6 +175,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
         if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
             System.out.println(username + ": accesso al gruppo multicast " + serverConnection.getGroupConnection().getGroupIp().getHostAddress());
         }
+        
         this.username = username;
         if (lobbyPanel == null) {
 

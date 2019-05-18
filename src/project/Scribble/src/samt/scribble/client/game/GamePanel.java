@@ -176,11 +176,11 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     // End of variables declaration//GEN-END:variables
 
     private String getStringByBytes(byte[] bytes) {
-        String message = "";
+        StringBuilder message = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
-            message += (char) bytes[i];
+            message.append((char)bytes[i]);
         }
-        return message;
+        return message.toString();
     }
 
     @Override
