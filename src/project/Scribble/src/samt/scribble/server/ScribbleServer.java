@@ -168,9 +168,8 @@ public class ScribbleServer implements DatagramListener {
                         String[] msgParts = attempt.split(DefaultScribbleParameters.MESSAGE_SEPARATOR);
                         
                         //ricavo le due parti del messaggio
-                        String attemptWord = msgParts[0];
-                        String username = msgParts[1];
-                        System.out.println("Username: " + username);
+                        String attemptWord = msgParts[0].trim();
+                        String username = msgParts[1].trim();
                         
                         // Controllo se il tentativo di indovinare la parola è corretto.
                         if (this.wordManager.isGuessedWord(attemptWord)) {
