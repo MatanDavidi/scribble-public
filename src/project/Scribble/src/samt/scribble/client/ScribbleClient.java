@@ -48,7 +48,7 @@ import samt.scribble.communication.Connection;
  * @author JariNaeser
  * @version 1.2.2 (2019-05-04 - 2019-05-09)
  */
-public class ScribbleClient extends JFrame implements WelcomeListener, LoginListener, LobbyListener, WordGuessListener, EndGameListener{
+public class ScribbleClient extends JFrame implements WelcomeListener, LoginListener, LobbyListener, WordGuessListener, EndGameListener {
 
     // ---------------------------------------------------------------- Costants
     /**
@@ -196,6 +196,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
     @Override
     public void gameStartingGuesser() {
 
+        this.lobbyPanel = null;
         if (gamePanel == null) {
 
             gamePanel = new GamePanel(serverConnection, PlayerRole.Guesser, username);
@@ -212,7 +213,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
 
     @Override
     public void gameStartingDrawer(String word) {
-
+        this.lobbyPanel = null;
         if (gamePanel == null) {
 
             gamePanel = new GamePanel(serverConnection, PlayerRole.Drawer, username);
@@ -229,13 +230,15 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
 
     @Override
     public void wordGuessed(String word) {
+        //resetto il game panel
+        this.gamePanel = null;
         
         endPanel = new EndPanel();
         //setto la stringa contentete il vincitore
         endPanel.setGuesserLabelText(word);
         endPanel.setListener(this);
         cardsPanel.add(ENDGAME_PANEL_NAME, endPanel);
-        
+
         replacePanel(ENDGAME_PANEL_NAME);
     }
 
@@ -255,7 +258,9 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
 
     @Override
     public void EndPanelClicked() {
-//        this.lobbyPanel = null;
-        loggedIn(username, serverConnection);
+        this.loginPanel = new LoginPanel();
+        this.loginPanel.setListener(this);
+        cardsPanel.add(LOGIN_PANEL_NAME, loginPanel);
+        replacePanel(LOGIN_PANEL_NAME);
     }
 }
