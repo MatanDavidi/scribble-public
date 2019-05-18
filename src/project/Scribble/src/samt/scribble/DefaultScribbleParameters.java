@@ -60,7 +60,7 @@ public class DefaultScribbleParameters {
      * Il livello di verbosità delle informazioni di debug durante l'esecuzione
      * del programma.
      */
-    public static final int DEBUG_VERBOSITY = DebugVerbosity.INFORMATION;
+    public static final int DEBUG_VERBOSITY = DebugVerbosity.RELEASE;
 
     /**
      * Attributo che rappresenta il percorso del file csv su cui verrà salvata

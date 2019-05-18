@@ -106,23 +106,37 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
     private void initComponents() {
 
         usernamePanel = new javax.swing.JPanel();
+        formPanel = new javax.swing.JPanel();
         usernameLabel = new javax.swing.JLabel();
         usernameTextField = new javax.swing.JTextField();
+        errorLabel = new javax.swing.JLabel();
         loginButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setLayout(new java.awt.GridLayout(2, 1));
+        setLayout(new java.awt.BorderLayout());
 
         usernamePanel.setBackground(new java.awt.Color(255, 255, 255));
-        usernamePanel.setLayout(new java.awt.GridLayout(1, 0));
+        usernamePanel.setLayout(new java.awt.GridLayout(3, 1));
+
+        formPanel.setBackground(new java.awt.Color(255, 255, 255));
+        formPanel.setLayout(new java.awt.GridLayout());
 
         usernameLabel.setBackground(new java.awt.Color(255, 255, 255));
         usernameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         usernameLabel.setText("Inserisci il tuo nome utente:");
-        usernamePanel.add(usernameLabel);
+        formPanel.add(usernameLabel);
+
+        usernamePanel.add(formPanel);
+
+        usernameTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         usernamePanel.add(usernameTextField);
 
-        add(usernamePanel);
+        errorLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        errorLabel.setForeground(new java.awt.Color(255, 0, 51));
+        errorLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        usernamePanel.add(errorLabel);
+
+        add(usernamePanel, java.awt.BorderLayout.CENTER);
 
         loginButton.setText("Accedi");
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -130,7 +144,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
                 loginButtonMouseClicked(evt);
             }
         });
-        add(loginButton);
+        add(loginButton, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
@@ -139,17 +153,13 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
         if (!username.isEmpty()) {
 
             if (username.matches(DefaultScribbleParameters.USERNAME_REGEX)) {
-
                 this.username = username;
 
                 try {
-
                     if (listeningThread == null) {
-
                         listeningThread = new ListeningThread(0);
                         listeningThread.addDatagramListener(this);
                         listeningThread.start();
-
                     }
 
                     JoinMessage joinMessage = new JoinMessage(username, listeningThread.getPort());
@@ -161,31 +171,25 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
                     );
 
                     if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
-
                         System.out.println("Inviata richiesta di accesso.");
-
                     }
 
                 } catch (IOException ex) {
-
                     JOptionPane.showMessageDialog(this, ex.getMessage());
-
                 }
-
             } else {
-
-                JOptionPane.showMessageDialog(usernamePanel, "Il nome utente specificato contiene caratteri non validi.");
-
+                errorLabel.setText("<html><body>Il nome utente specificato contiene"
+                        + "<br> caratteri non validi.</body></html>");
             }
-
         } else {
-
-            JOptionPane.showMessageDialog(this, "Inserire un nome utente all'interno del relativo campo.");
-
+            errorLabel.setText("<html><body>Inserire un nome utente <br> "
+                    + "all'interno del relativo campo.</body></html>");
         }
     }//GEN-LAST:event_loginButtonMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel errorLabel;
+    private javax.swing.JPanel formPanel;
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JPanel usernamePanel;
