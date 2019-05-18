@@ -73,8 +73,8 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
      * Attributo che rappresenta il titolo del pannello di fine gioco.
      */
     private final String ENDGAME_PANEL_NAME = "endPanel";
-    
-     /**
+
+    /**
      * Attributo che rappresenta il titolo del pannello di gioco.
      */
     private final String DEFAULT_TITLE = "Scribble";
@@ -107,7 +107,11 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
      * di giocatori nel server.
      */
     private LobbyPanel lobbyPanel;
-
+    
+    /**
+     * Istanza di EndPanel che contiene i componenti e la logica per la fine
+     * della partita
+     */
     private EndPanel endPanel;
 
     /**
@@ -129,7 +133,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
 
         //set title
         this.setTitle(DEFAULT_TITLE);
-        
+
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(200, 200));
 
@@ -166,7 +170,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
     // --------------------------------------------------------- General Methods
     @Override
     public void welcomeClicked() {
-        
+
         if (loginPanel == null) {
 
             loginPanel = new LoginPanel();
@@ -185,7 +189,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
         if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
             System.out.println(username + ": accesso al gruppo multicast " + serverConnection.getGroupConnection().getGroupIp().getHostAddress());
         }
-        
+
         this.username = username;
         if (lobbyPanel == null) {
 
@@ -270,7 +274,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
     public void EndPanelClicked() {
         //set default title
         this.setTitle(DEFAULT_TITLE);
-        
+
         this.loginPanel = new LoginPanel();
         this.loginPanel.setListener(this);
         cardsPanel.add(LOGIN_PANEL_NAME, loginPanel);
