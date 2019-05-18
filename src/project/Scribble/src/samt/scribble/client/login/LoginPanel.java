@@ -110,6 +110,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
         usernameLabel = new javax.swing.JLabel();
         usernameTextField = new javax.swing.JTextField();
         errorLabel = new javax.swing.JLabel();
+        loginButtonPanel = new javax.swing.JPanel();
         loginButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -119,7 +120,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
         usernamePanel.setLayout(new java.awt.GridLayout(3, 1));
 
         formPanel.setBackground(new java.awt.Color(255, 255, 255));
-        formPanel.setLayout(new java.awt.GridLayout());
+        formPanel.setLayout(new java.awt.GridLayout(1, 0));
 
         usernameLabel.setBackground(new java.awt.Color(255, 255, 255));
         usernameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -138,13 +139,17 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
         add(usernamePanel, java.awt.BorderLayout.CENTER);
 
+        loginButtonPanel.setBackground(new java.awt.Color(255, 255, 255));
+
         loginButton.setText("Accedi");
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 loginButtonMouseClicked(evt);
             }
         });
-        add(loginButton, java.awt.BorderLayout.SOUTH);
+        loginButtonPanel.add(loginButton);
+
+        add(loginButtonPanel, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
@@ -191,6 +196,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
     private javax.swing.JLabel errorLabel;
     private javax.swing.JPanel formPanel;
     private javax.swing.JButton loginButton;
+    private javax.swing.JPanel loginButtonPanel;
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JPanel usernamePanel;
     private javax.swing.JTextField usernameTextField;
