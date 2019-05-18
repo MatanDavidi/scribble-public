@@ -82,6 +82,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     public GamePanel(Connection connection, PlayerRole playerRole, String username) {
         initComponents();
         this.username = username;
+        System.out.println("Username: " + username);
         this.serverConnection = connection;
         this.serverConnection.addDatagramListener(this);
         this.scribblePanel = new ScribblePanel(connection, playerRole);
@@ -201,7 +202,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
 
             String msg = "<html><body>"
                     + "<b style:'font-size: 200%;'>LA PAROLA È STATA INDOVINATA!!!</b>"
-                    + "<br>La parola era: " + word
+                    + "<br>La parola era: " + word.toLowerCase()
                     + "<br>Ha vinto: " + username + "</body></html>";
 
             this.listener.wordGuessed(msg);

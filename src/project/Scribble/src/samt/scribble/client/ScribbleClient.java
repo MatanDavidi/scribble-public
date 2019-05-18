@@ -173,10 +173,9 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
     public void loggedIn(String username, Connection serverConnection) {
 
         if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
-            this.username = username;
             System.out.println(username + ": accesso al gruppo multicast " + serverConnection.getGroupConnection().getGroupIp().getHostAddress());
         }
-
+        this.username = username;
         if (lobbyPanel == null) {
 
             lobbyPanel = new LobbyPanel(serverConnection, username);
@@ -232,7 +231,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
     public void wordGuessed(String word) {
         //resetto il game panel
         this.gamePanel = null;
-        
+
         endPanel = new EndPanel();
         //setto la stringa contentete il vincitore
         endPanel.setGuesserLabelText(word);
