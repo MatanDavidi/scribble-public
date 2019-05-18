@@ -131,12 +131,12 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
                 break;
 
             case Commands.START_DRAWER:
-                countDownPreMatch(5);
+                countDownPreMatch();
                 listener.gameStartingDrawer(new String(message));
                 break;
 
             case Commands.START_GUESSER:
-                countDownPreMatch(5);
+                countDownPreMatch();
                 listener.gameStartingGuesser();
                 break;
         }
@@ -146,7 +146,8 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
      * CountDown pre partita.
      * @param times secondi che si vogliono attendere
      */
-    private void countDownPreMatch(int times) {
+    private void countDownPreMatch() {
+        int times = DefaultScribbleParameters.SECONDS_PRE_MATCH;
         String text = "Iniziamo... ";
         try {
             for (int i = 0; i < times; i++) {

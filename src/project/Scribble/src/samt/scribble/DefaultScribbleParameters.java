@@ -124,4 +124,6 @@ public class DefaultScribbleParameters {
      * Separatore del contenuto di un messaggio.
      */
     public static final String MESSAGE_SEPARATOR = ";";
+    
+    public static final int SECONDS_PRE_MATCH = 3;
 }

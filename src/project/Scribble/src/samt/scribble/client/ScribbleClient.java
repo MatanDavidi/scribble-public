@@ -69,8 +69,15 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
      */
     private final String GAME_PANEL_NAME = "gamePanel";
 
+    /**
+     * Attributo che rappresenta il titolo del pannello di fine gioco.
+     */
     private final String ENDGAME_PANEL_NAME = "endPanel";
-
+    
+     /**
+     * Attributo che rappresenta il titolo del pannello di gioco.
+     */
+    private final String DEFAULT_TITLE = "Scribble";
     // -------------------------------------------------------------- Attributes
     /**
      * Istanza di JPanel usata per la gestione della visualizzazione o del
@@ -118,8 +125,11 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
      * Crea scribble client.
      */
     public ScribbleClient() {
-        super("Scribble:");
+        super();
 
+        //set title
+        this.setTitle(DEFAULT_TITLE);
+        
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(200, 200));
 
@@ -156,7 +166,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
     // --------------------------------------------------------- General Methods
     @Override
     public void welcomeClicked() {
-
+        
         if (loginPanel == null) {
 
             loginPanel = new LoginPanel();
@@ -258,6 +268,9 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
 
     @Override
     public void EndPanelClicked() {
+        //set default title
+        this.setTitle(DEFAULT_TITLE);
+        
         this.loginPanel = new LoginPanel();
         this.loginPanel.setListener(this);
         cardsPanel.add(LOGIN_PANEL_NAME, loginPanel);
