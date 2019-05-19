@@ -23,6 +23,7 @@
  */
 package samt.scribble.communication.messages;
 
+import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.communication.Commands;
 
 /**
@@ -30,10 +31,8 @@ import samt.scribble.communication.Commands;
  * informazioni relative a un tentativo di indovinare la parola che sta
  * disegnando il disegnatore.
  *
- * Esempio di sottoclasse di Message.
- *
  * @author MatanDavidi
- * @version 1.1 (2019-04-16 - 2019-05-15)
+ * @version 1.2 (2019-04-16 - 2019-05-19)
  */
 public class WordGuessMessage extends Message {
 
@@ -42,11 +41,28 @@ public class WordGuessMessage extends Message {
      * fisso e permettendo di specificare la parola che si pensa stia essendo
      * disegnata.
      *
+     * @param username Il nome dell'utente che sta tentando di indovinare la
+     * parola.
      * @param word Il tentativo di indovinare la parola, ovvero quello che si
      * pensa che il disegnatore stia disegnando in questo momento.
      */
-    public WordGuessMessage(String word) {
-        super(Commands.WORD_GUESS, word.getBytes());
+    public WordGuessMessage(String username, String word) {
+        super(Commands.WORD_GUESS, WordGuessMessage.buildMessage(username, word));
+    }
+
+    /**
+     * Costruisce il messaggio da associare a quest'istanza di WordGuessMessage.
+     *
+     * @param username Il nome dell'utente che sta tentando di indovinare la
+     * parola.
+     * @param word Il tentativo dell'utente di indovinare la parola.
+     * @return Un array di byte contenente in ordine il nome utente, il
+     * separatore e la parola.
+     */
+    private static byte[] buildMessage(String username, String word) {
+
+        return (username + DefaultScribbleParameters.MESSAGE_SEPARATOR + word).getBytes();
+
     }
 
 }
