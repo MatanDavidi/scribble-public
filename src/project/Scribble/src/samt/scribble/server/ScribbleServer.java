@@ -166,11 +166,11 @@ public class ScribbleServer implements DatagramListener {
                     case Commands.WORD_GUESS:
                         String attempt = DatagramConverter.dataToString(packet);
                         String[] msgParts = attempt.split(DefaultScribbleParameters.MESSAGE_SEPARATOR);
-                        
+
                         //ricavo le due parti del messaggio
                         String attemptWord = msgParts[0].trim();
                         String username = msgParts[1].trim();
-                        
+
                         // Controllo se il tentativo di indovinare la parola è corretto.
                         if (this.wordManager.isGuessedWord(attemptWord)) {
 
@@ -225,7 +225,9 @@ public class ScribbleServer implements DatagramListener {
      * @throws IOException Errore di invio.
      */
     private void sendMessage(DatagramPacket packet) throws IOException {
-        new DatagramSocket().send(packet);
+        DatagramSocket sendSocket = new DatagramSocket();
+        sendSocket.send(packet);
+        sendSocket.close();
     }
 
     /**
