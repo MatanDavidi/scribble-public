@@ -179,6 +179,17 @@ public class ScribbleServer implements DatagramListener {
                             if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
                                 System.out.println("Giocatori rimossi dalla lista.");
                             }
+                        } else {
+
+                            //Informa l'utente che la parola che ha tentato di indovinare non è quella che si sta disegnando.
+                            Player sender = playerManager.getPlayerByUsername(username);
+                            if (sender != null) {
+
+                                DatagramPacket returnPacket = new DatagramPacket(data, data.length, sender.getIp(), sender.getPort());
+                                sendMessage(returnPacket);
+
+                            }
+
                         }
                 }
             } catch (IOException ex) {
