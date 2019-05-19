@@ -99,8 +99,8 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     public void setListener(WordGuessListener listener) {
         this.listener = listener;
     }
-    
-    public void setWordToGuess(String wordToGuess){
+
+    public void setWordToGuess(String wordToGuess) {
         jLabelWordToGuess.setText(wordToGuess);
     }
 
@@ -157,10 +157,9 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     private void jButtonSendWordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSendWordMouseClicked
         if (jButtonSendWord.isEnabled()) {
 
-            String wordToGuess = this.jTextFieldWord.getText().trim();
-            if (!wordToGuess.isEmpty()) {
-                String msg = wordToGuess + DefaultScribbleParameters.MESSAGE_SEPARATOR + username;
-                WordGuessMessage message = new WordGuessMessage(msg);
+            String wordGuess = this.jTextFieldWord.getText().trim();
+            if (!wordGuess.isEmpty()) {
+                WordGuessMessage message = new WordGuessMessage(username, wordGuess);
                 try {
                     MessageSender.sendMessage(
                             InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
@@ -189,7 +188,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     private String getStringByBytes(byte[] bytes) {
         StringBuilder message = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
-            message.append((char)bytes[i]);
+            message.append((char) bytes[i]);
         }
         return message.toString();
     }
@@ -198,10 +197,10 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     public void messageReceived(DatagramPacket packet) {
         byte[] bytes = packet.getData();
         String message = getStringByBytes(bytes);
-        
+
         //passera nel pacchetto da parte del server username del disegnatore e la parola da disegnare
         if (bytes[0] == Commands.START_DRAWER) {
-            
+
         } else if (bytes[0] == Commands.GUESSED_WORD) {
 
             String separator = (char) 127 + "";
