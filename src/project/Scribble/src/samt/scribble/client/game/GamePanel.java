@@ -196,14 +196,6 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     private javax.swing.JPanel wordGuessPanel;
     // End of variables declaration//GEN-END:variables
 
-    private String getStringByBytes(byte[] bytes) {
-        StringBuilder message = new StringBuilder();
-        for (int i = 0; i < bytes.length; i++) {
-            message.append((char) bytes[i]);
-        }
-        return message.toString();
-    }
-
     @Override
     public void messageReceived(DatagramPacket packet) {
         byte[] bytes = packet.getData();
