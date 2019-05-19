@@ -150,13 +150,39 @@ public class PlayerManager {
 //        }
 //        return DefaultScribbleParameters.NO_FOUND_USERNAME_BY_ADDRESS;
 //    }
-
     /**
      * Cancella tutti i giocatori registrati.
      */
     public void resetPlayers() {
 
         players.clear();
+
+    }
+
+    /**
+     * Ottiene un'istanza della classe
+     * {@link samt.scribble.server.player.Player Player} contenuta all'interno
+     * della lista
+     * {@link samt.scribble.server.player.PlayerManager#players players}
+     * ricercandone il nome utente.
+     *
+     * @param username Il nome utente da cercare all'interno della lista.
+     * @return Un'istanza della classe Player se il nome utente passato è
+     * contenuto nella lista, altrimenti null.
+     */
+    public Player getPlayerByUsername(String username) {
+
+        for (Player player : players) {
+
+            if (player.getUsername().equals(username)) {
+
+                return player;
+
+            }
+
+        }
+
+        return null;
 
     }
 
