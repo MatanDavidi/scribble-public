@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import samt.scribble.DebugVerbosity;
+import samt.scribble.DefaultScribbleParameters;
 
 /**
  * Gestione del dizionario di scribble.
@@ -61,45 +63,18 @@ public class WordManager {
     private String currentWord;
 
     /**
-     * Attributo booleano che indica se la modalità debug è attiva.
-     */
-    private boolean debug;
-
-    /**
-     * Metodo costruttore dove si definisce il file.
+     * Metodo costruttore che richiede la path del file e consente di utilizzare
+     * la modalità di debug.
      *
      * @param filePath Il percorso del file.
      * @throws java.io.IOException Se si verifica un'eccezione di input o di
      * output.
      */
     public WordManager(Path filePath) throws IOException {
-        this(filePath, false);
-    }
-
-    /**
-     * Metodo costruttore che richiede la path del file e consente di utilizzare
-     * la modalità di debug.
-     *
-     * @param filePath Il percorso del file.
-     * @param debug Stato della modalità di debug (true = attiva).
-     * @throws java.io.IOException Se si verifica un'eccezione di input o di
-     * output.
-     */
-    public WordManager(Path filePath, boolean debug) throws IOException {
         this.fileManager = new FileManager(filePath);
         this.words = fileManager.readFile();
         this.pickedWords = new ArrayList<>();
         this.currentWord = "";
-        this.debug = debug;
-    }
-
-    /**
-     * Metodo utile per sapere se si è in debug mode.
-     *
-     * @return Se si è in debug o meno.
-     */
-    public boolean isDebug() {
-        return this.debug;
     }
 
     /**
@@ -175,16 +150,32 @@ public class WordManager {
      */
     public boolean isGuessedWord(String userWord) {
         userWord = userWord.trim();
-        if (isDebug()) {
+        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
             System.out.println("Parola corrente: '" + getCurrentWord() + "', " + getCurrentWord().trim().length());
             System.out.println("Parola dell'utente: '" + userWord + "', " + userWord.length());
             System.out.println("Statement: " + userWord.equalsIgnoreCase(getCurrentWord()));
-        } else if (getCurrentWord().equalsIgnoreCase(userWord)) {
-            System.out.println("Parola indovinata");
-            return true;
         }
-        System.out.println("Parola sbagliata");
-        return false;
+
+        if (getCurrentWord().equalsIgnoreCase(userWord)) {
+
+            if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+
+                System.out.println("Parola indovinata");
+
+            }
+
+            return true;
+
+        } else {
+
+            if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+
+                System.out.println("Parola sbagliata");
+
+            }
+
+            return false;
+        }
     }
 
     /**
@@ -192,7 +183,7 @@ public class WordManager {
      */
     public void sortList() {
         Collections.sort(getPickedWords());
-        if (isDebug()) {
+        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
             for (String pickedWord : getPickedWords()) {
                 System.out.println("Word: " + pickedWord);
             }
@@ -215,7 +206,7 @@ public class WordManager {
         }
         setWords(getPickedWords());
         setPickedWords(new ArrayList<>());
-        if (isDebug()) {
+        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
             System.out.println("Parole terminate: ricarico la lista");
         }
         // Chiamata ricursiva
