@@ -174,7 +174,6 @@ public class ScribbleServer implements DatagramListener {
                         // Controllo se il tentativo di indovinare la parola è corretto.
                         if (this.wordManager.isGuessedWord(attemptWord)) {
 
-                            //Ricavo lo username del player che ha indovinato.
                             this.groupConnection.send(new GuessedWordMessage(username, attemptWord));
                             playerManager.resetPlayers();
                             if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
