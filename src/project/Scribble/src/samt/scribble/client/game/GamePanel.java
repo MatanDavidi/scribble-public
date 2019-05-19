@@ -159,17 +159,28 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
 
             String wordGuess = this.jTextFieldWord.getText().trim();
             if (!wordGuess.isEmpty()) {
-                WordGuessMessage message = new WordGuessMessage(username, wordGuess);
-                try {
-                    MessageSender.sendMessage(
-                            InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
-                            DefaultScribbleParameters.DEFAULT_SERVER_PORT,
-                            message
-                    );
-                    errorLabel.setText("");
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(this, ex.getMessage());
+
+                if (!wordGuess.contains(DefaultScribbleParameters.WORD_GUESS_MESSAGE_SEPARATOR)) {
+
+                    WordGuessMessage message = new WordGuessMessage(username, wordGuess);
+                    try {
+                        MessageSender.sendMessage(
+                                InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
+                                DefaultScribbleParameters.DEFAULT_SERVER_PORT,
+                                message
+                        );
+                        jTextFieldWord.setText("");
+                        errorLabel.setText("");
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
+                    }
+
+                } else {
+
+                    errorLabel.setText("La parola inserita contiene caratteri non consentiti.");
+
                 }
+
             } else {
                 errorLabel.setText("Inserire la parola");
             }
