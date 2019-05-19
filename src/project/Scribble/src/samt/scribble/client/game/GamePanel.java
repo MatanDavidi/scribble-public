@@ -199,26 +199,26 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
     @Override
     public void messageReceived(DatagramPacket packet) {
         byte[] bytes = packet.getData();
-        String message = getStringByBytes(bytes);
 
         //passera nel pacchetto da parte del server username del disegnatore e la parola da disegnare
-        if (bytes[0] == Commands.START_DRAWER) {
+        switch (bytes[0]) {
 
-        } else if (bytes[0] == Commands.GUESSED_WORD) {
+            case Commands.GUESSED_WORD:
+                String message = new String(bytes);
 
-            String separator = (char) 127 + "";
-            message = message.trim();
-            String[] msgParts = message.split(separator);
+                message = message.trim();
+                String[] msgParts = message.split(DefaultScribbleParameters.WORD_GUESS_MESSAGE_SEPARATOR + "");
 
-            String username = msgParts[0];
-            String word = msgParts[1];
+                String username = msgParts[0];
+                String word = msgParts[1];
+                String msg = "<html><body>"
+                        + "<b style:'font-size: 200%;'>LA PAROLA È STATA INDOVINATA!!!</b>"
+                        + "<br>La parola era: " + word.toLowerCase()
+                        + "<br>Ha vinto: " + username + "</body></html>";
 
-            String msg = "<html><body>"
-                    + "<b style:'font-size: 200%;'>LA PAROLA È STATA INDOVINATA!!!</b>"
-                    + "<br>La parola era: " + word.toLowerCase()
-                    + "<br>Ha vinto: " + username + "</body></html>";
+                this.listener.wordGuessed(msg);
+                break;
 
-            this.listener.wordGuessed(msg);
 
         }
     }
