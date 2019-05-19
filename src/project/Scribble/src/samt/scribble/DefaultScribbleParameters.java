@@ -119,11 +119,17 @@ public class DefaultScribbleParameters {
      * L'altezza massima in pixel della parte disegnabile dello ScribblePanel.
      */
     public static final int SCRIBBLE_WIDTH = 200;
-    
+
     /**
      * Separatore del contenuto di un messaggio.
      */
     public static final String MESSAGE_SEPARATOR = ";";
-    
+
+    /**
+     * Il numero di secondi che passa da quando hanno fatto l'accesso abbastanza
+     * giocatori (vedi
+     * {@link samt.scribble.DefaultScribbleParameters#MINIMUM_PLAYERS_NUMBER MINIMUM_PLAYERS_NUMBER})
+     * all'inizio vero e proprio della partita.
+     */
     public static final int SECONDS_PRE_MATCH = 3;
 }
