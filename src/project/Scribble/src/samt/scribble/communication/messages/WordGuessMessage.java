@@ -61,7 +61,7 @@ public class WordGuessMessage extends Message {
      */
     private static byte[] buildMessage(String username, String word) {
 
-        return (username + DefaultScribbleParameters.MESSAGE_SEPARATOR + word).getBytes();
+        return (username + DefaultScribbleParameters.WORD_GUESS_MESSAGE_SEPARATOR + word).getBytes();
 
     }
 

@@ -121,9 +121,10 @@ public class DefaultScribbleParameters {
     public static final int SCRIBBLE_WIDTH = 200;
 
     /**
-     * Separatore del contenuto di un messaggio.
+     * Separatore del contenuto di un messaggio di tipo
+     * {@link samt.scribble.communication.messages.WordGuessMessage WordGuessMessage}.
      */
-    public static final String MESSAGE_SEPARATOR = ";";
+    public static final String WORD_GUESS_MESSAGE_SEPARATOR = ";";
 
     /**
      * Il numero di secondi che passa da quando hanno fatto l'accesso abbastanza

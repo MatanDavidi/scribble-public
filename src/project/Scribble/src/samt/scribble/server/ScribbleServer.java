@@ -165,7 +165,7 @@ public class ScribbleServer implements DatagramListener {
 
                     case Commands.WORD_GUESS:
                         String attempt = DatagramConverter.dataToString(packet);
-                        String[] msgParts = attempt.split(DefaultScribbleParameters.MESSAGE_SEPARATOR);
+                        String[] msgParts = attempt.split(DefaultScribbleParameters.WORD_GUESS_MESSAGE_SEPARATOR);
 
                         //ricavo le due parti del messaggio
                         String attemptWord = msgParts[0].trim();

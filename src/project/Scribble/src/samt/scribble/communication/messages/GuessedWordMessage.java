@@ -70,7 +70,8 @@ public class GuessedWordMessage extends Message {
 
             } else if (i == usernameBytes.length) {
 
-                message[i] = DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR;
+                //sappiamo che il separatore è un solo carattere, quindi trasformiamo la stringa in un array di byte (di grandezza 1) e prendiamo il primo elemento.
+                message[i] = DefaultScribbleParameters.WORD_GUESS_MESSAGE_SEPARATOR.getBytes()[0];
 
             } else {
 
