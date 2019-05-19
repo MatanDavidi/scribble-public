@@ -219,6 +219,18 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
                 this.listener.wordGuessed(msg);
                 break;
 
+            case Commands.WORD_GUESS:
+
+                message = new String(bytes);
+                message = message.trim();
+
+                msgParts = message.split(DefaultScribbleParameters.WORD_GUESS_MESSAGE_SEPARATOR + "");
+
+                username = msgParts[0];
+                word = msgParts[1];
+
+                errorLabel.setText("La parola inserita '" + word + "' è sbagliata.");
+                break;
 
         }
     }
