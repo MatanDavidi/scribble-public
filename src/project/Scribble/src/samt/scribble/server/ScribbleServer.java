@@ -168,7 +168,7 @@ public class ScribbleServer implements DatagramListener {
                         if (this.playerManager.isRegisteredPlayer(packet.getAddress()) && data.length > 2) {
                             Point point = new Point(data[1], data[2]);
                             this.scribbleGame.setPixel(point);
-                            this.groupConnection.send(new DrawMessage(point));
+                            sendMessageToAllPlayers(new DrawMessage(point));
                         }
                         break;
 
@@ -183,7 +183,8 @@ public class ScribbleServer implements DatagramListener {
                         // Controllo se il tentativo di indovinare la parola è corretto.
                         if (this.wordManager.isGuessedWord(attemptWord)) {
 
-                            this.groupConnection.send(new GuessedWordMessage(username, attemptWord));
+                            //this.groupConnection.send(new GuessedWordMessage(username, attemptWord));
+                            sendMessageToAllPlayers(new GuessedWordMessage(username, attemptWord));
                             playerManager.resetPlayers();
                             if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
                                 System.out.println("Giocatori rimossi dalla lista.");
@@ -206,6 +207,15 @@ public class ScribbleServer implements DatagramListener {
                     System.out.println("ScribbleServer: " + ex.getMessage());
                 }
             }
+        }
+    }
+
+    private void sendMessageToAllPlayers(Message message) throws IOException {
+        //this.groupConnection.send(new DrawMessage(point));
+        for (Player player : playerManager.getPlayers()) {
+
+            MessageSender.sendMessage(player.getIp(), player.getPort(), message);
+
         }
     }
 
