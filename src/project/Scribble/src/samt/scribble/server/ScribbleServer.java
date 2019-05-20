@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import samt.scribble.DebugVerbosity;
 import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.client.game.ScribbleGame;
@@ -227,7 +227,7 @@ public class ScribbleServer implements DatagramListener {
      */
     private void startGame() throws IOException {
         int playersAmount = this.playerManager.getPlayersNumber();
-        int drawerIndex = new Random().nextInt(playersAmount);
+        int drawerIndex = ThreadLocalRandom.current().nextInt(playersAmount);
         // Ottengo la parola da indovinare.
         String wordToGuess = this.wordManager.getUniqueNewWord();
         for (int i = 0; i < playersAmount; ++i) {
