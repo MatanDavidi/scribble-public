@@ -133,4 +133,6 @@ public class DefaultScribbleParameters {
      * all'inizio vero e proprio della partita.
      */
     public static final int SECONDS_PRE_MATCH = 3;
+    
+    public static final int MAX_USERNAME_CHARS = 20;
 }
