@@ -157,30 +157,39 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
         String username = usernameTextField.getText().trim();
         if (!username.isEmpty()) {
 
-            if (username.matches(DefaultScribbleParameters.USERNAME_REGEX)) {
-                this.username = username;
+            if (username.length() <= DefaultScribbleParameters.MAX_USERNAME_CHARS) {
 
-                try {
-                    if (listeningThread == null) {
-                        listeningThread = new ListeningThread(0);
-                        listeningThread.addDatagramListener(this);
-                        listeningThread.start();
+                if (username.matches(DefaultScribbleParameters.USERNAME_REGEX)) {
+                    this.username = username;
+
+                    try {
+                        if (listeningThread == null) {
+                            listeningThread = new ListeningThread(0);
+                            listeningThread.addDatagramListener(this);
+                            listeningThread.start();
+                        }
+
+                        JoinMessage joinMessage = new JoinMessage(username, listeningThread.getPort());
+
+                        MessageSender.sendMessage(
+                                InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
+                                DefaultScribbleParameters.DEFAULT_SERVER_PORT,
+                                joinMessage
+                        );
+
+                        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+                            System.out.println("Inviata richiesta di accesso.");
+                        }
+
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                     }
 
-                    JoinMessage joinMessage = new JoinMessage(username, listeningThread.getPort());
+                } else {
 
-                    MessageSender.sendMessage(
-                            InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
-                            DefaultScribbleParameters.DEFAULT_SERVER_PORT,
-                            joinMessage
-                    );
+                    errorLabel.setText("<html><body>Il nome utente specificato è troppo lungo."
+                            + "<br> (massimo " + DefaultScribbleParameters.MAX_USERNAME_CHARS + " caratteri)</body></html>");
 
-                    if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
-                        System.out.println("Inviata richiesta di accesso.");
-                    }
-
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(this, ex.getMessage());
                 }
             } else {
                 errorLabel.setText("<html><body>Il nome utente specificato contiene"
@@ -251,6 +260,10 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
                     JOptionPane.showMessageDialog(this, ex.getMessage());
 
                 }
+
+            } else if (packetData[0] == Commands.GENERAL_ERROR) {
+
+                errorLabel.setText(new String(messageBytes));
 
             }
 
