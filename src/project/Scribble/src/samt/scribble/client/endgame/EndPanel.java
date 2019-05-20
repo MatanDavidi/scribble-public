@@ -78,31 +78,31 @@ public class EndPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        replayButton = new javax.swing.JButton();
         guesserLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
 
-        jButton1.setText("Gioca Ancora");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        replayButton.setText("Gioca Ancora");
+        replayButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                replayButtonMouseClicked(evt);
             }
         });
-        add(jButton1, java.awt.BorderLayout.PAGE_END);
+        add(replayButton, java.awt.BorderLayout.PAGE_END);
 
         guesserLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         add(guesserLabel, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void replayButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_replayButtonMouseClicked
         listener.endPanelClicked();
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_replayButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel guesserLabel;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton replayButton;
     // End of variables declaration//GEN-END:variables
 }
