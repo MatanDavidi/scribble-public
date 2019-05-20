@@ -24,9 +24,19 @@
 package samt.scribble.client.endgame;
 
 /**
+ * L'interfaccia contenente i metodi relativi agli eventi sollevati da
+ * un'istanza di EndPanel (vedi
+ * {@link samt.scribble.client.endgame.EndPanel EndPanel}).
  *
- * @author Bryan
+ * @author bryanbeffa
+ * @author MatanDavidi
+ * @version 1.0.1 (2019-05-17 - 2019-05-20)
  */
 public interface EndGameListener {
+
+    /**
+     * Viene richiamato ogni volta che il pulsante "Gioca ancora" all'interno
+     * del pannello viene premuto.
+     */
     public void endPanelClicked();
 }

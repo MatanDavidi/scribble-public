@@ -24,11 +24,20 @@
 package samt.scribble.client.endgame;
 
 /**
+ * La classe EndPanel è una sottoclasse di JPanel che contiene il messaggio di
+ * fine partita, con un bottone che, una volta cliccato, riporta al pannello di
+ * accesso (vedi {@link samt.scribble.client.login.LoginPanel LoginPanel}).
  *
- * @author Bryan
+ * @author bryanbeffa
+ * @author MatanDavidi
+ * @version 1.0.1 (2019-05-17 - 2019-05-20)
  */
 public class EndPanel extends javax.swing.JPanel {
-    
+
+    /**
+     * L'EndGameListener che riceverà gli eventi relativi a quest'istanza di
+     * EndPanel.
+     */
     private EndGameListener listener;
 
     /**
@@ -37,11 +46,25 @@ public class EndPanel extends javax.swing.JPanel {
     public EndPanel() {
         initComponents();
     }
-    
-    public void setGuesserLabelText(String text){
+
+    /**
+     * Imposta un testo contenuto all'interno del guesserLabel.
+     *
+     * @param text Il testo da inserire nel guesserLabel.
+     */
+    public void setGuesserLabelText(String text) {
         guesserLabel.setText(text);
     }
-    
+
+    /**
+     * Imposta un EndGameListener (vedi
+     * {@link samt.scribble.client.endgame.EndGameListener EndGameListener}) che
+     * riceverà le chiamate ai metodi relativi agli eventi sollevati da
+     * quest'istanza di EndPanel.
+     *
+     * @param listener L'EndGameListener che riceverà gli eventi relativi a
+     * quest'istanza di EndPanel.
+     */
     public void setListener(EndGameListener listener) {
         this.listener = listener;
     }
