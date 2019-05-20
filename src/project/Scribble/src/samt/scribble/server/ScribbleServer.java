@@ -152,6 +152,15 @@ public class ScribbleServer implements DatagramListener {
                             if (playersNumber == DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
                                 startGame();
                             }
+                            if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+
+                                for (Player player : playerManager.getPlayers()) {
+
+                                    System.out.println(player.getUsername() + " - " + player.getIp().getHostAddress() + ":" + player.getPort());
+
+                                }
+
+                            }
                         }
                         break;
 
