@@ -271,7 +271,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
     }
 
     @Override
-    public void EndPanelClicked() {
+    public void endPanelClicked() {
         //set default title
         this.setTitle(DEFAULT_TITLE);
 

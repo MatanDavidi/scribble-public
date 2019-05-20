@@ -28,5 +28,5 @@ package samt.scribble.client.endgame;
  * @author Bryan
  */
 public interface EndGameListener {
-    public void EndPanelClicked();
+    public void endPanelClicked();
 }
