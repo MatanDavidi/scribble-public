@@ -152,6 +152,18 @@ public class ScribbleServer implements DatagramListener {
                             if (playersNumber == DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
                                 startGame();
                             }
+                            /*else if (playersNumber > DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
+
+                                DatagramPacket guesserPacket = GameInProgressModule.addToGameInProgress(packet, scribbleGame.getMatrix());
+
+                                if (guesserPacket != null) {
+
+                                    sendMessage(guesserPacket);
+
+                                }
+
+                            }*/
+
                             if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
 
                                 for (Player player : playerManager.getPlayers()) {
