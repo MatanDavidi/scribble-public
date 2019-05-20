@@ -82,6 +82,16 @@ public class ScribbleGame {
     }
 
     /**
+     * Ritorna il valore del campo
+     * {@link samt.scribble.client.game.ScribbleGame#matrix matrix}.
+     *
+     * @return La matrice per i punti da disegnare nell'interfaccia.
+     */
+    public boolean[][] getMatrix() {
+        return matrix;
+    }
+
+    /**
      * Metodo che imposta un pixel della matrice.
      *
      * @param position Il punto da impostare.
