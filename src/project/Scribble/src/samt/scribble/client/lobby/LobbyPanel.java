@@ -115,7 +115,7 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
 
         byte[] packetData = datagramPacket.getData();
 
-        byte[] message = new byte[packetData.length - 1];
+        byte[] message = new byte[datagramPacket.getLength() - 1];
 
         for (int i = 0; i < message.length; ++i) {
 

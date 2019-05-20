@@ -223,7 +223,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
             } else {
 
-                messageBytes = new byte[packetData.length - 1];
+                messageBytes = new byte[datagramPacket.getLength() - 1];
 
             }
 
