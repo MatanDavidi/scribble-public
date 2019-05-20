@@ -257,7 +257,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
                 } catch (IOException ex) {
 
-                    JOptionPane.showMessageDialog(this, ex.getMessage());
+                    errorLabel.setText(ex.getMessage());
 
                 }
 
