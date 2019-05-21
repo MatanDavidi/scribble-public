@@ -23,17 +23,51 @@
  */
 package samt.scribble.communication.messages;
 
+import java.net.InetAddress;
+import samt.scribble.DefaultScribbleParameters;
 import samt.scribble.communication.Commands;
 
-/* 
+/**
+ * La classe JoinGameInProgressMessage è una sottoclasse di Message che segnala
+ * a un utente che sta eseguendo l'accesso dopo che una partita è già
+ * cominciata, perciò oltre alla connessione al gruppo deve ricevere il disegno
+ * che è stato disegnato finora e avrà per forza il ruolo di indovinatore perché
+ * il disegnatore è già stato assegnato per la partita.
  *
  * @author MatanDavidi
- * @version 1.0 (2019-05-20 - 2019-05-20)
+ * @version 1.1 (2019-05-20 - 2019-05-21)
  */
 public class JoinGameInProgressMessage extends Message {
 
-    public JoinGameInProgressMessage(boolean[][] matrix) {
-        super(Commands.GAME_IN_PROGRESS, JoinGameInProgressMessage.booleanMatrixToByteArray(matrix));
+    public JoinGameInProgressMessage(InetAddress groupAddress, boolean[][] matrix) {
+        super(Commands.GAME_IN_PROGRESS, JoinGameInProgressMessage.buildMessage(groupAddress, matrix));
+    }
+
+    private static byte[] buildMessage(InetAddress groupAddress, boolean[][] matrix) {
+
+        byte[] matrixBytes = booleanMatrixToByteArray(matrix);
+        byte[] groupBytes = groupAddress.getAddress();
+        byte[] message = new byte[groupBytes.length + matrixBytes.length + 1];
+        for (int i = 0; i < message.length; i++) {
+
+            if (i < groupBytes.length) {
+
+                message[i] = groupBytes[i];
+
+            } else if (i == groupBytes.length) {
+
+                message[i] = DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR;
+
+            } else {
+
+                message[i] = matrixBytes[i - groupBytes.length - 1];
+
+            }
+
+        }
+
+        return message;
+
     }
 
     public static byte[] booleanMatrixToByteArray(boolean[][] matrix) {
