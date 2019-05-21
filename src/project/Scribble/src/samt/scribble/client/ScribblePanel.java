@@ -53,7 +53,7 @@ import samt.scribble.communication.messages.DrawMessage;
  * @author giuliobosco
  * @author jarinaeser
  * @author MatanDavidi
- * @version 1.1.4 (2019-05-06 - 2019-05-09)
+ * @version 1.2 (2019-05-06 - 2019-05-21)
  */
 public class ScribblePanel extends JPanel implements DatagramListener, MouseMotionListener, MouseListener {
 
@@ -126,6 +126,12 @@ public class ScribblePanel extends JPanel implements DatagramListener, MouseMoti
         this.clear = true;
         this.connection = connection;
         repaint();
+    }
+
+    public boolean addToPointsReceived(Point point) {
+
+        return receivedPoints.add(point);
+
     }
 
     @Override
