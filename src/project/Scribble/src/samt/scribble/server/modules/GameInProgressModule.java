@@ -25,18 +25,20 @@ package samt.scribble.server.modules;
 
 import java.net.DatagramPacket;
 import samt.scribble.DefaultScribbleParameters;
-import samt.scribble.communication.messages.GuesserMessage;
+import samt.scribble.communication.GroupConnection;
 import samt.scribble.communication.messages.JoinGameInProgressMessage;
 import samt.scribble.communication.messages.JoinMessage;
 
-/* 
+/**
+ * La classe GameInProgressModule è un modulo utilizzato dal server quando una
+ * partita è già in corso.
  *
  * @author MatanDavidi
- * @version 1.0 (2019-05-20 - 2019-05-20)
+ * @version 1.0 (2019-05-20 - 2019-05-21)
  */
 public class GameInProgressModule {
 
-    public static DatagramPacket addToGameInProgress(DatagramPacket packetSent, boolean[][] matrix) {
+    public static DatagramPacket addToGameInProgress(DatagramPacket packetSent, GroupConnection groupConnection, boolean[][] matrix) {
 
         byte[] data = packetSent.getData();
         boolean isUsernamePart = true;
@@ -68,7 +70,7 @@ public class GameInProgressModule {
 
         if (port != -1) {
 
-            JoinGameInProgressMessage guesserMessage = new JoinGameInProgressMessage(matrix);
+            JoinGameInProgressMessage guesserMessage = new JoinGameInProgressMessage(groupConnection.getGroupIp(), matrix);
             return new DatagramPacket(
                     guesserMessage.getWholeMessage(),
                     guesserMessage.getWholeMessage().length,

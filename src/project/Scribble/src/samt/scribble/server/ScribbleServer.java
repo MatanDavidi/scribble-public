@@ -151,10 +151,9 @@ public class ScribbleServer implements DatagramListener {
                             int playersNumber = this.playerManager.getPlayersNumber();
                             if (playersNumber == DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
                                 startGame();
-                            }
-                            /*else if (playersNumber > DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
+                            } else if (playersNumber > DefaultScribbleParameters.MINIMUM_PLAYERS_NUMBER) {
 
-                                DatagramPacket guesserPacket = GameInProgressModule.addToGameInProgress(packet, scribbleGame.getMatrix());
+                                DatagramPacket guesserPacket = GameInProgressModule.addToGameInProgress(packet, groupConnection, scribbleGame.getMatrix());
 
                                 if (guesserPacket != null) {
 
@@ -162,7 +161,7 @@ public class ScribbleServer implements DatagramListener {
 
                                 }
 
-                            }*/
+                            }
 
                             if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
 
