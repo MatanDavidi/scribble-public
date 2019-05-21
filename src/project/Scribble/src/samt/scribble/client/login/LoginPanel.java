@@ -224,17 +224,7 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
         if (packetData.length > 0) {
 
-            byte[] messageBytes;
-
-            if (packetData[0] == Commands.GROUP_ADDRESS_MESSAGE) {
-
-                messageBytes = new byte[4];
-
-            } else {
-
-                messageBytes = new byte[datagramPacket.getLength() - 1];
-
-            }
+            byte[] messageBytes = new byte[datagramPacket.getLength() - 1];
 
             for (int i = 0; i < messageBytes.length; ++i) {
 
