@@ -91,6 +91,28 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         adjustToRole();
     }
 
+    public GamePanel(Connection connection, PlayerRole playerRole, String username, boolean[][] matrix) {
+
+        this(connection, playerRole, username);
+
+        for (int i = 0; i < matrix.length; i++) {
+
+            for (int j = 0; j < matrix[i].length; j++) {
+
+                if (matrix[i][j]) {
+
+                    scribblePanel.addToPointsReceived(new Point(i, j));
+
+                }
+
+            }
+
+        }
+
+        scribblePanel.repaint();
+
+    }
+
     /**
      * Metodo utile per impostare il listener delle parole indovinate.
      *
