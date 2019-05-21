@@ -103,6 +103,18 @@ public class JoinGameInProgressMessage extends Message {
 
     }
 
+    public static void main(String[] args) {
+
+        boolean[][] matrix = new boolean[][]{
+            {false, false, true},
+            {true, false, false},
+            {false, true, false}
+        };
+
+        byte[] converted = booleanMatrixToByteArray(matrix);
+
+        boolean[][] convertedMatrix = byteArrayToBooleanMatrix(converted, matrix.length, matrix[0].length);
+
     }
 
 }
