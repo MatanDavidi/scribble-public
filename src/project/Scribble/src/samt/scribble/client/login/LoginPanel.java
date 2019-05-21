@@ -35,6 +35,7 @@ import samt.scribble.communication.DatagramListener;
 import samt.scribble.communication.GroupConnection;
 import samt.scribble.communication.ListeningThread;
 import samt.scribble.communication.MessageSender;
+import samt.scribble.communication.messages.JoinGameInProgressMessage;
 import samt.scribble.communication.messages.JoinMessage;
 
 /**
@@ -42,7 +43,7 @@ import samt.scribble.communication.messages.JoinMessage;
  * utili per accedere al server.
  *
  * @author MatanDavidi
- * @version 1.1 (2019-05-04 - 2019-05-06)
+ * @version 1.2 (2019-05-04 - 2019-05-21)
  */
 public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
@@ -242,6 +243,59 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
                         MessageSender sender = new MessageSender();
 
                         listener.loggedIn(username, new Connection(groupConnection, listeningThread, sender));
+
+                    }
+
+                } catch (IOException ex) {
+
+                    errorLabel.setText(ex.getMessage());
+
+                }
+
+            } else if (packetData[0] == Commands.GAME_IN_PROGRESS) {
+
+                try {
+
+                    if (username != null && listener != null) {
+
+                        int groupIpLength = 0;
+
+                        for (int i = 0; i < messageBytes.length && groupIpLength == 0; i++) {
+
+                            if (messageBytes[i] == DefaultScribbleParameters.COMMAND_MESSAGE_SEPARATOR) {
+
+                                groupIpLength = i;
+
+                            }
+
+                        }
+
+                        byte[] groupIpBytes = new byte[groupIpLength];
+                        byte[] matrixBytes = new byte[messageBytes.length - groupIpLength - 1];
+
+                        for (int i = 0; i < messageBytes.length; i++) {
+
+                            if (i < groupIpLength) {
+
+                                groupIpBytes[i] = messageBytes[i];
+
+                            } else if (i > groupIpLength) {
+
+                                matrixBytes[i - groupIpLength - 1] = messageBytes[i];
+
+                            }
+
+                        }
+
+                        boolean[][] drawingMatrix = JoinGameInProgressMessage.byteArrayToBooleanMatrix(
+                                matrixBytes, DefaultScribbleParameters.SCRIBBLE_WIDTH,
+                                DefaultScribbleParameters.SCRIBBLE_HEIGHT
+                        );
+                        GroupConnection groupConnection = new GroupConnection(InetAddress.getByAddress(groupIpBytes), DefaultScribbleParameters.DEFAULT_GROUP_PORT);
+                        MessageSender sender = new MessageSender();
+                        Connection serverConnection = new Connection(groupConnection, listeningThread, sender);
+
+                        listener.loggedInStartedGame(username, serverConnection, drawingMatrix);
 
                     }
 
