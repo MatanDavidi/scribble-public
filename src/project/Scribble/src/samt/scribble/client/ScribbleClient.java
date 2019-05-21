@@ -46,7 +46,7 @@ import samt.scribble.communication.Connection;
  * @author giuliobosco (giuliobva@gmail.com)
  * @author MatanDavidi
  * @author JariNaeser
- * @version 1.2.2 (2019-05-04 - 2019-05-09)
+ * @version 1.3 (2019-05-04 - 2019-05-21)
  */
 public class ScribbleClient extends JFrame implements WelcomeListener, LoginListener, LobbyListener, WordGuessListener, EndGameListener {
 
@@ -107,7 +107,7 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
      * di giocatori nel server.
      */
     private LobbyPanel lobbyPanel;
-    
+
     /**
      * Istanza di EndPanel che contiene i componenti e la logica per la fine
      * della partita
@@ -208,6 +208,26 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
     }
 
     @Override
+    public void loggedInStartedGame(String username, Connection serverConnection, boolean[][] drawingMatrix) {
+
+        if (gamePanel != null) {
+
+            cardsPanel.remove(lobbyPanel);
+
+        }
+
+        gamePanel = new GamePanel(serverConnection, PlayerRole.Guesser, username, drawingMatrix);
+        gamePanel.setListener(this);
+        cardsPanel.add(GAME_PANEL_NAME, gamePanel);
+
+        //setto il testo del jField nel gamePanel
+        gamePanel.setWordToGuess("Indovina la parola per primo");
+
+        replacePanel(GAME_PANEL_NAME);
+
+    }
+
+    @Override
     public void gameStartingGuesser() {
 
         this.lobbyPanel = null;
@@ -280,4 +300,5 @@ public class ScribbleClient extends JFrame implements WelcomeListener, LoginList
         cardsPanel.add(LOGIN_PANEL_NAME, loginPanel);
         replacePanel(LOGIN_PANEL_NAME);
     }
+
 }
