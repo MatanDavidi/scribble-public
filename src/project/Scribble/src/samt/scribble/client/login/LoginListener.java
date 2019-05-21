@@ -30,7 +30,7 @@ import samt.scribble.communication.Connection;
  * registrazione al server.
  *
  * @author MatanDavidi
- * @version 1.1 (2019-05-04 - 2019-05-06)
+ * @version 1.2 (2019-05-04 - 2019-05-21)
  */
 public interface LoginListener {
 
@@ -42,5 +42,17 @@ public interface LoginListener {
      * al gruppo, thread di ascolto e classe di invio dei pacchetti.
      */
     public void loggedIn(String username, Connection serverConnection);
+
+    /**
+     * Evento che segnala che un utente si sta per unire ad una partita già in
+     * atto.
+     *
+     * @param username Il nome dell'utente che ha eseguito l'accesso.
+     * @param serverConnection La connessione al server, composta da connessione
+     * al gruppo, thread di ascolto e classe di invio dei pacchetti.
+     * @param drawingMatrix La matrice di valori booleani che permette di
+     * ricostruire il disegno.
+     */
+    public void loggedInStartedGame(String username, Connection serverConnection, boolean[][] drawingMatrix);
 
 }
