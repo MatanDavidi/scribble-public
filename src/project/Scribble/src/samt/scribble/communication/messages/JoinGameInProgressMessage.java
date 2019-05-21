@@ -38,7 +38,46 @@ public class JoinGameInProgressMessage extends Message {
 
     public static byte[] booleanMatrixToByteArray(boolean[][] matrix) {
 
-        return new byte[0];
+        int messageSize = 0;
+        int messageIndex = 0;
+
+        for (boolean[] row : matrix) {
+
+            for (boolean pixel : row) {
+
+                if (pixel) {
+
+                    ++messageSize;
+
+                }
+
+            }
+
+        }
+
+        byte[] message = new byte[messageSize];
+
+        for (int i = 0; i < matrix.length; i++) {
+
+            for (int j = 0; j < matrix[i].length; j++) {
+
+                int currentIndex = i * matrix.length + j;
+
+                if (matrix[i][j] && currentIndex <= Byte.MAX_VALUE) {
+
+                    message[messageIndex] = (byte) currentIndex;
+                    ++messageIndex;
+
+                }
+
+            }
+
+        }
+
+        return message;
+
+    }
+
 
     }
 
