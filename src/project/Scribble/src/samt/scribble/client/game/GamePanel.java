@@ -24,6 +24,7 @@
 package samt.scribble.client.game;
 
 import java.awt.BorderLayout;
+import java.awt.Point;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -42,7 +43,7 @@ import samt.scribble.communication.messages.WordGuessMessage;
  * @author MattiaRuberto
  * @author MatanDavidi
  * @author gabrialessi
- * @version 1.0.2 (2019-05-08 - 2019-05-15)
+ * @version 1.1 (2019-05-08 - 2019-05-21)
  */
 public class GamePanel extends javax.swing.JPanel implements DatagramListener {
 
@@ -78,6 +79,7 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
      *
      * @param connection Connessione al server.
      * @param playerRole Ruolo del giocatore.
+     * @param username Username dell'utente che sta utilizzando il client.
      */
     public GamePanel(Connection connection, PlayerRole playerRole, String username) {
         initComponents();
