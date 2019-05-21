@@ -45,6 +45,7 @@ import samt.scribble.communication.messages.Message;
 import samt.scribble.communication.messages.UsersListMessage;
 import samt.scribble.server.modules.DatagramConverter;
 import samt.scribble.server.modules.EchoModule;
+import samt.scribble.server.modules.GameInProgressModule;
 import samt.scribble.server.modules.JoinModule;
 import samt.scribble.server.modules.WordManager;
 import samt.scribble.server.player.Player;
@@ -54,8 +55,8 @@ import samt.scribble.server.player.PlayerManager;
  * Scribble server.
  *
  * @author giuliobosco (giuliobva@gmail.com)
- * * @author MatanDavidi
- * @version 1.2 (2019-05-16)
+ * @author MatanDavidi
+ * @version 1.2.1 (2019-04-19 - 2019-05-21)
  */
 public class ScribbleServer implements DatagramListener {
 
@@ -185,11 +186,18 @@ public class ScribbleServer implements DatagramListener {
 
                     case Commands.WORD_GUESS:
                         String attempt = DatagramConverter.dataToString(packet);
+
                         String[] msgParts = attempt.split(DefaultScribbleParameters.WORD_GUESS_MESSAGE_SEPARATOR);
 
                         //ricavo le due parti del messaggio
                         String username = msgParts[0].trim();
                         String attemptWord = msgParts[1].trim();
+
+                        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+
+                            System.out.println("Ricevuto tentativo di indovinare da parte di " + username + ": " + attemptWord);
+
+                        }
 
                         // Controllo se il tentativo di indovinare la parola è corretto.
                         if (this.wordManager.isGuessedWord(attemptWord)) {
