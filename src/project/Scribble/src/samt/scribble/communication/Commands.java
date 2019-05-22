@@ -118,7 +118,7 @@ public class Commands {
      * parola è stata indovinata.
      */
     public final static byte GUESSED_WORD = 12;
-    
+
     public final static byte GAME_IN_PROGRESS = 13;
 
 }

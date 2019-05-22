@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 giuliobosco.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -133,6 +133,10 @@ public class DefaultScribbleParameters {
      * all'inizio vero e proprio della partita.
      */
     public static final int SECONDS_PRE_MATCH = 3;
-    
+
+    /**
+     * Il numero massimo di caratteri per il nome utente di un giocatore, ovvero
+     * la lunghezza massima che il nome utente di un giocatore può avere.
+     */
     public static final int MAX_USERNAME_CHARS = 20;
 }

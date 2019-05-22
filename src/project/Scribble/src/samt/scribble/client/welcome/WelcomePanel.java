@@ -31,6 +31,7 @@ package samt.scribble.client.welcome;
  * @version 1.0.1 (2019-05-08 - 2019-05-09)
  */
 public class WelcomePanel extends javax.swing.JPanel {
+
     /**
      * Attributo che rappresenta l'interfaccia WelcomeListener.
      */

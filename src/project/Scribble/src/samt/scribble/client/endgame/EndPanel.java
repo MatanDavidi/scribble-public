@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Bryan.
+ * Copyright 2019 SAMT.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -99,7 +99,6 @@ public class EndPanel extends javax.swing.JPanel {
     private void replayButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_replayButtonMouseClicked
         listener.endPanelClicked();
     }//GEN-LAST:event_replayButtonMouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel guesserLabel;

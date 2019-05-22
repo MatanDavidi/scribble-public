@@ -144,6 +144,7 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
 
     /**
      * CountDown pre partita.
+     *
      * @param times secondi che si vogliono attendere
      */
     private void countDownPreMatch() {
@@ -151,7 +152,7 @@ public class LobbyPanel extends javax.swing.JPanel implements DatagramListener {
         String text = "Iniziamo... ";
         try {
             for (int i = 0; i < times; i++) {
-                idleLabel.setText(text + (times-i));
+                idleLabel.setText(text + (times - i));
                 Thread.sleep(1000);
             }
         } catch (InterruptedException ex) {
