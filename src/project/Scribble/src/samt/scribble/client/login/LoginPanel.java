@@ -188,13 +188,13 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
                 } else {
 
-                    errorLabel.setText("<html><body>Il nome utente specificato è troppo lungo."
-                            + "<br> (massimo " + DefaultScribbleParameters.MAX_USERNAME_CHARS + " caratteri)</body></html>");
 
+                    errorLabel.setText("<html><body>Il nome utente specificato contiene"
+                            + "<br> caratteri non validi.</body></html>");
                 }
             } else {
-                errorLabel.setText("<html><body>Il nome utente specificato contiene"
-                        + "<br> caratteri non validi.</body></html>");
+                    errorLabel.setText("<html><body>Il nome utente specificato è troppo lungo."
+                            + "<br> (massimo " + DefaultScribbleParameters.MAX_USERNAME_CHARS + " caratteri)</body></html>");
             }
         } else {
             errorLabel.setText("<html><body>Inserire un nome utente <br> "
