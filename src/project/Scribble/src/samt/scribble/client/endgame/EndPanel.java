@@ -23,6 +23,8 @@
  */
 package samt.scribble.client.endgame;
 
+import java.awt.event.KeyEvent;
+
 /**
  * La classe EndPanel è una sottoclasse di JPanel che contiene il messaggio di
  * fine partita, con un bottone che, una volta cliccato, riporta al pannello di
@@ -97,8 +99,14 @@ public class EndPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void replayButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_replayButtonMouseClicked
-        listener.endPanelClicked();
+        replay();
     }//GEN-LAST:event_replayButtonMouseClicked
+
+    private void replay() {
+
+        listener.endPanelClicked();
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel guesserLabel;

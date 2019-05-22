@@ -25,6 +25,7 @@ package samt.scribble.client.game;
 
 import java.awt.BorderLayout;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -149,6 +150,11 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
         wordGuessPanel.setLayout(new java.awt.GridLayout(2, 1));
 
         jTextFieldWord.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldWord.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldWordKeyPressed(evt);
+            }
+        });
         wordGuessPanel.add(jTextFieldWord);
 
         jButtonSendWord.setText("Send Word");
@@ -179,38 +185,21 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
      * @param evt Attributo che rappresenta le informazioni del bottone.
      */
     private void jButtonSendWordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSendWordMouseClicked
-        if (jButtonSendWord.isEnabled()) {
 
-            String wordGuess = this.jTextFieldWord.getText().trim();
-            if (!wordGuess.isEmpty()) {
+        sendWord();
 
-                if (!wordGuess.contains(DefaultScribbleParameters.WORD_GUESS_MESSAGE_SEPARATOR)) {
+    }//GEN-LAST:event_jButtonSendWordMouseClicked
 
-                    WordGuessMessage message = new WordGuessMessage(username, wordGuess);
-                    try {
-                        MessageSender.sendMessage(
-                                InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
-                                DefaultScribbleParameters.DEFAULT_SERVER_PORT,
-                                message
-                        );
-                        jTextFieldWord.setText("");
-                        errorLabel.setText("");
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(this, ex.getMessage());
-                    }
+    private void jTextFieldWordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldWordKeyPressed
 
-                } else {
+        //Se viene premuto ENTER
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 
-                    errorLabel.setText("La parola inserita contiene caratteri non consentiti.");
-
-                }
-
-            } else {
-                errorLabel.setText("Inserire la parola");
-            }
+            sendWord();
 
         }
-    }//GEN-LAST:event_jButtonSendWordMouseClicked
+
+    }//GEN-LAST:event_jTextFieldWordKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel errorLabel;
@@ -269,6 +258,42 @@ public class GamePanel extends javax.swing.JPanel implements DatagramListener {
 
             jButtonSendWord.setEnabled(false);
             jTextFieldWord.setEditable(false);
+
+        }
+
+    }
+
+    private void sendWord() {
+
+        if (jButtonSendWord.isEnabled()) {
+
+            String wordGuess = this.jTextFieldWord.getText().trim();
+            if (!wordGuess.isEmpty()) {
+
+                if (!wordGuess.contains(DefaultScribbleParameters.WORD_GUESS_MESSAGE_SEPARATOR)) {
+
+                    WordGuessMessage message = new WordGuessMessage(username, wordGuess);
+                    try {
+                        MessageSender.sendMessage(
+                                InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
+                                DefaultScribbleParameters.DEFAULT_SERVER_PORT,
+                                message
+                        );
+                        jTextFieldWord.setText("");
+                        errorLabel.setText("");
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
+                    }
+
+                } else {
+
+                    errorLabel.setText("La parola inserita contiene caratteri non consentiti.");
+
+                }
+
+            } else {
+                errorLabel.setText("Inserire la parola");
+            }
 
         }
 

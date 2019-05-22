@@ -23,6 +23,7 @@
  */
 package samt.scribble.client.login;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -131,6 +132,11 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
         usernamePanel.add(formPanel);
 
         usernameTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        usernameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                usernameTextFieldKeyPressed(evt);
+            }
+        });
         usernamePanel.add(usernameTextField);
 
         errorLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -155,51 +161,20 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
 
-        String username = usernameTextField.getText().trim();
-        if (!username.isEmpty()) {
+        sendLogin();
 
-            if (username.length() <= DefaultScribbleParameters.MAX_USERNAME_CHARS) {
-
-                if (username.matches(DefaultScribbleParameters.USERNAME_REGEX)) {
-                    this.username = username;
-
-                    try {
-                        if (listeningThread == null) {
-                            listeningThread = new ListeningThread(0);
-                            listeningThread.addDatagramListener(this);
-                            listeningThread.start();
-                        }
-
-                        JoinMessage joinMessage = new JoinMessage(username, listeningThread.getPort());
-
-                        MessageSender.sendMessage(
-                                InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
-                                DefaultScribbleParameters.DEFAULT_SERVER_PORT,
-                                joinMessage
-                        );
-
-                        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
-                            System.out.println("Inviata richiesta di accesso.");
-                        }
-
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(this, ex.getMessage());
-                    }
-
-                } else {
-
-                    errorLabel.setText("<html><body>Il nome utente specificato contiene"
-                            + "<br> caratteri non validi.</body></html>");
-                }
-            } else {
-                errorLabel.setText("<html><body>Il nome utente specificato è troppo lungo."
-                        + "<br> (massimo " + DefaultScribbleParameters.MAX_USERNAME_CHARS + " caratteri)</body></html>");
-            }
-        } else {
-            errorLabel.setText("<html><body>Inserire un nome utente <br> "
-                    + "all'interno del relativo campo.</body></html>");
-        }
     }//GEN-LAST:event_loginButtonMouseClicked
+
+    private void usernameTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameTextFieldKeyPressed
+
+        //Se viene premuto ENTER
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            sendLogin();
+
+        }
+
+    }//GEN-LAST:event_usernameTextFieldKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel errorLabel;
@@ -313,4 +288,54 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
         }
 
     }
+
+    private void sendLogin() {
+
+        String username = usernameTextField.getText().trim();
+        if (!username.isEmpty()) {
+
+            if (username.length() <= DefaultScribbleParameters.MAX_USERNAME_CHARS) {
+
+                if (username.matches(DefaultScribbleParameters.USERNAME_REGEX)) {
+                    this.username = username;
+
+                    try {
+                        if (listeningThread == null) {
+                            listeningThread = new ListeningThread(0);
+                            listeningThread.addDatagramListener(this);
+                            listeningThread.start();
+                        }
+
+                        JoinMessage joinMessage = new JoinMessage(username, listeningThread.getPort());
+
+                        MessageSender.sendMessage(
+                                InetAddress.getByName(DefaultScribbleParameters.SERVER_ADDRESS),
+                                DefaultScribbleParameters.DEFAULT_SERVER_PORT,
+                                joinMessage
+                        );
+
+                        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
+                            System.out.println("Inviata richiesta di accesso.");
+                        }
+
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
+                    }
+
+                } else {
+
+                    errorLabel.setText("<html><body>Il nome utente specificato contiene"
+                            + "<br> caratteri non validi.</body></html>");
+                }
+            } else {
+                errorLabel.setText("<html><body>Il nome utente specificato è troppo lungo."
+                        + "<br> (massimo " + DefaultScribbleParameters.MAX_USERNAME_CHARS + " caratteri)</body></html>");
+            }
+        } else {
+            errorLabel.setText("<html><body>Inserire un nome utente <br> "
+                    + "all'interno del relativo campo.</body></html>");
+        }
+
+    }
+
 }

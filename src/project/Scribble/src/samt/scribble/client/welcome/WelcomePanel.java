@@ -23,6 +23,8 @@
  */
 package samt.scribble.client.welcome;
 
+import java.awt.event.KeyEvent;
+
 /**
  * Welcome panel.
  *
@@ -82,13 +84,19 @@ public class WelcomePanel extends javax.swing.JPanel {
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
 
+        goToLogin();
+
+    }//GEN-LAST:event_formMouseClicked
+
+    private void goToLogin() {
+
         if (listener != null) {
 
             listener.welcomeClicked();
 
         }
 
-    }//GEN-LAST:event_formMouseClicked
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel clickLabel;
