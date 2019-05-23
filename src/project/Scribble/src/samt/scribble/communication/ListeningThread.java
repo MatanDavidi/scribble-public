@@ -61,6 +61,7 @@ public class ListeningThread extends Thread {
      * Crea la thread di ascolto con la porta logica di ascolto.
      *
      * @param port Porta logica del socket di ascolto.
+     * @throws java.net.SocketException
      */
     public ListeningThread(int port) throws IllegalArgumentException, SocketException {
         setPort(port);
@@ -68,7 +69,7 @@ public class ListeningThread extends Thread {
 
         this.socket = new DatagramSocket(this.getPort());
 
-        //In case the field contained the value 0, which would bind the socket to an unused port. We want the port field to contain the actual port.
+        //In caso il campo conteneva il valore 0, che associa il socket a una porta disponibile. Vogliamo che il campo port contenga il valore effettivo della porta.
         if (socket.getLocalPort() != port) {
 
             setPort(socket.getLocalPort());
@@ -118,11 +119,6 @@ public class ListeningThread extends Thread {
      */
     public void addDatagramListener(DatagramListener listener) {
         listeners.add(listener);
-        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
-
-            System.out.println(this.getClass().getName() + ": aggiunto listener alla lista.");
-
-        }
     }
 
     /**
@@ -132,13 +128,6 @@ public class ListeningThread extends Thread {
     @Override
     public void run() {
         try {
-
-            if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
-
-                System.out.println("Avviato thread di ascolto sulla porta " + port);
-
-            }
-
             while (!isInterrupted()) {
                 byte[] buffer = new byte[256];
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);

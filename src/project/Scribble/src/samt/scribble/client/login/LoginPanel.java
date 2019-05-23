@@ -189,12 +189,6 @@ public class LoginPanel extends javax.swing.JPanel implements DatagramListener {
     @Override
     public void messageReceived(DatagramPacket datagramPacket) {
 
-        if (DefaultScribbleParameters.DEBUG_VERBOSITY >= DebugVerbosity.INFORMATION) {
-
-            System.out.println(this.getClass().getName() + ": ricevuto pacchetto UDP.");
-
-        }
-
         byte[] packetData = datagramPacket.getData();
 
         if (packetData.length > 0) {
