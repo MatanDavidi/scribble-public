@@ -6,7 +6,7 @@ occhio
 mondo
 punto
 lavoro
-città
+citta
 guerra
 strada
 notte
@@ -40,3 +40,12 @@ nave
 pietra
 carne
 bosco
+dito
+spalla
+ginocchio
+gatto
+chiave
+bussola
+orologio
+croce
+scale
